@@ -1,10 +1,10 @@
 """
-WSGI config for explore_scotland project.
+WSGI config for tango_with_django_project project.
 
 It exposes the WSGI callable as a module-level variable named ``application``.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/3.0/howto/deployment/wsgi/
+https://docs.djangoproject.com/en/2.1/howto/deployment/wsgi/
 """
 
 import os

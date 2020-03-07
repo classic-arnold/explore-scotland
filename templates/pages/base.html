@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+{% load explore_scotland_template_tags %}
+
+<html>
+    <head>
+         <title>
+            Rango -
+            {% block title_block %}
+                Explore Scotland!
+            {% endblock %}
+        </title>
+    </head>
+    <body>
+        <div>
+            {% block body_block %}
+            {% endblock %}
+        </div>
+        <div>
+            <h2>Categories</h2>
+            {% block sidebar_block %}
+            {% get_category_list category %}
+            {% endblock %}
+        </div>
+        <hr />
+        <div>
+            <ul>
+            {% if user.is_authenticated %}
+                <!-- Show these links when the user is logged in -->
+                <li><a href="{% url 'explore_scotland_app:restricted' %}">Restricted Page</a></li>
+                <li><a href="{% url 'explore_scotland_app:add_category' %}">Add a New Category</a></li>
+                <li><a href="{% url 'explore_scotland_app:logout' %}">Logout</a></li>
+            {% else %}
+                <!-- Show these links when the user is NOT logged in -->
+                <li><a href="{% url 'explore_scotland_app:register' %}">Sign Up</a></li>
+                <li><a href="{% url 'explore_scotland_app:login' %}">Login</a></li>
+            {% endif %}
+                <!-- Outside the conditional statements, ALWAYS show -->
+                <li><a href="{% url 'explore_scotland_app:about' %}">About</a></li>
+                <li><a href="{% url 'explore_scotland_app:index' %}">Index</a></li>
+            </ul>
+        </div>
+    </body>
+</html>

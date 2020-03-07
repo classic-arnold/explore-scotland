@@ -1,0 +1,15 @@
+{% extends 'pages/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+     Restricted Page
+{% endblock %}
+
+{% block body_block %}
+    <h1>Restricted for Explore Ecotland!</h1>
+    {% if registered %}
+        Rango says: <strong>thank you for registering!</strong>
+        <a href="{% url 'explore_scotland_app:index' %}">Return to the homepage.</a><br />
+    {% endif %}
+
+{% endblock %}
