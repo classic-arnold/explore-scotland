@@ -35,7 +35,7 @@ SECRET_KEY = '5vnnwsl4vf##m1uxjdx7iedsw-0eu*c@ov6=7fft$^&ec4_2^z'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 MAX_NAME_LENGTH = 128
 MAX_URL_LENGTH = 200
