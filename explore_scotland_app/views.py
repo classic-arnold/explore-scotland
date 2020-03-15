@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
 def index(request):
-   return render(request, 'explore_scotland_app/homePage.html')
+   return render(request, 'explore_scotland_app/index.html')
    
 def register(request):
     # A boolean value for telling the template
@@ -100,7 +100,7 @@ def user_login(request):
     else:
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
-        return render(request, 'pages/login.html')
+        return render(request, 'explore_scotland_app/login.html')
 
 # Use the login_required() decorator to ensure only those logged in can
 # access the view.
@@ -150,8 +150,8 @@ def edit_profile(request):
 			}
     else:
     	user_form = UserForm()
-        profile_form = UserProfileForm()
-        ctx = {
+    	profile_form = UserProfileForm()
+    	ctx = {
         	'user_form': user_form,
         	'profile_form': profile_form
         }
