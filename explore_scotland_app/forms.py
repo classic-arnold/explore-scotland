@@ -13,3 +13,8 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('picture',)
+        
+class UserFormWithoutPassword(UserForm):
+    def __init__(self, *args, **kwargs):
+        super(UserFormWithoutPassword, self).__init__(*args, **kwargs)
+        self.fields.pop('password')

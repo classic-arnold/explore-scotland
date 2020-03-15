@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from explore_scotland_app.forms import UserForm, UserProfileForm
+from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
@@ -110,3 +110,90 @@ def user_logout(request):
     logout(request)
     # Take the user back to the homepage.
     return redirect(reverse('explore_scotland_app:index'))
+    
+@login_required
+def edit_profile(request):
+    # If the request is a HTTP POST, try to pull out the relevant information.
+    if request.method == 'POST':
+        user_form = UserForm(request.POST)
+        profile_form = UserProfileForm(request.POST)
+
+        # If the two forms are valid...
+        if user_form.is_valid() and profile_form.is_valid():
+            # Save the user's form data to the database.
+            user = user_form.save()
+
+            # Now sort out the UserProfile instance.
+            # Since we need to set the user attribute ourselves,
+            # we set commit=False. This delays saving the model
+            # until we're ready to avoid integrity problems.
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            # Did the user provide a profile picture?
+            # If so, we need to get it from the input form and
+            #put it in the UserProfile model.
+            if 'picture' in request.FILES:
+                profile.picture = request.FILES['picture']
+
+            # Now we save the UserProfile model instance.
+            profile.save()
+
+            # Update our variable to indicate that the template
+            # registration was successful.
+            ctx = {
+				'changed': True
+			}
+        else:
+        	ctx = {
+				'changed': False
+			}
+    else:
+    	user_form = UserForm()
+        profile_form = UserProfileForm()
+        ctx = {
+        	'user_form': user_form,
+        	'profile_form': profile_form
+        }
+    	return render(request, 'explore_scotland_app/edit-profile.html', ctx)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
