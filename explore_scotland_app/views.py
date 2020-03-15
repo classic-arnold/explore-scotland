@@ -1,10 +1,6 @@
 from django.shortcuts import render
 
 from django.http import HttpResponse
-from explore_scotland_app.models import Category
-from explore_scotland_app.forms import CategoryForm
-from explore_scotland_app.models import Page
-from explore_scotland_app.forms import PageForm
 from django.shortcuts import redirect
 from django.urls import reverse
 from explore_scotland_app.forms import UserForm, UserProfileForm

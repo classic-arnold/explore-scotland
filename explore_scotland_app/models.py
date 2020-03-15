@@ -5,27 +5,27 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 
 # Create your models here.
-class Profile(models.Model):
+class UserProfile(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
-	profile_picture = models.ImageField(upload_to="")
+	picture = models.ImageField(upload_to="")
 	
 	def __str__(self):
 		return self.user.first_name + self.user.last_name
 		
 class Photo(models.Model):
-	owner = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="photos_uploaded")
+	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="photos_uploaded")
 	description = models.TextField(max_length=256)
 	date_added = models.DateField(auto_now_add=True)
 	categories = models.CharField(max_length=256) #add choice
 	tags = models.CharField(max_length=256) #add choice
-	likes = models.ManyToManyField(Profile, related_name="photos_liked")
+	likes = models.ManyToManyField(UserProfile, related_name="photos_liked")
 	
 	
 	def __str__(self):
 		return self.owner.user.first_name + self.owner.user.last_name + "photo"
 		
 class Comment(models.Model):
-	owner = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="comment_posted")
+	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="comment_posted")
 	content = models.TextField(max_length=256)
 	photo = models.ForeignKey(Photo, on_delete=models.CASCADE, related_name="photo_comments", null=True, blank=True)
 	comment = models.ForeignKey("self", on_delete=models.CASCADE, related_name="comment_comments", null=True, blank=True)
