@@ -223,7 +223,7 @@ def picture_details(request, photo_id):
 	return render(request, 'explore_scotland_app/picture-details.html', ctx)
 	
 @login_required
-def post_comment(request):
+def post_comment(request, photo_id):
 	if request.method == POST:
 		comment_form = CommentForm(request.POST)
 		photo_id = comment_form.data.get('photo_id', None)
