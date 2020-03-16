@@ -1,92 +1,14 @@
-<!DOCTYPE html>
+{% extends './base.html' %}
+{% load static %}
 
-<html>
+{% block title_block %}Home{% endblock %}
 
-    <head>
-        <meta charset="utf-8">
-        <title>Explore Scotland</title>
-    </head>
+{% block body_block %}
+<div style="text-align:center;">
+	<img src="D:\es\static\image\logo.jpg" width="150" height="150"  alt="Logo"/>
+</div>
 
-    <style>
-        #copyright
-        {
-            text-align:center;
-            color:red
-        }
-        h1.center
-        {
-            text-align:center;
-        }
-        .homepagetitle
-        {
-            text-align:center;
-            color:#6495ED
-        }
-
-
-    </style>
-
-
-
-    <body>
-        <div style="text-align:center;">
-
-            <img src="D:\es\static\image\logo.jpg" width="150" height="150"  alt="Logo"/>
-
-        </div>
-
-        <h1 class="homepagetitle"> Explore Scotland </h1>
-        <h2 class="homepagetitle"><span style="text-align:center;font-familu:arial;color:#6495ED"> Share &</span>
-        <span style="text-align:center;font-familu:arial;color:#DC143C"> Love </span> </h2>
-
-
-
-        <a href="https://google.com">
-            <button> Copyright @2020 Team-"LAT" All rights reserved </button>
-        </a>
-        <a href="https://google.com">
-            <button> Daily Board </button>
-        </a>
-        <a href="https://google.com">
-            <button> Weekly Board </button>
-        </a>
-        <a href="https://google.com">
-            <button> Monthly Board </button>
-        </a>
-        <a href="https://google.com">
-            <button> Overall Board </button>
-        </a>
-        <a href="https://google.com">
-            <button> Support </button>
-        </a>
-        <a href="https://google.com">
-            <button> ContactUs </button>
-        </a>
-        <a href="https://google.com">
-            <button> Terms </button>
-        </a>
-        <a href="https://google.com">
-            <button> Privacy </button>
-        </a>
-        <a href="https://google.com">
-            <button> FAQ </button>
-        </a>
-
-
-
-
-
-
-
-
-
-
-        <!-- the bottom button-->
-
-
-
-    </body>
-
-
-
-</html>
+<h1 class="homepagetitle"> Explore Scotland </h1>
+<h2 class="homepagetitle"><span style="text-align:center;font-familu:arial;color:#6495ED"> Share &</span>
+<span style="text-align:center;font-familu:arial;color:#DC143C"> Love </span> </h2>
+{% endblock %}

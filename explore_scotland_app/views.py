@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword, PhotoForm
@@ -204,6 +204,15 @@ def delete_photo(request, photo_id):
 	except:
 		pass
 	return redirect(reverse('explore_scotland_app:index'))
+	
+from django.core.serializers import serialize
+
+@login_required
+def get_photos(request):
+	photos = serialize('json', Photo.objects.all()[:10])
+	return JsonResponse(photos, safe=False)
+	
+	
 	
 
 
