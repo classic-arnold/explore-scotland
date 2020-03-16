@@ -10,7 +10,7 @@ class UserProfile(models.Model):
 	picture = models.ImageField(upload_to="")
 	
 	def __str__(self):
-		return self.user.first_name + self.user.last_name
+		return self.user.username
 		
 class Photo(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="photos_uploaded")
@@ -22,7 +22,7 @@ class Photo(models.Model):
 	picture = models.ImageField(upload_to="")
 	
 	def __str__(self):
-		return self.owner.user.first_name + self.owner.user.last_name + "photo"
+		return self.owner.user.username + "photo"
 		
 class Comment(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="comment_posted")
@@ -38,6 +38,6 @@ class Comment(models.Model):
 	
 	def __str__(self):
 		if self.photo is not None:
-			return self.owner.user.first_name + self.owner.user.last_name + "comment on" + self.photo.__str__()
+			return self.owner.user.username + "comment on" + self.photo.__str__()
 		else:
-			return self.owner.user.first_name + self.owner.user.last_name + "comment on" + self.comment.__str__()
+			return self.owner.user.username + "comment on" + self.comment.__str__()

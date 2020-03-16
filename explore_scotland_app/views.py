@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword, PhotoForm
+from explore_scotland_app.models import UserProfile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
@@ -169,7 +170,7 @@ def upload_photo(request):
 		if photo_form.is_valid():
 
 			photo = photo_form.save(commit=False)
-			photo.owner = request.user
+			photo.owner = UserProfile.objects.get(user=request.user)
 
 			photo.save()
 
