@@ -238,7 +238,7 @@ def post_comment(request, photo_id):
 			
 			comment.save()
 			
-		return redirect(reverse('explore_scotland_app:picture_details', photo_id=photo_id))
+		return redirect(reverse('explore_scotland_app:picture_details', photo_id))
 	try:
 		return redirect(request.META.get('HTTP_REFERRER'))
 	except:
