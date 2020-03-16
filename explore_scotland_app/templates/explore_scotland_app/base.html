@@ -18,7 +18,7 @@
 		<div class="p-3 d-flex justify-content-end">
 			{% if user.is_authenticated %}
 			<!-- add link -->
-			<span class="d-flex align-items-center">Hello, Explorer {{request.user}} <div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center"><img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}"></div></span>
+			<span class="d-flex align-items-center">Hello, Explorer {{request.user}} <div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center ml-3"><img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}"></div></span>
 			{% else %}
 			<a href="{% url 'explore_scotland_app:login' %}">Login/register</a>
 			{% endif %}
