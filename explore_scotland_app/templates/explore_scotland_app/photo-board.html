@@ -14,8 +14,11 @@
 <script>
 $('document').ready(function(){
 	var url = {% if board_type == 'daily-board' %}
+				"{% url 'explore_scotland_app:get_photos' %}"
 				{% elif board_type == 'weekly-board' %}
+				"{% url 'explore_scotland_app:get_photos' %}"
 				{% elif board_type == 'monthly-board' %}
+				"{% url 'explore_scotland_app:get_photos' %}"
 				{% elif board_type == 'overall-board' %}
 				"{% url 'explore_scotland_app:get_photos' %}"
 				{% endif %};
