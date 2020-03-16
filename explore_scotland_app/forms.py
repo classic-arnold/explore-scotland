@@ -25,4 +25,4 @@ class UserFormWithoutPassword(UserForm):
 class PhotoForm(forms.ModelForm):
 	class Meta:
 		model = Photo
-		fields = ('photo', 'description', 'categories', 'tags')
+		fields = ('picture', 'description', 'categories', 'tags')

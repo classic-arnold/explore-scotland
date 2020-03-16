@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword
+from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword, PhotoForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
@@ -158,6 +158,33 @@ def delete_user(request):
 	except:
 		return HttpResponse("Unable to delete account.")
 	return redirect(reverse('explore_scotland_app:index'))
+	
+@login_required
+def upload_photo(request):
+	# If the request is a HTTP POST, try to pull out the relevant information.
+	if request.method == 'POST':
+		photo_form = PhotoForm(request.POST, request.FILES)
+
+		# If the form is valid...
+		if photo_form.is_valid():
+
+			photo = photo_form.save(commit=False)
+			photo.owner = request.user
+
+			photo.save()
+
+			# Update our variable to indicate that the template
+			# registration was successful.
+			ctx = {
+				'successful': True,
+			}
+			return render(request, 'explore_scotland_app/upload-photo.html', ctx)
+			
+	photo_form = PhotoForm()
+	ctx = {
+		'photo_form': photo_form,
+	}
+	return render(request, 'explore_scotland_app/upload-photo.html', ctx)
 
 
 
