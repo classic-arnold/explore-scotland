@@ -1,12 +1,11 @@
 body{
 	font-family:arial;
-	min-height: 100vh;
 }
 
 footer * {
 	border: 1px solid black;
 	padding: 5px;
-	margin: 10px;
+	margin: 5px;
 	box-shadow: 8px 8px 8px 1px #888888;
 }
 

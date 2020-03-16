@@ -230,13 +230,16 @@ def post_comment(request, photo_id):
 	if request.method == 'POST':
 		comment_form = CommentForm(request.POST)
 		photo_id = comment_form.data.get('photo_id', None)
+		comment_id = comment_form.data.get('comment_id', None)
 		
 		if comment_form.is_valid():
 			comment = comment_form.save(commit=False)
 			
 			comment.owner = request.user.profile
 			
-			if photo_id:
+			if comment_id:
+				comment.comment = Comment.objects.get(pk=comment_id)
+			elif photo_id:
 				comment.photo = Photo.objects.get(pk=photo_id)
 			
 			comment.save()

@@ -19,13 +19,14 @@
 		{% endif %}
 	</div>
 		
-	<div>
+	<div id="comment-form">
 		<h4>Post comment</h4>
 		<form id="comment_form" method="post" action="{% url 'explore_scotland_app:post_comment' photo_id=photo.id %}">
 			{% csrf_token %}
 			<!-- Display each form -->
 			{{ comment_form.as_p }}
 			<input type="hidden" name="photo_id" value={{photo.id}}>
+			<input type="hidden" name="comment_id">
 			<!-- Provide a button to click to submit the form. -->
 			<input type="submit" name="submit" value="Post" />
 		</form>
@@ -39,8 +40,17 @@
 			<h5 class="card-title">{{comment.owner}}</h5>
 			<h6 class="card-subtitle mb-2 text-muted">{{comment.date_added}}</h6>
 			<p class="card-text">{{comment.content}}</p>
+			<a id="reply" class="card-link" href="#comment-form" onclick="()=>{commentComment({{comment.id}})}">Reply (remember to JS type comment here, and add value)</a>
 		  </div>
 		</div>
 		{% endfor %}
 	</div>
+	
+	<script>
+		commentComment(commentId){
+			$('document').ready(function(){
+				$('input[name="comment_id"]').val(commentId)
+			});
+		}
+	</script>
 {% endblock %}
