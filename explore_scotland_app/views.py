@@ -255,10 +255,8 @@ def like_photo(request, photo_id):
 	photo = Photo.objects.get(pk=photo_id)
 	
 	if request.user.profile in photo.likes.all():
-		print('check')
 		photo.likes.remove(request.user.profile)
 	else:
-		print('check2')
 		photo.likes.add(request.user.profile)
 	
 	try:
