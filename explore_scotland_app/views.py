@@ -189,7 +189,10 @@ def upload_photo(request):
 	
 @login_required
 def delete_photo(request, photo_id):
-	photo = Photo.objects.get(pk=photo_id)
+	try:
+		photo = Photo.objects.get(pk=photo_id)
+	except Photo.DoesNotExist:
+		return HttpResponse('Photo does not exist.')
 	
 	if photo.owner == request.user.profile:
 		photo.delete()
