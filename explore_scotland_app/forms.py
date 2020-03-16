@@ -34,3 +34,8 @@ class CommentForm(forms.ModelForm):
 		labels = {
 			'content': ''
 		}
+		
+class PhotoFormWithoutPhoto(PhotoForm):
+	def __init__(self, *args, **kwargs):
+		super(PhotoFormWithoutPhoto, self).__init__(*args, **kwargs)
+		self.fields.pop('picture')

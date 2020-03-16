@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword, PhotoForm, CommentForm
+from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword, PhotoForm, CommentForm, PhotoFormWithoutPhoto
 from explore_scotland_app.models import UserProfile, Photo, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -115,7 +115,7 @@ def edit_profile(request):
 	# If the request is a HTTP POST, try to pull out the relevant information.
 	if request.method == 'POST':
 		user_form = UserFormWithoutPassword(request.POST, instance = request.user)
-		profile_form = UserProfileForm(request.POST, request.FILES)
+		profile_form = UserProfileForm(request.POST, request.FILES, instance = request.user.profile)
 
 		# If the two forms are valid...
 		if user_form.is_valid() and profile_form.is_valid():
@@ -145,8 +145,8 @@ def edit_profile(request):
 			}
 			return render(request, 'explore_scotland_app/edit-profile.html', ctx)
 			
-	user_form = UserFormWithoutPassword()
-	profile_form = UserProfileForm()
+	user_form = UserFormWithoutPassword(instance = request.user)
+	profile_form = UserProfileForm(instance = request.user.profile)
 	ctx = {
 		'user_form': user_form,
 		'profile_form': profile_form
@@ -273,10 +273,23 @@ def like_photo(request, photo_id):
 		pass
 	return redirect(reverse('explore_scotland_app:index'))
 
-
-
-
-
+def edit_photo(request, photo_id):
+	photo = Photo.objects.get(pk=photo_id)
+	if request.method == 'POST':
+		photo_form = PhotoFormWithoutPhoto(request.POST, instance=photo)
+	
+		if photo_form.is_valid():
+			photo_form.save()
+		
+			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
+		else:
+			return HttpResponse('Failed to edit photo.')
+	photo_form = PhotoFormWithoutPhoto(instance=photo)
+	ctx = {
+		'photo_form': photo_form,
+		'photo': photo
+	}
+	return render(request, 'explore_scotland_app/edit-photo.html', ctx)
 
 
 
