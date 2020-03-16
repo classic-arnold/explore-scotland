@@ -251,9 +251,19 @@ def post_comment(request, photo_id):
 	return redirect(reverse('explore_scotland_app:index'))
 	
 @login_required
-def like_photo(request):
+def like_photo(request, photo_id):
+	photo = Photo.objects.get(pk=photo_id)
 	
-
+	if request.user.profile in photo.likes:
+		photo.likes.remove(request.user.profile)
+	else:
+		photo.likes.add(request.user.profile)
+	
+	try:
+		return redirect(request.META.get('HTTP_REFERRER'))
+	except:
+		pass
+	return redirect(reverse('explore_scotland_app:index'))
 
 
 
