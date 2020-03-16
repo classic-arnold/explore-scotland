@@ -116,7 +116,7 @@ def edit_profile(request):
 	# If the request is a HTTP POST, try to pull out the relevant information.
 	if request.method == 'POST':
 		user_form = UserFormWithoutPassword(request.POST)
-		profile_form = UserProfileForm(request.POST)
+		profile_form = UserProfileForm(request.POST, request.FILES)
 
 		# If the two forms are valid...
 		if user_form.is_valid() and profile_form.is_valid():
@@ -145,14 +145,14 @@ def edit_profile(request):
 				'changed': True,
 			}
 			return render(request, 'explore_scotland_app/edit-profile.html', ctx)
-	else:
-		user_form = UserFormWithoutPassword()
-		profile_form = UserProfileForm()
-		ctx = {
-			'user_form': user_form,
-			'profile_form': profile_form
-		}
-		return render(request, 'explore_scotland_app/edit-profile.html', ctx)
+			
+	user_form = UserFormWithoutPassword()
+	profile_form = UserProfileForm()
+	ctx = {
+		'user_form': user_form,
+		'profile_form': profile_form
+	}
+	return render(request, 'explore_scotland_app/edit-profile.html', ctx)
 
 
 
