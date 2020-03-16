@@ -7,6 +7,17 @@
 <h2 class="homepagetitle text-center"><span style="color:#6495ED"> Share &</span>
 <span style="color:#DC143C"> Love </span> </h2>
 
-
-
+<h4>Your Uploaded Photo</h4>
+<div class="photo-bar">
+	{% for photo in request.user.profile.photos_uploaded.all %}
+		<div class='photo-container'>
+			<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
+				<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
+			</a>
+		</div>
+		<p>
+			<strong>{{photo.owner}}</strong> {{photo.description}}
+		</p>
+	{% endfor %}
+</div>
 {% endblock %}
