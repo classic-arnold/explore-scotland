@@ -21,6 +21,10 @@
 		
 	<div id="comment-form">
 		<h4>Post comment</h4>
+		<div class="hide-this">
+			<span id="comment_help" class="text-success"></span>
+			<btn id="comment_help_cancel" onclick="undoCommentComment()">cancel</btn>
+		</div>
 		<form id="comment_form" method="post" action="{% url 'explore_scotland_app:post_comment' photo_id=photo.id %}">
 			{% csrf_token %}
 			<!-- Display each form -->
@@ -40,16 +44,24 @@
 			<h5 class="card-title">{{comment.owner}}</h5>
 			<h6 class="card-subtitle mb-2 text-muted">{{comment.date_added}}</h6>
 			<p class="card-text">{{comment.content}}</p>
-			<a id="reply" class="card-link" href="#comment-form" onclick="()=>{commentComment({{comment.id}})}">Reply (remember to JS type comment here, and add value)</a>
+			<a id="reply" class="card-link" href="#comment-form" onclick="commentComment({{comment.id}}, '{{comment.owner}}')">Reply</a>
 		  </div>
 		</div>
 		{% endfor %}
 	</div>
 	
 	<script>
-		commentComment(commentId){
+		function commentComment(commentId, commentOwner){
 			$('document').ready(function(){
-				$('input[name="comment_id"]').val(commentId)
+				$('input[name="comment_id"]').val(commentId);
+				$('#comment_help').html(`Replying to ${commentOwner}'s comment`);
+			});
+		}
+		
+		function undoCommentComment(){
+			$('document').ready(function(){
+				$('input[name="comment_id"]').val('');
+				$('#comment_help').hide();
 			});
 		}
 	</script>
