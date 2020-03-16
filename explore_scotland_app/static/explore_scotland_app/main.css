@@ -22,3 +22,7 @@ footer * {
 .hide-this{
 	display: none;
 }
+
+a {
+	text-decoration: none;	
+}

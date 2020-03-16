@@ -35,10 +35,20 @@ $('document').ready(function(){
 		dataType: 'json', // type of response data
 		timeout: 500,     // timeout milliseconds
 		success: function (data,status,xhr) {   // success callback function
+			data = JSON.parse(data);
 			data.map((photo)=>{
-				var photoDiv = `<a href='{% url 'explore_scotland_app:picture_details_without_key' %}/${data.pk}'><div class='photo'><img src='${data.picture.url}'/></div></a>`;
+				var photoDiv = `
+									<div class='photo-container'>
+										<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
+											<img class="border rounded mw-100" src='{{MEDIA_URL}}/${photo.fields.picture}'/>
+										</a>
+									</div>
+									<p>
+										<strong>${photo.fields.owner}</strong> ${photo.fields.description}
+									</p>
+								`;
 				$('.photo-bar').append(photoDiv);
-			})
+			});
 		},
 		error: function (jqXhr, textStatus, errorMessage) { // error callback 
 			$('.photo-bar').append('Error: ' + errorMessage);
