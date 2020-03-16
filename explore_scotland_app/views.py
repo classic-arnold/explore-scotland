@@ -154,14 +154,12 @@ def edit_profile(request):
 	}
 	return render(request, 'explore_scotland_app/edit-profile.html', ctx)
 	
-@login_required
 def delete_user(request):
-	# If the request is a HTTP POST, try to pull out the relevant information.
-	if request.method == 'POST':
+	try:
 		request.user.delete()
-		return redirect(reverse('explore_scotland_app:index'))
-			
-	return render(request, 'explore_scotland_app/delete-account.html', ctx)
+	except:
+		return HttpResponse("Unable to delete account.")
+	return redirect(reverse('explore_scotland_app:index'))
 
 
 
