@@ -9,15 +9,23 @@
 
 
 <form>
-	<label>Search for a photo</label>
-	<input type="text" name="keyword" placeholder="Enter keyword, location or tag"/>
+	<div>
+		<label>Search</label>
+		<input type="text" name="keyword" placeholder="Enter keyword, location or tag"/>
+	</div>
 	
-	<label class="mt-3">Sort-by</label>
-	<select name="sort-by">
-		<option value="like">Most Liked</option>
-		<option value="favorite">Most Favourite</option>
-		<option value="latest">Latest Uploads</option>
-	</select>
+	<div>
+		<label class="mt-3">Sort-by</label>
+		<select name="sort-by">
+			<option value="like">Most Liked</option>
+			<option value="favorite">Most Favourite</option>
+			<option value="latest">Latest Uploads</option>
+		</select>
+	</div>
+	
+	<div>
+		<input type="submit" value="Explore Scotland!">
+	</div>
 </form>
 
 {% endblock %}
