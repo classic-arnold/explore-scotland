@@ -5,6 +5,8 @@
 
 {% block body_block %}
 
+
+<h4>10 Photos For You</h4>
 <div class="photo-bar d-flex align-items-center">
 	
 </div>
@@ -39,7 +41,6 @@ $('document').ready(function(){
 										<strong>${photo.fields.owner}</strong> ${photo.fields.description}
 									</p>
 								</div>`;
-				$('.photo-bar').append("<h4>10 Latest Photos</h4>");
 				$('.photo-bar').append(photoDiv);
 			});
 		},
