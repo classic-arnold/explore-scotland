@@ -5,7 +5,7 @@
 
 {% block body_block %}
 
-<div class="photo-bar">
+<div class="photo-bar d-flex align-items-center">
 	
 </div>
 {% endblock %}
@@ -29,7 +29,7 @@ $('document').ready(function(){
 		success: function (data,status,xhr) {   // success callback function
 			data = JSON.parse(data);
 			data.map((photo)=>{
-				var photoDiv = `
+				var photoDiv = `<div>
 									<div class='photo-container'>
 										<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
 											<img class="border rounded mw-100" src='{{MEDIA_URL}}/${photo.fields.picture}'/>
@@ -38,7 +38,7 @@ $('document').ready(function(){
 									<p>
 										<strong>${photo.fields.owner}</strong> ${photo.fields.description}
 									</p>
-								`;
+								</div>`;
 				$('.photo-bar').append("<h4>10 Latest Photos</h4>");
 				$('.photo-bar').append(photoDiv);
 			});
