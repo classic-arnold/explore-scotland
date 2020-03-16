@@ -10,7 +10,7 @@
 			<img class="border rounded mw-100" src={{photo.picture.url}}>
 		</div>
 		
-		<a class="btn btn-primary" href="{% url 'explore_scotland_app:like_photo' photo_id=photo.pk %}">{% if request.user.profile in photo.likes %}Like{% else %}Dislike{% endif %}</a>
+		<a class="btn btn-primary" href="{% url 'explore_scotland_app:like_photo' photo_id=photo.pk %}">{% if request.user.profile in photo.likes.all %}Like{% else %}Dislike{% endif %}</a>
 		
 		{% if photo.owner == request.user.profile %}
 		<a class="btn btn-danger" href="{% url 'explore_scotland_app:delete_photo' photo_id=photo.pk %}">Delete</a>

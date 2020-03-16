@@ -200,7 +200,7 @@ def delete_photo(request, photo_id):
 		return HttpResponse('You are not the owner of this photo.')
 	
 	try:
-		return redirect(request.META.get('HTTP_REFERRER'))
+		return redirect(request.META.get('HTTP_REFERER'))
 	except:
 		pass
 	return redirect(reverse('explore_scotland_app:index'))
@@ -245,7 +245,7 @@ def post_comment(request, photo_id):
 		else:
 			return HttpResponse('Failed to add comment.')
 	try:
-		return redirect(request.META.get('HTTP_REFERRER'))
+		return redirect(request.META.get('HTTP_REFERER'))
 	except:
 		pass
 	return redirect(reverse('explore_scotland_app:index'))
@@ -255,12 +255,14 @@ def like_photo(request, photo_id):
 	photo = Photo.objects.get(pk=photo_id)
 	
 	if request.user.profile in photo.likes.all():
+		print('check')
 		photo.likes.remove(request.user.profile)
 	else:
+		print('check2')
 		photo.likes.add(request.user.profile)
 	
 	try:
-		return redirect(request.META.get('HTTP_REFERRER'))
+		return redirect(request.META['HTTP_REFERER'])
 	except:
 		pass
 	return redirect(reverse('explore_scotland_app:index'))
