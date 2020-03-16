@@ -4,21 +4,35 @@
 {% block title_block %} Picture details {% endblock %}
 
 {% block body_block %}
-	<h1>Photo</h1>
-	
-	<div class="photo-container">
-		<img class="border rounded mw-100" src={{photo.picture.url}}>
+	<div>
+		<h1>Photo</h1>
+		<div class="photo-container">
+			<img class="border rounded mw-100" src={{photo.picture.url}}>
+		</div>	
+	</div>
+		
+	<div>
+		<h4>Post comment</h4>
+		<form id="comment_form" method="post" action="{% url 'explore_scotland_app:post_comment' photo_id=photo.id %}">
+			{% csrf_token %}
+			<!-- Display each form -->
+			{{ comment_form.as_p }}
+			<input type="hidden" name="photo_id" value={{photo.id}}>
+			<!-- Provide a button to click to submit the form. -->
+			<input type="submit" name="submit" value="Post" />
+		</form>
 	</div>
 	
-	<br/>
-	
-	<h4>Post comment</h4>
-	<form id="comment_form" method="post" action="{% url 'explore_scotland_app:post_comment' photo_id=photo.id %}">
-		{% csrf_token %}
-		<!-- Display each form -->
-		{{ comment_form.as_p }}
-		<input type="hidden" name="photo_id" value={{photo.id}}>
-		<!-- Provide a button to click to submit the form. -->
-		<input type="submit" name="submit" value="Post" />
-	</form>
+	<div>
+		<h4>Other comments</h4>
+		{% for comment in comments %}
+		<div class="card" style="width: 18rem;">
+		  <div class="card-body">
+			<h5 class="card-title">{{comment.owner}}</h5>
+			<h6 class="card-subtitle mb-2 text-muted">{{comment.date_added}}</h6>
+			<p class="card-text">{{comment.content}}</p>
+		  </div>
+		</div>
+		{% endfor %}
+	</div>
 {% endblock %}

@@ -216,9 +216,12 @@ def picture_details(request, photo_id):
 	photo = Photo.objects.get(pk=photo_id)
 	comment_form = CommentForm()
 	
+	comments = photo.photo_comments.all()
+	
 	ctx = {
 		'comment_form': comment_form,
-		'photo': photo
+		'photo': photo,
+		'comments': comments
 	}
 	return render(request, 'explore_scotland_app/picture-details.html', ctx)
 	
