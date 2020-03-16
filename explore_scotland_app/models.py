@@ -29,7 +29,7 @@ class Photo(models.Model):
 	date_added = models.DateField(auto_now_add=True)
 	categories = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=LANDSCAPE)
 	tags = models.CharField(max_length=256) #add choice
-	likes = models.ManyToManyField(UserProfile, related_name="photos_liked", null=True)
+	likes = models.ManyToManyField(UserProfile, related_name="photos_liked")
 	picture = models.ImageField(upload_to="")
 	
 	def __str__(self):
