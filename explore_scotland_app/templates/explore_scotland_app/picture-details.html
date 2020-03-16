@@ -12,7 +12,7 @@
 		
 		<span class="badge">{{photo.likes.all.count}} likes</span>
 		
-		<a class="btn btn-primary" href="{% url 'explore_scotland_app:like_photo' photo_id=photo.pk %}">{% if request.user.profile in photo.likes.all %}Dislike{% else %}Like{% endif %}</a>
+		<a class="btn btn-primary btn-sm" href="{% url 'explore_scotland_app:like_photo' photo_id=photo.pk %}">{% if request.user.profile in photo.likes.all %}Dislike{% else %}Like{% endif %}</a>
 		
 		{% if photo.owner == request.user.profile %}
 		<a class="btn btn-danger" href="{% url 'explore_scotland_app:delete_photo' photo_id=photo.pk %}">Delete</a>
@@ -21,10 +21,8 @@
 		
 	<div id="comment-form">
 		<h4>Post comment</h4>
-		<div class="hide-this">
-			<span id="comment_help" class="text-success"></span>
-			<btn id="comment_help_cancel" onclick="undoCommentComment()">cancel</btn>
-		</div>
+		<span id="comment_help" class="hide-this">
+		</span>
 		<form id="comment_form" method="post" action="{% url 'explore_scotland_app:post_comment' photo_id=photo.id %}">
 			{% csrf_token %}
 			<!-- Display each form -->
@@ -32,7 +30,7 @@
 			<input type="hidden" name="photo_id" value={{photo.id}}>
 			<input type="hidden" name="comment_id">
 			<!-- Provide a button to click to submit the form. -->
-			<input type="submit" name="submit" value="Post" />
+			<input type="submit" name="submit" value="Post" class="btn btn-primary"/>
 		</form>
 	</div>
 	
@@ -47,6 +45,17 @@
 			<a id="reply" class="card-link" href="#comment-form" onclick="commentComment({{comment.id}}, '{{comment.owner}}')">Reply</a>
 		  </div>
 		</div>
+		<div class="ml-5">
+			{% for comment in comment.comment_comments.all %}
+			<div class="card" style="width: 18rem;">
+			  <div class="card-body">
+				<h5 class="card-title">{{comment.owner}}</h5>
+				<h6 class="card-subtitle mb-2 text-muted">{{comment.date_added}}</h6>
+				<p class="card-text">{{comment.content}}</p>
+			  </div>
+			</div>
+			{% endfor %}
+		</div>
 		{% endfor %}
 	</div>
 	
@@ -54,13 +63,17 @@
 		function commentComment(commentId, commentOwner){
 			$('document').ready(function(){
 				$('input[name="comment_id"]').val(commentId);
-				$('#comment_help').html(`Replying to ${commentOwner}'s comment`);
+				$('#comment_help').append(`Replying to ${commentOwner}'s comment`);
+				$('#comment_help').append(`<a id="comment_help_cancel" class="btn btn-danger btn-sm text-light ml-3" onclick="undoCommentComment()">cancel</a>`);
+				$('#comment_help').show();
+				
 			});
 		}
 		
 		function undoCommentComment(){
 			$('document').ready(function(){
 				$('input[name="comment_id"]').val('');
+				$('#comment_help').empty();
 				$('#comment_help').hide();
 			});
 		}
