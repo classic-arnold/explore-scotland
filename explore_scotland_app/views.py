@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
-from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword, PhotoForm
+from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword, PhotoForm, CommentForm
 from explore_scotland_app.models import UserProfile, Photo
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -212,6 +212,27 @@ def get_photos(request):
 	photos = serialize('json', Photo.objects.all()[:10])
 	return JsonResponse(photos, safe=False)
 	
+def picture_details(request, photo_id):
+	photo = Photo.objects.get(pk=photo_id)
+	comment_form = CommentForm()
+	
+	ctx = {
+		'comment_form': comment_form,
+		'photo': photo
+	}
+	return render(request, 'explore_scotland_app/picture-details.html', ctx)
+	
+@login_required
+def post_comment(request):
+	if request.method == POST:
+		comment_form = CommentForm(request.POST)
+		
+		if comment_form.is_valid():
+			comment = comment_form.save(commit=False)
+			
+			comment.owner = request.user.profile
+			
+			#comment.photo = 
 	
 	
 

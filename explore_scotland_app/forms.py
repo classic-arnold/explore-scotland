@@ -26,3 +26,11 @@ class PhotoForm(forms.ModelForm):
 	class Meta:
 		model = Photo
 		fields = ('picture', 'description', 'categories', 'tags')
+		
+class CommentForm(forms.ModelForm):
+	class Meta:
+		model = Comment
+		fields = ('content',)
+		labels = {
+			'content': ''
+		}

@@ -14,19 +14,21 @@
 </head>
 
 <body>
-    {% block body_block %} {% endblock %}
-    <footer class="d-flex justify-content-around align-items-center flex-wrap fixed-bottom">
-		<span>Copyright @2020 Team-"LAT". All rights reserved.</span>
-		<a href="https://google.com">Daily Board </a>
-		<a href="https://google.com">Weekly Board </a>
-		<a href="https://google.com">Monthly Board </a>
-		<a href="https://google.com">Overall Board </a>
-		<a href="https://google.com">Support </a>
-		<a href="https://google.com">ContactUs </a>
-		<a href="https://google.com">Terms </a>
-		<a href="https://google.com">Privacy </a>
-		<a href="https://google.com">FAQ </a>
-	</footer>
+	<div class="container">
+		{% block body_block %} {% endblock %}
+		<footer class="d-flex justify-content-around align-items-center flex-wrap">
+			<span>© 2020 Team LAT</span>
+			<a href="https://google.com">Daily Board </a>
+			<a href="https://google.com">Weekly Board </a>
+			<a href="https://google.com">Monthly Board </a>
+			<a href="https://google.com">Overall Board </a>
+			<a href="https://google.com">Support </a>
+			<a href="https://google.com">ContactUs </a>
+			<a href="https://google.com">Terms </a>
+			<a href="https://google.com">Privacy </a>
+			<a href="https://google.com">FAQ </a>
+		</footer>
+	</div>
 </body>
 
 </html>
