@@ -29,7 +29,7 @@ class PhotoForm(forms.ModelForm):
 		
 	def __init__(self, *args, **kwargs):
 		super(PhotoForm, self).__init__(*args, **kwargs)
-		self.fields['tags'].widget.attrs['placeholder'] = 'Add tags separated by space'
+		self.fields['tags'].widget.attrs['placeholder'] = 'Separate by space'
 		
 class CommentForm(forms.ModelForm):
 	class Meta:
