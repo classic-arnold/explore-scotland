@@ -13,10 +13,21 @@ class UserProfile(models.Model):
 		return self.user.username
 		
 class Photo(models.Model):
+	
+	LANDSCAPE = 'LS'
+	ARCHITECTURE = 'AC'
+	PEOPLE = 'PP'
+
+	CATEGORY_CHOICES = [
+		(LANDSCAPE, 'Landscape'),
+		(ARCHITECTURE, 'Architecture'),
+		(PEOPLE, 'People'),
+	]
+    
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="photos_uploaded")
 	description = models.TextField(max_length=256)
 	date_added = models.DateField(auto_now_add=True)
-	categories = models.CharField(max_length=256) #add choice
+	categories = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=LANDSCAPE)
 	tags = models.CharField(max_length=256) #add choice
 	likes = models.ManyToManyField(UserProfile, related_name="photos_liked")
 	picture = models.ImageField(upload_to="")
