@@ -4,42 +4,28 @@
 
 <head>
     <title>Explore Scotland - {% block title_block %}{% endblock %} </title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
     <link rel="stylesheet" type="text/css" href="{% static 'explore_scotland_app/main.css' %}">
 </head>
 
 <body>
     {% block body_block %} {% endblock %}
-    <footer>
-		<a href="https://google.com">
-			<button> Copyright @2020 Team-"LAT" All rights reserved </button>
-		</a>
-		<a href="https://google.com">
-			<button> Daily Board </button>
-		</a>
-		<a href="https://google.com">
-			<button> Weekly Board </button>
-		</a>
-		<a href="https://google.com">
-			<button> Monthly Board </button>
-		</a>
-		<a href="https://google.com">
-			<button> Overall Board </button>
-		</a>
-		<a href="https://google.com">
-			<button> Support </button>
-		</a>
-		<a href="https://google.com">
-			<button> ContactUs </button>
-		</a>
-		<a href="https://google.com">
-			<button> Terms </button>
-		</a>
-		<a href="https://google.com">
-			<button> Privacy </button>
-		</a>
-		<a href="https://google.com">
-			<button> FAQ </button>
-		</a>
+    <footer class="d-flex justify-content-around align-items-center fixed-bottom">
+		<span>Copyright @2020 Team-"LAT". All rights reserved.</span>
+		<a href="https://google.com">Daily Board </a>
+		<a href="https://google.com">Weekly Board </a>
+		<a href="https://google.com">Monthly Board </a>
+		<a href="https://google.com">Overall Board </a>
+		<a href="https://google.com">Support </a>
+		<a href="https://google.com">ContactUs </a>
+		<a href="https://google.com">Terms </a>
+		<a href="https://google.com">Privacy </a>
+		<a href="https://google.com">FAQ </a>
 	</footer>
 </body>
 
