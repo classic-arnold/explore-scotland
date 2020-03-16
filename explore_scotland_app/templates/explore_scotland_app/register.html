@@ -7,9 +7,9 @@
 <h1>Register</h1>
 {% if registered %}
 <strong>Thank you for registering!</strong>
-<a href="{% url 'explore_scotland_app:index' %}">Return to the homepage.</a><br/>
+<a href="{% url 'explore_scotland_app:index' %}">Return to the homepage.</a> <br/>
 {% else %}
-<strong>Register an account with us here!</strong> <br/>
+<a href="{% url 'explore_scotland_app:login' %}">Registered? Login here</a> <br/>
 <form id="user_form" method="post" action="{% url 'explore_scotland_app:register' %}" enctype="multipart/form-data">
 	{% csrf_token %}
 	<!-- Display each form -->
@@ -19,5 +19,4 @@
 	<input type="submit" name="submit" value="Register" />
 </form>
 {% endif %}
-<a href="{% url 'explore_scotland_app:login' %}">Registered? Login here</a>
 {% endblock %}
