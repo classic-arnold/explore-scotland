@@ -195,6 +195,11 @@ def delete_photo(request, photo_id):
 		photo.delete()
 	else:
 		return HttpResponse('You are not the owner of this photo.')
+	try:
+		return redirect(request.META.get('HTTP_REFERRER'))
+	except:
+		pass
+	return redirect(reverse('explore_scotland_app:index'))
 	
 
 
