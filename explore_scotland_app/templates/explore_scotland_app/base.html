@@ -20,12 +20,12 @@
 		</div>
 
 		<div class="text-center">
-			<img src="{% static 'explore_scotland_app/logo/logo.png' %}" width="150" height="150"  alt="Logo"/>
+			<a href="{% url 'explore_scotland_app:index' %}"><img src="{% static 'explore_scotland_app/logo/logo.png' %}" width="150" height="150"  alt="Logo"/></a>
 		</div>
 		{% block body_block %} {% endblock %}
 		<footer class="d-flex justify-content-around align-items-center flex-wrap">
 			<span>© 2020 Team LAT</span>
-			<a href="https://google.com">Daily Board </a>
+			<a href="{% url 'explore_scotland_app:daily_board' %}">Daily Board </a>
 			<a href="https://google.com">Weekly Board </a>
 			<a href="https://google.com">Monthly Board </a>
 			<a href="https://google.com">Overall Board </a>
