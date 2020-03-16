@@ -212,6 +212,11 @@ def get_photos(request):
 	photos = serialize('json', Photo.objects.all()[:10])
 	return JsonResponse(photos, safe=False)
 	
+@login_required
+def get_liked_photos(request):
+	photos = serialize('json', request.user.profile.photo_set.all())
+	return JsonResponse(photos, safe=False)
+	
 def picture_details(request, photo_id):
 	photo = Photo.objects.get(pk=photo_id)
 	comment_form = CommentForm()
