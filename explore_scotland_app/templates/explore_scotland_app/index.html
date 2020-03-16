@@ -21,4 +21,29 @@
 
 <h2 class="homepagetitle text-center"><span style="color:#6495ED"> Share &</span>
 <span style="color:#DC143C"> Love </span> </h2>
+
+<div class="photo-bar">
+	
+</div>
+{% endblock %}
+
+{% block script_block %}
+<script>
+$('document').ready(function(){
+	$.ajax("{% url 'explore_scotland_app:get_photos' %}",
+	{
+		dataType: 'json', // type of response data
+		timeout: 500,     // timeout milliseconds
+		success: function (data,status,xhr) {   // success callback function
+			data.map((photo)=>{
+				var photoDiv = `<a href='{% url 'explore_scotland_app:picture_details_without_key' %}/${data.pk}'><div class='photo'><img src='${data.picture.url}'/></div></a>`;
+				$('.photo-bar').append(photoDiv);
+			})
+		},
+		error: function (jqXhr, textStatus, errorMessage) { // error callback 
+			$('.photo-bar').append('Error: ' + errorMessage);
+		}
+	});
+});
+</script>
 {% endblock %}

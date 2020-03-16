@@ -218,7 +218,11 @@ def get_liked_photos(request):
 	return JsonResponse(photos, safe=False)
 	
 def picture_details(request, photo_id):
-	photo = Photo.objects.get(pk=photo_id)
+	try:
+		photo = Photo.objects.get(pk=photo_id)
+	except Photo.DoesNotExist:
+		return HttpResponse('Photo does not exist.')
+	
 	comment_form = CommentForm()
 	
 	comments = photo.photo_comments.all()
