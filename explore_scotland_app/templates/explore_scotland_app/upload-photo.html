@@ -1,0 +1,21 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title_block %} Register {% endblock %}
+
+{% block body_block %}
+	<h1>Upload Photo</h1>
+	{% if successful %}
+	<strong>Upload successful</strong>
+	<a href="{% url 'explore_scotland_app:index' %}">Return to the homepage.</a><br/>
+	{% else %}
+	<strong>Upload your photos here!</strong> <br/>
+	<form id="photo_form" method="post" action="{% url 'explore_scotland_app:upload_photo' %}" enctype="multipart/form-data">
+		{% csrf_token %}
+		<!-- Display each form -->
+		{{ photo_form.as_p }}
+		<!-- Provide a button to click to submit the form. -->
+		<input type="submit" name="submit" value="Upload" />
+	</form>
+	{% endif %}
+{% endblock %}
