@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword, PhotoForm
-from explore_scotland_app.models import UserProfile
+from explore_scotland_app.models import UserProfile, Photo
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
@@ -170,7 +170,7 @@ def upload_photo(request):
 		if photo_form.is_valid():
 
 			photo = photo_form.save(commit=False)
-			photo.owner = UserProfile.objects.get(user=request.user)
+			photo.owner = request.user.profile
 
 			photo.save()
 
@@ -186,6 +186,16 @@ def upload_photo(request):
 		'photo_form': photo_form,
 	}
 	return render(request, 'explore_scotland_app/upload-photo.html', ctx)
+	
+@login_required
+def delete_photo(request, photo_id):
+	photo = Photo.objects.get(pk=photo_id)
+	
+	if photo.owner == request.user.profile:
+		photo.delete()
+	else:
+		return HttpResponse('You are not the owner of this photo.')
+	
 
 
 
