@@ -254,7 +254,7 @@ def post_comment(request, photo_id):
 def like_photo(request, photo_id):
 	photo = Photo.objects.get(pk=photo_id)
 	
-	if request.user.profile in photo.likes:
+	if request.user.profile in photo.likes.all():
 		photo.likes.remove(request.user.profile)
 	else:
 		photo.likes.add(request.user.profile)
