@@ -19,6 +19,7 @@ urlpatterns = [
     path('edit-photo/<int:photo_id>', views.edit_photo, name='edit_photo'),
     path('photo-board/', views.photo_board, {'board_type': 'overall-board'}, name='photo_board'),
     path('photo-board/<slug:board_type>', views.photo_board, name='photo_board'),
+    path('profile', views.profile, name='profile'),
     
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),

@@ -300,6 +300,9 @@ def photo_board(request, board_type):
 		'board_type': board_type,
 	}
 	return render(request, 'explore_scotland_app/photo-board.html', ctx)
+	
+def profile(request):
+	return render(request, 'explore_scotland_app/profile.html')
 
 
 
