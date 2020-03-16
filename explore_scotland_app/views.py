@@ -224,7 +224,7 @@ def picture_details(request, photo_id):
 	
 @login_required
 def post_comment(request, photo_id):
-	if request.method == POST:
+	if request.method == 'POST':
 		comment_form = CommentForm(request.POST)
 		photo_id = comment_form.data.get('photo_id', None)
 		
