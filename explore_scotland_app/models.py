@@ -19,6 +19,7 @@ class Photo(models.Model):
 	categories = models.CharField(max_length=256) #add choice
 	tags = models.CharField(max_length=256) #add choice
 	likes = models.ManyToManyField(UserProfile, related_name="photos_liked")
+	photo = models.ImageField(upload_to="")
 	
 	
 	def __str__(self):
