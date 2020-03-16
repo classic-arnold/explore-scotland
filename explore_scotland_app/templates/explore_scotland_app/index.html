@@ -4,56 +4,7 @@
 {% block title_block %}Home{% endblock %}
 
 {% block body_block %}
-<!-- 
-<div class="row p-3">
-	<div class="col-11 text-center">
-		<img src="{% static 'explore_scotland_app/logo/logo.png' %}" width="150" height="150"  alt="Logo"/>
-	</div>
-	<div class="col-1">
-		<div class="bg-dark rounded-circle profile-circle"></div>
-	</div>
-</div>
- -->
-
-<div class="text-center">
-	<img src="{% static 'explore_scotland_app/logo/logo.png' %}" width="150" height="150"  alt="Logo"/>
-</div>
-
 <h2 class="homepagetitle text-center"><span style="color:#6495ED"> Share &</span>
 <span style="color:#DC143C"> Love </span> </h2>
 
-<div class="photo-bar">
-	
-</div>
-{% endblock %}
-
-{% block script_block %}
-<script>
-$('document').ready(function(){
-	$.ajax("{% url 'explore_scotland_app:get_photos' %}",
-	{
-		dataType: 'json', // type of response data
-		timeout: 500,     // timeout milliseconds
-		success: function (data,status,xhr) {   // success callback function
-			data = JSON.parse(data);
-			data.map((photo)=>{
-				var photoDiv = `
-									<div class='photo-container'>
-										<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
-											<img class="border rounded mw-100" src='{{MEDIA_URL}}/${photo.fields.picture}'/>
-										</a>
-									</div>
-									<p>
-										<strong>${photo.fields.owner}</strong> ${photo.fields.description}
-									</p>
-								`;
-				$('.photo-bar').append(photoDiv);
-			});
-		},
-		error: function (jqXhr, textStatus, errorMessage) { // error callback 
-			$('.photo-bar').append('Error: ' + errorMessage);
-		}
-	});
-});
-</script>
 {% endblock %}
