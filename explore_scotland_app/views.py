@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from explore_scotland_app.forms import UserForm, UserProfileForm, UserFormWithoutPassword, PhotoForm, CommentForm
-from explore_scotland_app.models import UserProfile, Photo
+from explore_scotland_app.models import UserProfile, Photo, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
@@ -234,11 +234,13 @@ def post_comment(request, photo_id):
 			comment.owner = request.user.profile
 			
 			if photo_id:
-				comment.photo = photo_id
+				comment.photo = Photo.objects.get(pk=photo_id)
 			
 			comment.save()
 			
-		return redirect(reverse('explore_scotland_app:picture_details', photo_id))
+			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
+		else:
+			return HttpResponse('Failed to add comment.')
 	try:
 		return redirect(request.META.get('HTTP_REFERRER'))
 	except:

@@ -42,8 +42,8 @@ class Comment(models.Model):
 	comment = models.ForeignKey("self", on_delete=models.CASCADE, related_name="comment_comments", null=True, blank=True)
 	date_added = models.DateField(auto_now_add=True)
 	
-	def clean(self):
-		super().clean()
+	def save(self):
+		super().save()
 		if self.photo is None and self.comment is None:
 			raise ValidationError('Comments must be linked to either a photo or a comment.')
 	
