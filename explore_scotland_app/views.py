@@ -250,11 +250,9 @@ def post_comment(request, photo_id):
 		pass
 	return redirect(reverse('explore_scotland_app:index'))
 	
+@login_required
+def like_photo(request):
 	
-
-
-
-
 
 
 

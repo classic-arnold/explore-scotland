@@ -8,7 +8,13 @@
 		<h1>Photo</h1>
 		<div class="photo-container">
 			<img class="border rounded mw-100" src={{photo.picture.url}}>
-		</div>	
+		</div>
+		
+		<a href="{% static 'explore_scotland_app:like_photo' photo_id=photo.pk %}">{% if photo.likes.all().contains(request.user.profile) %}Like{% else %}Dislike{% endif %}</a>
+		
+		{% if photo.owner == request.user %}
+		<a href="{% static 'explore_scotland_app:delete_photo' photo_id=photo.pk %}">Delete</a>
+		{% endif %}
 	</div>
 		
 	<div>
