@@ -226,13 +226,19 @@ def picture_details(request, photo_id):
 def post_comment(request):
 	if request.method == POST:
 		comment_form = CommentForm(request.POST)
+		photo_id = comment_form.data.get('photo_id', None)
 		
 		if comment_form.is_valid():
 			comment = comment_form.save(commit=False)
 			
 			comment.owner = request.user.profile
 			
-			#comment.photo = 
+			if photo_id:
+				comment.photo = photo_id
+			
+			comment.save()
+			
+		return redirect(reverse('explore_scotland_app:picture_details', photo_id=photo_id))
 	
 	
 

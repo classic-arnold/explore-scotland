@@ -17,6 +17,7 @@
 		{% csrf_token %}
 		<!-- Display each form -->
 		{{ comment_form.as_p }}
+		<input type="hidden" name="photo_id" value={{photo.id}}>
 		<!-- Provide a button to click to submit the form. -->
 		<input type="submit" name="submit" value="Post" />
 	</form>
