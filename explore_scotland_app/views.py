@@ -214,7 +214,7 @@ def get_photos(request):
 	
 @login_required
 def get_liked_photos(request):
-	photos = serialize('json', request.user.profile.photo_set.all())
+	photos = serialize('json', request.user.profile.photos_liked.all())
 	return JsonResponse(photos, safe=False)
 	
 def picture_details(request, photo_id):
