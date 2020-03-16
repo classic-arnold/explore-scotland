@@ -295,8 +295,11 @@ def edit_photo(request, photo_id):
 	}
 	return render(request, 'explore_scotland_app/edit-photo.html', ctx)
 
-def photo_board(request):
-	return render(request, 'explore_scotland_app/photo-board.html')
+def photo_board(request, board_type):
+	ctx = {
+		'board_type': board_type,
+	}
+	return render(request, 'explore_scotland_app/photo-board.html', ctx)
 
 
 
