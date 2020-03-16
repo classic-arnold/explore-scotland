@@ -16,7 +16,7 @@
 <body>
 	<div class="container">
 		<div class="p-3 d-flex justify-content-end">
-			<a href="{% url 'explore_scotland_app:login' %}"><div class="bg-dark rounded-circle profile-circle"></div>
+			<a href="{% url 'explore_scotland_app:login' %}"><div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center"><img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}"></div>
 		</div>
 
 		<div class="text-center">
