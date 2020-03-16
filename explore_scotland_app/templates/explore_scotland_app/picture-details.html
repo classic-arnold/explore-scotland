@@ -61,6 +61,7 @@
 	
 	<script>
 		function commentComment(commentId, commentOwner){
+			undoCommentComment();
 			$('document').ready(function(){
 				$('input[name="comment_id"]').val(commentId);
 				$('#comment_help').append(`Replying to ${commentOwner}'s comment`);
