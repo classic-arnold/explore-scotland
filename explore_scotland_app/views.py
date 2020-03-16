@@ -115,7 +115,7 @@ def user_logout(request):
 def edit_profile(request):
 	# If the request is a HTTP POST, try to pull out the relevant information.
 	if request.method == 'POST':
-		user_form = UserFormWithoutPassword(request.POST)
+		user_form = UserFormWithoutPassword(request.POST, instance = request.user)
 		profile_form = UserProfileForm(request.POST, request.FILES)
 
 		# If the two forms are valid...
@@ -153,6 +153,15 @@ def edit_profile(request):
 		'profile_form': profile_form
 	}
 	return render(request, 'explore_scotland_app/edit-profile.html', ctx)
+	
+@login_required
+def delete_user(request):
+	# If the request is a HTTP POST, try to pull out the relevant information.
+	if request.method == 'POST':
+		request.user.delete()
+		return redirect(reverse('explore_scotland_app:index'))
+			
+	return render(request, 'explore_scotland_app/delete-account.html', ctx)
 
 
 
