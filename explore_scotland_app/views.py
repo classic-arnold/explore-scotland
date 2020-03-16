@@ -23,7 +23,7 @@ def register(request):
 		# Attempt to grab information from the raw form information.
 		# Note that we make use of both UserForm and UserProfileForm.
 		user_form = UserForm(request.POST)
-		profile_form = UserProfileForm(request.POST)
+		profile_form = UserProfileForm(request.POST, request.FILES)
 
 		# If the two forms are valid...
 		if user_form.is_valid() and profile_form.is_valid():
@@ -115,7 +115,7 @@ def user_logout(request):
 def edit_profile(request):
 	# If the request is a HTTP POST, try to pull out the relevant information.
 	if request.method == 'POST':
-		user_form = UserForm(request.POST)
+		user_form = UserFormWithoutPassword(request.POST)
 		profile_form = UserProfileForm(request.POST)
 
 		# If the two forms are valid...
@@ -141,8 +141,12 @@ def edit_profile(request):
 
 			# Update our variable to indicate that the template
 			# registration was successful.
+			ctx = {
+				'changed': True,
+			}
+			return render(request, 'explore_scotland_app/edit-profile.html', ctx)
 	else:
-		user_form = UserForm()
+		user_form = UserFormWithoutPassword()
 		profile_form = UserProfileForm()
 		ctx = {
 			'user_form': user_form,
