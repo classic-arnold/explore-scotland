@@ -1,9 +1,8 @@
 {% extends './base.html' %}
 {% load static %}
 
-{% block title_block %}
-login
-{% endblock %}
+{% block title_block %}Login{% endblock %}
+
 {% block body_block %}
 <h1>Login</h1>
 <form id="login_form" method="post" action="{% url 'explore_scotland_app:login' %}">
