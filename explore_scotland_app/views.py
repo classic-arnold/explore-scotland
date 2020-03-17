@@ -103,7 +103,7 @@ def user_login(request):
 		# blank dictionary object...
 		return render(request, 'explore_scotland_app/login.html')
 
-
+@login_required
 def user_logout(request):
 	# Since we know the user is logged in, we can now just log them out.
 	logout(request)
@@ -153,6 +153,7 @@ def edit_profile(request):
 	}
 	return render(request, 'explore_scotland_app/edit-profile.html', ctx)
 	
+@login_required
 def delete_user(request):
 	try:
 		request.user.delete()
@@ -207,14 +208,12 @@ def delete_photo(request, photo_id):
 	
 from django.core.serializers import serialize
 
-@login_required
 def get_photos(request):
 	photos = serialize('json', Photo.objects.all()[:10])
 	return JsonResponse(photos, safe=False)
 	
 from django.db.models import Count
 
-@login_required
 def search_photos(request):
 	if request.method == 'GET':
 		query = request.GET.get("keyword", '')
@@ -298,6 +297,7 @@ def like_photo(request, photo_id):
 		pass
 	return redirect(reverse('explore_scotland_app:index'))
 
+@login_required
 def edit_photo(request, photo_id):
 	photo = Photo.objects.get(pk=photo_id)
 	if request.method == 'POST':
@@ -322,6 +322,7 @@ def photo_board(request, board_type):
 	}
 	return render(request, 'explore_scotland_app/photo-board.html', ctx)
 	
+@login_required
 def profile(request):
 	return render(request, 'explore_scotland_app/profile.html')
 
