@@ -101,6 +101,10 @@ def user_login(request):
 	else:
 		# No context variables to pass to the template system, hence the
 		# blank dictionary object...
+		next = request.GET.get("next", None)
+		ctx = {
+			'next': next,
+		}
 		return render(request, 'explore_scotland_app/login.html')
 
 @login_required
