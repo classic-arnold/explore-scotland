@@ -24,6 +24,9 @@
 </form>
 <h4>Search results for {{query}} sorted by {{sorted_by}}</h4>
 <div class="photo-bar  d-flex align-items-center">
+	{% if not photos %}
+		<p class="text-center">No results</p>
+	{% endif %}
 	{% for photo in photos %}
 		<div>
 			<div class='photo-container'>
