@@ -5,14 +5,19 @@
 
 {% block body_block %}
 	<div>
-		<h1>Photo</h1>
+		<div class="d-flex align-items-center">
+			<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center">
+				<img class="img-fluid" src="{{MEDIA_ROOT}}{{photo.owner.picture.url}}">
+			</div>
+			<strong class="ml-3">{{photo.owner}}</strong>
+		</div>
 		
-		<span>
+		<div class="mt-3">
 			<iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button_count&size=small&width=96&height=20&appId" width="96" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
 			<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-		</span>
+		</div>
 		
-		<div class="photo-container">
+		<div class="photo-container-big">
 			<img class="border rounded mw-100" src={{photo.picture.url}}>
 		</div>
 		
@@ -28,7 +33,7 @@
 		</div>
 		
 		<p class="mt-3">
-			<strong>{{photo.owner}}</strong> {{photo.description}}
+			{{photo.description}}
 		</p>
 		<span id="tags" class="mt-3">
 		</span>

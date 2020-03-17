@@ -19,22 +19,23 @@
 			{% if user.is_authenticated %}
 			<!-- add link -->
 			<span class="d-flex align-items-center">
-				<a href="{% url 'explore_scotland_app:profile' %}">
-					<span class="d-flex align-items-center">Hello {{request.user}} 
-						<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center ml-3">
-							<img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}">
-						</div>
-					</span>
+				<span class="d-flex align-items-center">Hello {{request.user}} 
+					<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center ml-3">
+						<img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}">
+					</div>
+				</span>
+				<a href="{% url 'explore_scotland_app:profile' %}" class="small ml-3">
+					Dashboard
 				</a>
 				<a href="{% url 'explore_scotland_app:edit_profile' %}" class="small ml-3">
-					edit
+					Edit account
 				</a>
 				<a href="{% url 'explore_scotland_app:logout' %}" class="small ml-3">
-					logout
+					Logout
 				</a>
 			</span>
 			{% else %}
-			<a href="{% url 'explore_scotland_app:login' %}">Login/register</a>
+			<a href="{% url 'explore_scotland_app:login' %}" class="btn btn-outline-primary btn-sm">Account</a>
 			{% endif %}
 		</div>
 
