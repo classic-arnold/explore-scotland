@@ -32,6 +32,9 @@ class Photo(models.Model):
 	likes = models.ManyToManyField(UserProfile, related_name="photos_liked")
 	picture = models.ImageField(upload_to="")
 	
+	class Meta:
+		ordering = ('-date_added',)
+	
 	def __str__(self):
 		return self.owner.user.username + " photo."
 		

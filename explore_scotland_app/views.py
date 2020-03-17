@@ -212,6 +212,27 @@ def get_photos(request):
 	photos = serialize('json', Photo.objects.all()[:10])
 	return JsonResponse(photos, safe=False)
 	
+from django.db.models import Count
+
+@login_required
+def search_photos(request):
+	if request.method == 'GET':
+		query = request.GET.get("keyword", '')
+		sorted_by = request.GET.get("sort-by", '')
+		photos = None
+		if sorted_by == 'likes':
+			photos = Photo.objects.filter(description__contains=query, tags__contains=query).annotate(q_count=Count('likes')).order_by('-q_count')
+		elif sorted_by == 'latest':
+			photos = Photo.objects.filter(description__contains=query, tags__contains=query).order_by('-date_added')
+		else:
+			photos = Photo.objects.filter(description__contains=query, tags__contains=query)
+		ctx = {
+			'photos': photos,
+			'query': query,
+			'sorted_by': sorted_by
+		}
+		return render(request, 'explore_scotland_app/search-photos.html', ctx)
+	
 @login_required
 def get_liked_photos(request):
 	photos = serialize('json', request.user.profile.photos_liked.all())

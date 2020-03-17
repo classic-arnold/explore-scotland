@@ -11,6 +11,7 @@ urlpatterns = [
     path('upload-photo/', views.upload_photo, name='upload_photo'),
     path('delete-photo/<int:photo_id>', views.delete_photo, name='delete_photo'),
     path('get-photos/', views.get_photos, name='get_photos'),
+    path('search-photos/', views.search_photos, name='search_photos'),
     path('get-liked-photos/', views.get_liked_photos, name='get_liked_photos'),
     path('picture-page/<int:photo_id>', views.picture_details, name='picture_details'),
     path('picture-page/', views.picture_details, name='picture_details_without_key'),
