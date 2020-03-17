@@ -20,7 +20,7 @@
 			<!-- add link -->
 			<span class="d-flex align-items-center">
 				<a href="{% url 'explore_scotland_app:profile' %}">
-					<span class="d-flex align-items-center">Hello, Explorer {{request.user}} 
+					<span class="d-flex align-items-center">Hello {{request.user}} 
 						<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center ml-3">
 							<img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}">
 						</div>
