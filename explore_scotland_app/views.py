@@ -105,7 +105,7 @@ def user_login(request):
 		ctx = {
 			'next': next,
 		}
-		return render(request, 'explore_scotland_app/login.html')
+		return render(request, 'explore_scotland_app/login.html', ctx)
 
 @login_required
 def user_logout(request):
