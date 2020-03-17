@@ -23,6 +23,12 @@ footer a:hover {
 	heigh: auto;
 }
 
+.photo-container-big{
+	width: 100%;
+	heigh: auto;
+}
+
+
 .profile-circle{
 	width: 30px;
 	height: 30px;
