@@ -88,10 +88,6 @@ def user_login(request):
 				# If the account is valid and active, we can log the user in.
 				# We'll send the user back to the homepage.
 				login(request, user)
-				try:
-					return redirect(request.GET.get("next"))
-				except:
-					pass
 				return redirect(reverse('explore_scotland_app:index'))
 			else:
 				# An inactive account was used - no logging in!
@@ -105,11 +101,7 @@ def user_login(request):
 	else:
 		# No context variables to pass to the template system, hence the
 		# blank dictionary object...
-		next = request.GET.get("next", None)
-		ctx = {
-			'next': next,
-		}
-		return render(request, 'explore_scotland_app/login.html', ctx)
+		return render(request, 'explore_scotland_app/login.html')
 
 @login_required
 def user_logout(request):
