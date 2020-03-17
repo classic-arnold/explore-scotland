@@ -18,14 +18,14 @@
 		
 		<span class="badge">{{photo.likes.all.count}} likes</span>
 		
-		<span class="mt-3">
+		<div class="mt-3">
 			<a class="btn btn-primary btn-sm" href="{% url 'explore_scotland_app:like_photo' photo_id=photo.pk %}">{% if request.user.profile in photo.likes.all %}Dislike{% else %}Like{% endif %}</a>
 		
 			{% if photo.owner == request.user.profile %}
 			<a class="btn btn-primary btn-sm" href="{% url 'explore_scotland_app:edit_photo' photo_id=photo.pk %}">Edit</a>
 			<a class="btn btn-danger btn-sm" href="{% url 'explore_scotland_app:delete_photo' photo_id=photo.pk %}">Delete</a>
 			{% endif %}
-		</span>
+		</div>
 		
 		<p class="mt-3">
 			<strong>{{photo.owner}}</strong> {{photo.description}}
