@@ -26,3 +26,7 @@ footer * {
 a {
 	text-decoration: none;	
 }
+
+form{
+	max-width: 300px;
+}
