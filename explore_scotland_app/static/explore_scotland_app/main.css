@@ -45,13 +45,13 @@ form{
 }
 
 #weekly-board{
-	background-color: green;
+	background-color: #5afc03;
 }
 
 #monthly-board{
-	background-color: blue;
+	background-color: #03d3fc;
 }
 
 #overall-board{
-	background-color: purple;
+	background-color: #8003fc;
 }
