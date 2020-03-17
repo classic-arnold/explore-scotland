@@ -31,7 +31,6 @@
 			<strong>{{photo.owner}}</strong> {{photo.description}}
 		</p>
 		<span id="tags" class="mt-3">
-			tags: {{photo.tags}}
 		</span>
 	</div>
 		
@@ -95,5 +94,14 @@
 			$('#comment_help').hide();
 		});
 	}
+	
+	$('document').ready(function(){
+		var tags = "{{photo.tags}}";
+		tagsArr = tags.split(" ");
+		tagsArr.map((tag)=>{
+			var tagElem = `<small class='badge badge-secondary'>${tag}</small>`
+			$("#tags").append(tagElem);
+		})
+	});
 </script>
 {% endblock %}
