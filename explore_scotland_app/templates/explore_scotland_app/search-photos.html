@@ -4,7 +4,7 @@
 {% block title_block %}Home{% endblock %}
 
 {% block body_block %}
-<form id="search_form" action="{% url 'explore_scotland_app:search_photos' %}" method="get">
+<form id="search_form" action="{% url 'explore_scotland_app:search_photos' %}" method="get" class="m-auto d-flex flex-column align-items-center">
 	<div>
 		<label>Search (Leave blank to see all photos)</label>
 		<input type="text" name="keyword" placeholder="Enter keyword, location or tag" value="{{query}}"/>
@@ -23,7 +23,7 @@
 	</div>
 </form>
 <h4>Search results for {{query}} sorted by {{sorted_by}}</h4>
-<div class="photo-bar  d-flex align-items-center">
+<div class="photo-bar d-flex align-items-center">
 	{% if not photos %}
 		<p class="text-center">No results</p>
 	{% endif %}
