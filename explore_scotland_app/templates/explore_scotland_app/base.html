@@ -42,7 +42,7 @@
 			<a href="{% url 'explore_scotland_app:index' %}"><img src="{% static 'explore_scotland_app/logo/logo.png' %}" width="150" height="150"  alt="Logo"/></a>
 		</div>
 		{% block body_block %} {% endblock %}
-		<footer class="d-flex justify-content-around align-items-center flex-wrap">
+		<footer class="d-flex justify-content-around align-items-center flex-wrap mt-5">
 			<span>© 2020 Team LAT</span>
 			<a id="daily-board" href="{% url 'explore_scotland_app:photo_board' 'daily-board' %}">Daily Board</a>
 			<a id="weekly-board" href="{% url 'explore_scotland_app:photo_board' 'weekly-board' %}">Weekly Board </a>
