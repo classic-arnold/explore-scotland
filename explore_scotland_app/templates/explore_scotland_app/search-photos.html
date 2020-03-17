@@ -12,9 +12,9 @@
 	
 	<div>
 		<label class="mt-3">Sort-by</label>
-		<select name="sort-by" value="{{sorted_by}}">
-			<option value="likes">Most Liked</option>
-			<option value="latest">Latest Uploads</option>
+		<select name="sort-by">
+			<option value="likes" {% if sorted_by == 'likes' %}selected{% endif %}>Most Liked</option>
+			<option value="latest" {% if sorted_by == 'latest' %}selected{% endif %}>Latest Uploads</option>
 		</select>
 	</div>
 	
