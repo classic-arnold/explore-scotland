@@ -9,6 +9,15 @@ footer * {
 	box-shadow: 8px 8px 8px 1px #888888;
 }
 
+footer a, footer a:hover {
+	color: black;
+	text-decoration: none;
+}
+
+footer a:hover {
+	transform: translateY(-10px);
+}
+
 .photo-container{
 	width: 300px;
 	heigh: auto;
@@ -29,4 +38,20 @@ a {
 
 form{
 	max-width: 300px;
+}
+
+#daily-board{
+	background-color: orange;
+}
+
+#weekly-board{
+	background-color: green;
+}
+
+#monthly-board{
+	background-color: blue;
+}
+
+#overall-board{
+	background-color: purple;
 }
