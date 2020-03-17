@@ -10,12 +10,12 @@
 
 <form id="search_form" action="{% url 'explore_scotland_app:search_photos' %}" method="get" class="m-auto d-flex flex-column align-items-center">
 	<div>
-		<label>Search (Leave blank to see all photos)</label>
+		<label class="text-center">Search (Leave blank to see all photos)</label>
 		<input type="text" name="keyword" placeholder="Enter keyword, location or tag"/>
 	</div>
 	
 	<div>
-		<label class="mt-3 d-block">Sort-by</label>
+		<label class="mt-3 d-block text-center">Sort-by</label>
 		<select name="sort-by">
 			<option value="likes">Most Liked</option>
 			<option value="latest">Latest Uploads</option>
