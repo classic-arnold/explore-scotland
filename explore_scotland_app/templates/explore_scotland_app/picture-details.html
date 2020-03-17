@@ -39,7 +39,7 @@
 		<h4>Post comment</h4>
 		<span id="comment_help" class="hide-this">
 		</span>
-		<form id="comment_form" method="post" action="{% url 'explore_scotland_app:post_comment' photo_id=photo.id %}">
+		<form id="comment_form" method="post" action="{% url 'explore_scotland_app:post_comment' photo_id=photo.id %}" class="mt-3">
 			{% csrf_token %}
 			<!-- Display each form -->
 			{{ comment_form.as_p }}
