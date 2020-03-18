@@ -180,7 +180,7 @@ def upload_photo(request):
 			ctx = {
 				'successful': True,
 			}
-			return render(request, 'explore_scotland_app/profile.html', ctx)
+			return redirect(reverse('explore_scotland_app:profile'))
 			
 	photo_form = PhotoForm()
 	ctx = {

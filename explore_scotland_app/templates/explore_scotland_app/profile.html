@@ -28,8 +28,7 @@
 
 <div class="mt-5">
 	<h4>Your Liked Photos</h4>
-	<!-- 
-<div class="photo-bar  d-flex align-items-center">
+	<div class="photo-bar  d-flex align-items-center">
 		{% for photo in request.user.profile.photos_liked.all %}
 			<div>
 				<div class='photo-container'>
@@ -43,59 +42,5 @@
 			</div>
 		{% endfor %}
 	</div>
- -->
- 	<div id="photoCarouselLiked" class="carousel slide" data-ride="carousel">
-	  <ol class="carousel-indicators">
-	  </ol>
-	  <div class="carousel-inner">
-	  </div>
-	  <a class="carousel-control-prev" href="#photoCarouselLiked" role="button" data-slide="prev">
-		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		<span class="sr-only">Previous</span>
-	  </a>
-	  <a class="carousel-control-next" href="#photoCarouselLiked" role="button" data-slide="next">
-		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		<span class="sr-only">Next</span>
-	  </a>
-	</div>
 </div>
-{% endblock %}
-
-
-{% block script_block %}
-<script>
-
-$('document').ready(function(){
-	var url = "{% url 'explore_scotland_app:get_liked_photos' %}";
-	$.ajax(url,
-	{
-		dataType: 'json', // type of response data
-		timeout: 500,     // timeout milliseconds
-		success: function (data,status,xhr) {   // success callback function
-			data = JSON.parse(data);
-			var active = 'active';
-			data.map((photo, i)=>{
-				var photoMeta = `<li data-target="#photoCarouselLiked" data-slide-to="${i}" class="${active}"></li>`
-				var photoDiv = `<div class="carousel-item ${active}">
-									<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
-										<img src="{{MEDIA_URL}}/${photo.fields.picture}" alt="">
-										<div class="carousel-caption d-none d-md-block">
-											<h5>${photo.fields.owner}</h5>
-											<p>${photo.fields.description}</p>
-										</div>
-									</a>
-								</div>`;
-				$('.carousel-indicators').append(photoMeta);
-				$('.carousel-inner').append(photoDiv);
-				active = '';
-			});
-		},
-		error: function (jqXhr, textStatus, errorMessage) { // error callback 
-			$('.carousel-inner').append('Error: ' + errorMessage);
-		}
-	});
-	
-	$("#{{board_type}}").addClass('mb-5');
-});
-</script>
 {% endblock %}
