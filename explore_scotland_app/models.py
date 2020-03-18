@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 
 from PIL import Image
 
+from django.core.files.base import ContentFile
+
 # Create your models here.
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
@@ -33,7 +35,6 @@ class Photo(models.Model):
 	tags = models.CharField(max_length=256, null=True, blank=True) #add choice
 	likes = models.ManyToManyField(UserProfile, related_name="photos_liked")
 	picture = models.ImageField(upload_to="")
-	picture_square = models.ImageField(upload_to="")
 	
 	class Meta:
 		ordering = ('-date_added',)
@@ -42,7 +43,6 @@ class Photo(models.Model):
 		return self.owner.user.username + " photo."
 		
 	def save(self, *args, **kwargs):
-		self.picture_square = self.picture
 		super().save()
 		img = Image.open(self.picture_square.path)
 		width, height = img.size  # Get dimensions
