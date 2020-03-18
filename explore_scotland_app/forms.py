@@ -26,9 +26,7 @@ class PhotoForm(forms.ModelForm):
 	class Meta:
 		model = Photo
 		fields = ('picture', 'description', 'categories', 'tags')
-		labels = {
-			'picture': 'Picture (ensure a 1:1 aspect ratio or image will be cut)',
-		}
+		
 	def __init__(self, *args, **kwargs):
 		super(PhotoForm, self).__init__(*args, **kwargs)
 		self.fields['tags'].widget.attrs['placeholder'] = 'Separate by space'

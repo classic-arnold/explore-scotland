@@ -74,7 +74,7 @@ $('document').ready(function(){
 				var photoMeta = `<li data-target="#photoCarousel" data-slide-to="${i}" class="${active}"></li>`
 				var photoDiv = `<div class="carousel-item ${active} text-center">
 									<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
-										<img src="{{MEDIA_URL}}/${photo.fields.picture}" alt="" class="img-fluid" width="80%" height="auto">
+										<img src="{{MEDIA_URL}}/${photo.fields.picture_square}" alt="" class="img-fluid" width="80%" height="auto">
 									</a>
 								</div>`;
 				$('.carousel-indicators').append(photoMeta);
