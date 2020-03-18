@@ -10,9 +10,9 @@
 </div>
 
 <div class="mt-5">
-	<div class="d-flex justify-content-center align-items-center flex-wrap cat">
+	<div class="d-flex justify-content-center align-items-center flex-wrap cat-bar">
 		{% for category in categories %}
-			<a href="{% url 'explore_scotland_app:photo_board' %}">{{category.1}}</a>
+		<a href="{% url 'explore_scotland_app:photo_board' %}">{{category.1}}</a>
 		{% endfor %}
 	</div>
 	<form id="search_form" action="{% url 'explore_scotland_app:search_photos' %}" method="get" class="mx-auto d-flex flex-column align-items-center mt-5">
