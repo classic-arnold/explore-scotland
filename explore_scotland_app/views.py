@@ -10,7 +10,10 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
 def index(request):
-	return render(request, 'explore_scotland_app/index.html')
+	ctx = {
+		'categories': Photo.CATEGORY_CHOICES,
+	}
+	return render(request, 'explore_scotland_app/index.html', ctx)
 
 def register(request):
 	# A boolean value for telling the template
