@@ -28,7 +28,7 @@ class Photo(models.Model):
 	description = models.TextField(max_length=256)
 	date_added = models.DateField(auto_now_add=True)
 	categories = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=LANDSCAPE)
-	tags = models.CharField(max_length=256) #add choice
+	tags = models.CharField(max_length=256, null=True, blank=True) #add choice
 	likes = models.ManyToManyField(UserProfile, related_name="photos_liked")
 	picture = models.ImageField(upload_to="")
 	
