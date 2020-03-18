@@ -24,7 +24,7 @@
     <span class="sr-only">Next</span>
   </a>
 </div>
-<div class="mt-5 col-4">
+<div class="col-4">
 	<form id="search_form" action="{% url 'explore_scotland_app:search_photos' %}" method="get" class="mx-auto d-flex flex-column align-items-start mt-5">
 		<div>
 			<label class="">Search (Leave blank to see all photos)</label>
@@ -75,10 +75,6 @@ $('document').ready(function(){
 				var photoDiv = `<div class="carousel-item ${active}">
 									<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
 										<img src="{{MEDIA_URL}}/${photo.fields.picture}" alt="" class="img-fluid" width="100%" height="auto">
-										<div class="carousel-caption d-none d-md-block">
-											<h5>${photo.fields.owner}</h5>
-											<p>${photo.fields.description}</p>
-										</div>
 									</a>
 								</div>`;
 				$('.carousel-indicators').append(photoMeta);
