@@ -44,7 +44,7 @@ class Photo(models.Model):
 		
 	def save(self, *args, **kwargs):
 		super().save()
-		img = Image.open(self.picture_square.path)
+		img = Image.open(self.picture.path)
 		width, height = img.size  # Get dimensions
 
 		if width > 300 and height > 300:
@@ -68,7 +68,7 @@ class Photo(models.Model):
 			bottom = width
 			img = img.crop((left, top, right, bottom))
 
-		img.save(self.picture_square.path)
+		img.save(self.picture.path)
 		
 class Comment(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="comment_posted")
