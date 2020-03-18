@@ -219,6 +219,7 @@ def search_photos(request):
 	if request.method == 'GET':
 		query_string = request.GET.get("keyword", '')
 		sorted_by = request.GET.get("sort-by", '')
+		category = request.GET.get("category", '')
 		photos = None
 		
 		words = re.split(r"[^A-Za-z']+", query_string)
@@ -235,11 +236,16 @@ def search_photos(request):
 			photos = Photo.objects.filter(query).order_by('-date_added')
 		else:
 			photos = Photo.objects.filter(query)
+			
+		if category != 'all':
+			photos = photos.filter(categories=category)
 		
 		ctx = {
 			'photos': photos,
 			'query': query_string,
-			'sorted_by': sorted_by
+			'sorted_by': sorted_by,
+			'categories': Photo.CATEGORY_CHOICES,
+			'category_searched': category
 		}
 		return render(request, 'explore_scotland_app/search-photos.html', ctx)
 	

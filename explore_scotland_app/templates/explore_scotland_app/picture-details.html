@@ -36,6 +36,7 @@
 			{{photo.description}}
 		</p>
 		<span id="tags" class="mt-3">
+			<small class='badge badge-primary mr-1'>{{photo.get_categories_display}}</small>
 		</span>
 	</div>
 		
@@ -104,6 +105,9 @@
 	}
 	
 	$('document').ready(function(){
+		if ("{{photo.tags}}" == "None"){
+			return;
+		}
 		var tags = "{{photo.tags}}";
 		tagsArr = tags.split(" ");
 		tagsArr.map((tag)=>{
