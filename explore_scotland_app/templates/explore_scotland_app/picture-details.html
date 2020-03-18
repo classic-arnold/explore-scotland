@@ -1,0 +1,112 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title_block %} Picture {% endblock %}
+
+{% block body_block %}
+	<div>
+		<div class="d-flex align-items-center">
+			<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center">
+				<img class="img-fluid" src="{{MEDIA_ROOT}}{{photo.owner.picture.url}}">
+			</div>
+			<strong class="ml-3">{{photo.owner}}</strong>
+		</div>
+		
+		<div class="mt-3">
+			<iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button_count&size=small&width=96&height=20&appId" width="96" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+			<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+		</div>
+		
+		<div class="photo-container-big">
+			<img class="border rounded mw-100" src={{photo.picture.url}}>
+		</div>
+		
+		<span class="badge">{{photo.likes.all.count}} likes</span>
+		
+		<div class="mt-3">
+			<a class="btn btn-primary btn-sm" href="{% url 'explore_scotland_app:like_photo' photo_id=photo.pk %}">{% if request.user.profile in photo.likes.all %}Dislike{% else %}Like{% endif %}</a>
+		
+			{% if photo.owner == request.user.profile %}
+			<a class="btn btn-primary btn-sm" href="{% url 'explore_scotland_app:edit_photo' photo_id=photo.pk %}">Edit</a>
+			<a class="btn btn-danger btn-sm" href="{% url 'explore_scotland_app:delete_photo' photo_id=photo.pk %}">Delete</a>
+			{% endif %}
+		</div>
+		
+		<p class="mt-3">
+			{{photo.description}}
+		</p>
+		<span id="tags" class="mt-3">
+		</span>
+	</div>
+		
+	<div id="comment-form" class="mt-3">
+		<h4>Post comment</h4>
+		<span id="comment_help" class="hide-this">
+		</span>
+		<form id="comment_form" method="post" action="{% url 'explore_scotland_app:post_comment' photo_id=photo.id %}" class="mt-3">
+			{% csrf_token %}
+			<!-- Display each form -->
+			{{ comment_form.as_p }}
+			<input type="hidden" name="photo_id" value={{photo.id}}>
+			<input type="hidden" name="comment_id">
+			<!-- Provide a button to click to submit the form. -->
+			<input type="submit" name="submit" value="Post"/>
+		</form>
+	</div>
+	
+	<div>
+		<h4>Other comments</h4>
+		{% for comment in comments %}
+		<div class="card mt-3" style="width: 18rem;">
+		  <div class="card-body">
+			<h5 class="card-title">{{comment.owner}}</h5>
+			<h6 class="card-subtitle mb-2 text-muted">{{comment.date_added}}</h6>
+			<p class="card-text">{{comment.content}}</p>
+			<a id="reply" class="card-link" href="#comment-form" onclick="commentComment({{comment.id}}, '{{comment.owner}}')">Reply</a>
+		  </div>
+		</div>
+		<div class="ml-5">
+			{% for comment in comment.comment_comments.all %}
+			<div class="card mt-3" style="width: 18rem;">
+			  <div class="card-body">
+				<h5 class="card-title">{{comment.owner}}</h5>
+				<h6 class="card-subtitle mb-2 text-muted">{{comment.date_added}}</h6>
+				<p class="card-text">{{comment.content}}</p>
+			  </div>
+			</div>
+			{% endfor %}
+		</div>
+		{% endfor %}
+	</div>
+{% endblock %}
+
+{% block script_block %}
+<script>
+	function commentComment(commentId, commentOwner){
+		undoCommentComment();
+		$('document').ready(function(){
+			$('input[name="comment_id"]').val(commentId);
+			$('#comment_help').append(`Replying to ${commentOwner}'s comment`);
+			$('#comment_help').append(`<a id="comment_help_cancel" class="btn btn-danger btn-sm text-light ml-3" onclick="undoCommentComment()">cancel</a>`);
+			$('#comment_help').show();
+		});
+	}
+	
+	function undoCommentComment(){
+		$('document').ready(function(){
+			$('input[name="comment_id"]').val('');
+			$('#comment_help').empty();
+			$('#comment_help').hide();
+		});
+	}
+	
+	$('document').ready(function(){
+		var tags = "{{photo.tags}}";
+		tagsArr = tags.split(" ");
+		tagsArr.map((tag)=>{
+			var tagElem = `<small class='badge badge-secondary mr-1'>${tag}</small>`
+			$("#tags").append(tagElem);
+		})
+	});
+</script>
+{% endblock %}

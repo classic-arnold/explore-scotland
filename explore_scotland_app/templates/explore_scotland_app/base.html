@@ -1,0 +1,77 @@
+<!DOCTYPEhtml>
+{% load static %}
+<html>
+
+<head>
+    <title>Explore Scotland - {% block title_block %}{% endblock %} </title>
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'explore_scotland_app/main.css' %}">
+</head>
+
+<body>
+	<div class="container">
+		<div class="p-3 d-flex justify-content-end">
+			{% if user.is_authenticated %}
+			<!-- add link -->
+			<span class="d-flex align-items-center">
+				<span class="d-flex align-items-center">Hello {{request.user}} 
+					<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center ml-3">
+						<img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}">
+					</div>
+				</span>
+				<a href="{% url 'explore_scotland_app:profile' %}" class="small ml-3">
+					Dashboard
+				</a>
+				<a href="{% url 'explore_scotland_app:edit_profile' %}" class="small ml-3">
+					Edit account
+				</a>
+				<a href="{% url 'explore_scotland_app:logout' %}" class="small ml-3">
+					Logout
+				</a>
+			</span>
+			{% else %}
+			<a href="{% url 'explore_scotland_app:login' %}" class="btn btn-outline-primary btn-sm">Account</a>
+			{% endif %}
+		</div>
+
+		<div class="text-center">
+			<a href="{% url 'explore_scotland_app:index' %}"><img src="{% static 'explore_scotland_app/logo/logo.png' %}" width="150" height="150"  alt="Logo"/></a>
+		</div>
+		{% block body_block %} {% endblock %}
+		<footer class="d-flex justify-content-around align-items-center flex-wrap mt-5">
+			<span>© 2020 Team LAT</span>
+			<a id="daily-board" href="{% url 'explore_scotland_app:photo_board' 'daily-board' %}">Daily Board</a>
+			<a id="weekly-board" href="{% url 'explore_scotland_app:photo_board' 'weekly-board' %}">Weekly Board </a>
+			<a id="monthly-board" href="{% url 'explore_scotland_app:photo_board' 'monthly-board' %}">Monthly Board </a>
+			<a id="overall-board" href="{% url 'explore_scotland_app:photo_board' 'overall-board' %}">Overall Board </a>
+			<a href="#">Support </a>
+			<a href="#">Contact Us </a>
+			<a href="#">Terms </a>
+			<a href="#">Privacy </a>
+			<a href="#">FAQ </a>
+		</footer>
+	</div>
+	
+	<script>
+		$('document').ready(function(){
+			$('form').addClass('form-group');
+			$('input').addClass('form-control');
+			
+			$('input[type="submit"]').removeClass('form-control');
+			$('input[type="submit"]').addClass('btn btn-primary');
+			
+			$('input[type="file"]').addClass('p-1');
+			$('input[type="button"]').addClass('btn btn-primary');
+		});
+	</script>
+	
+	{% block script_block %} {% endblock %}
+	
+</body>
+
+</html>

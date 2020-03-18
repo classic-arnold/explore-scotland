@@ -25,6 +25,6 @@ from explore_scotland_app import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('explore_scotland_app/', include('explore_scotland_app.urls')),
+    path('', include('explore_scotland_app.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
