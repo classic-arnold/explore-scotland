@@ -211,22 +211,34 @@ def get_photos(request):
 	photos = serialize('json', Photo.objects.all()[:10])
 	return JsonResponse(photos, safe=False)
 	
-from django.db.models import Count
+from django.db.models import Count, Q
+
+import re
 
 def search_photos(request):
 	if request.method == 'GET':
-		query = request.GET.get("keyword", '')
+		query_string = request.GET.get("keyword", '')
 		sorted_by = request.GET.get("sort-by", '')
 		photos = None
+		
+		words = re.split(r"[^A-Za-z']+", query_string)
+		
+		query = Q()
+		
+		for word in words:
+    		# 'or' the queries together
+   			query |= Q(description__icontains=word) | Q(tags__icontains=word)
+		
 		if sorted_by == 'likes':
-			photos = Photo.objects.filter(description__contains=query, tags__contains=query).annotate(q_count=Count('likes')).order_by('-q_count')
+			photos = Photo.objects.filter(query).annotate(q_count=Count('likes')).order_by('-q_count')
 		elif sorted_by == 'latest':
-			photos = Photo.objects.filter(description__contains=query, tags__contains=query).order_by('-date_added')
+			photos = Photo.objects.filter(query).order_by('-date_added')
 		else:
-			photos = Photo.objects.filter(description__contains=query, tags__contains=query)
+			photos = Photo.objects.filter(query)
+		
 		ctx = {
 			'photos': photos,
-			'query': query,
+			'query': query_string,
 			'sorted_by': sorted_by
 		}
 		return render(request, 'explore_scotland_app/search-photos.html', ctx)
