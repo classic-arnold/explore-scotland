@@ -20,7 +20,8 @@ footer a:hover {
 }
 
 .photo-bar{
-	border: 1px solid #bedae8;
+	border: 1px solid black;
+	border-radius: 3px;
 	padding: 10px;
 	overflow-x: scroll;
   	overflow-y: hidden;
