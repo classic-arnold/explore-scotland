@@ -8,12 +8,24 @@ footer * {
 	padding: 5px;
 	margin: 5px;
 	box-shadow: 8px 8px 8px 1px #888888;
+	color: black;
+	background: white;
+	text-decoration: none;
 }
 
-footer *, footer a:hover {
+.cat a {
+	border: 1px solid black;
+	border-radius: 3px;
+	padding: 5px;
+	margin: 5px;
+	box-shadow: 8px 8px 8px 1px #888888;
 	background: white;
 	color: black;
 	text-decoration: none;
+}
+
+.cat a:hover {
+	transform: translateY(-10px);
 }
 
 footer a:hover {

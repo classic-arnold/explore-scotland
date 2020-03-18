@@ -10,7 +10,12 @@
 </div>
 
 <div class="mt-5">
-	<form id="search_form" action="{% url 'explore_scotland_app:search_photos' %}" method="get" class="m-auto d-flex flex-column align-items-center">
+	<div class="d-flex justify-content-center align-items-center flex-wrap cat">
+		{% for category in categories %}
+			<a href="{% url 'explore_scotland_app:photo_board' %}">{{category.1}}</a>
+		{% endfor %}
+	</div>
+	<form id="search_form" action="{% url 'explore_scotland_app:search_photos' %}" method="get" class="mx-auto d-flex flex-column align-items-center mt-5">
 		<div>
 			<label class="text-center">Search (Leave blank to see all photos)</label>
 			<input type="text" name="keyword" placeholder="Enter keyword, location or tag"/>
@@ -28,11 +33,6 @@
 			<input type="submit" value="Explore Scotland!">
 		</div>
 	</form>
-	
-	Categories:
-	{% for category in categories %}
-		<a href="{% url 'explore_scotland_app:photo_board' %}">{{category.1}}</a>
-	{% endfor %}
 </div>
 
 {% endblock %}
