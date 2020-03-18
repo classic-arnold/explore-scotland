@@ -33,6 +33,7 @@ class Photo(models.Model):
 	tags = models.CharField(max_length=256, null=True, blank=True) #add choice
 	likes = models.ManyToManyField(UserProfile, related_name="photos_liked")
 	picture = models.ImageField(upload_to="")
+	picture_square = models.ImageField(upload_to="")
 	
 	class Meta:
 		ordering = ('-date_added',)
@@ -41,8 +42,9 @@ class Photo(models.Model):
 		return self.owner.user.username + " photo."
 		
 	def save(self, *args, **kwargs):
+		self.picture_square = self.picture
 		super().save()
-		img = Image.open(self.picture.path)
+		img = Image.open(self.picture_square.path)
 		width, height = img.size  # Get dimensions
 
 		if width > 300 and height > 300:
@@ -66,7 +68,7 @@ class Photo(models.Model):
 			bottom = width
 			img = img.crop((left, top, right, bottom))
 
-		img.save(self.picture.path)
+		img.save(self.picture_square.path)
 		
 class Comment(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="comment_posted")
