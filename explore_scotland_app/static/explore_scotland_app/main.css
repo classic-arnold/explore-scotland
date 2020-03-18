@@ -19,6 +19,19 @@ footer a:hover {
 	transform: translateY(-10px);
 }
 
+.photo-bar{
+	border: 1px solid #bedae8;
+	padding: 10px;
+	overflow-x: scroll;
+  	overflow-y: hidden;
+  	white-space: nowrap;
+  	-webkit-overflow-scrolling: touch;
+
+  	nth-child(1) {
+  		display: inline-block;
+  	}
+}
+
 .photo-container{
 	width: 300px;
 	heigh: auto;
