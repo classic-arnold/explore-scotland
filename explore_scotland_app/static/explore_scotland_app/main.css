@@ -1,6 +1,5 @@
 body{
 	font-family:arial;
-	background: lightgrey;
 }
 
 footer * {
@@ -22,8 +21,6 @@ footer a:hover {
 }
 
 .photo-bar{
-	border-right: 1px solid black;
-	padding: 10px;
 	overflow-x: scroll;
   	overflow-y: hidden;
   	white-space: nowrap;
