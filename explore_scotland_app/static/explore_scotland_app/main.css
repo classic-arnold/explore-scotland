@@ -20,6 +20,7 @@ footer a:hover {
 	transform: translateY(-10px);
 }
 
+/* 
 .photo-bar{
 	overflow-x: scroll;
   	overflow-y: hidden;
@@ -30,6 +31,7 @@ footer a:hover {
   		display: inline-block;
   	}
 }
+ */
 
 .photo-container{
 	width: 300px;
