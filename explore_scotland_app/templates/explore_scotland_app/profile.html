@@ -1,5 +1,6 @@
 {% extends './base.html' %}
 {% load static %}
+{% load explore_scotland_tags %}
 
 {% block title_block %}Home{% endblock %}
 
@@ -10,37 +11,11 @@
 <div>
 	<h4>Your Uploaded Photos</h4>
 	<a href="{% url 'explore_scotland_app:upload_photo' %}">Upload</a>
-	<div class="photo-bar d-flex flex-wrap align-items-center">
-		{% for photo in request.user.profile.photos_uploaded.all %}
-			<div>
-				<div class='photo-container'>
-					<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
-						<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
-					</a>
-				</div>
-				<p>
-					<strong>{{photo.owner}}</strong> {{photo.description}}
-				</p>
-			</div>
-		{% endfor %}
-	</div>
+	{% get_photo_grid photos=request.user.profile.photos_uploaded.all %}
 </div>
 
 <div class="mt-5">
 	<h4>Your Liked Photos</h4>
-	<div class="photo-bar d-flex flex-wrap align-items-center">
-		{% for photo in request.user.profile.photos_liked.all %}
-			<div>
-				<div class='photo-container'>
-					<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
-						<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
-					</a>
-				</div>
-				<p>
-					<strong>{{photo.owner}}</strong> {{photo.description}}
-				</p>
-			</div>
-		{% endfor %}
-	</div>
+	{% get_photo_grid photos=request.user.profile.photos_liked.all %}
 </div>
 {% endblock %}

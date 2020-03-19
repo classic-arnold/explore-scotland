@@ -9,24 +9,7 @@
 	<div class="col-8">
 		<div class="">
 			<h4>Search results for <i>{{query}}</i> sorted by <i>{{sorted_by}}</i></h4>
-			{% if not photos %}
-				<p class="text-center">No results</p>
-			{% else %}
-			<div class="d-flex flex-wrap align-items-center">
-				{% for photo in photos %}
-					<div class="">
-						<div class='photo-container'>
-							<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
-								<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
-							</a>
-						</div>
-						<p>
-							<strong>{{photo.owner}}</strong> {{photo.description}}
-						</p>
-					</div>
-				{% endfor %}
-			</div>
-			{% endif %}
+			{% get_photo_grid photos=photos %}
 		</div>
 	</div>
 	<div class="col-4">
