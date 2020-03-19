@@ -1,5 +1,6 @@
 {% extends './base.html' %}
 {% load static %}
+{% load explore_scotland_tags %}
 
 {% block title_block %}Home{% endblock %}
 
@@ -29,34 +30,7 @@
 		</div>
 	</div>
 	<div class="col-4">
-		<form id="search_form" action="{% url 'explore_scotland_app:search_photos' %}" method="get" class="m-auto d-flex flex-column align-items-start">
-			<div>
-				<label class="text-center">Search (Leave blank to see all photos)</label>
-				<input type="text" name="keyword" placeholder="Enter keyword, location or tag" value="{{query}}"/>
-			</div>
-	
-			<div>
-				<label class="mt-3 d-block">Sort-by</label>
-				<select name="sort-by">
-					<option value="likes" {% if sorted_by == 'likes' %}selected{% endif %}>Most Liked</option>
-					<option value="latest" {% if sorted_by == 'latest' %}selected{% endif %}>Latest Uploads</option>
-				</select>
-			</div>
-		
-			<div>
-				<label class="mt-3 d-block">Category</label>
-				<select name="category">
-					<option value="all">All</option>
-					{% for category in categories %}
-					<option value="{{category.0}}" {% if category_searched == category.0 %}selected{% endif %}>{{category.1}}</option>
-					{% endfor %}
-				</select>
-			</div>
-	
-			<div class="mt-3">
-				<input type="submit" value="Explore Scotland!">
-			</div>
-		</form>
+		{% get_search_form category_searched=category_searched sorted_by=sorted_by %}
 	</div>
 </div>
 {% endblock %}

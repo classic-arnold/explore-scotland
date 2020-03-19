@@ -10,10 +10,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
 def index(request):
-	ctx = {
-		'categories': Photo.CATEGORY_CHOICES,
-	}
-	return render(request, 'explore_scotland_app/index.html', ctx)
+	return render(request, 'explore_scotland_app/index.html')
 
 def register(request):
 	# A boolean value for telling the template
@@ -270,7 +267,6 @@ def search_photos(request):
 			'photos': photos,
 			'query': query_string,
 			'sorted_by': sorted_by,
-			'categories': Photo.CATEGORY_CHOICES,
 			'category_searched': category
 		}
 		return render(request, 'explore_scotland_app/search-photos.html', ctx)
