@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<div class="modal" tabindex="-1" role="dialog">
+	<div id="message_modal" class="modal" tabindex="-1" role="dialog">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
 		  <div class="modal-body">
@@ -27,7 +27,6 @@
 			{% endif %}
 		  </div>
 		  <div class="modal-footer">
-			<button type="button" class="btn btn-primary">Save changes</button>
 			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		  </div>
 		</div>
@@ -99,6 +98,10 @@
 			
 			$('input[type="file"]').addClass('p-1');
 			$('input[type="button"]').addClass('btn btn-primary');
+			
+			{% if messages %}
+			$('#message_modal').modal('show');
+			{% endif %}
 		});
 	</script>
 	
