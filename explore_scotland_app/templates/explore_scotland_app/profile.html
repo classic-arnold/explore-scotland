@@ -9,6 +9,7 @@
 
 <div>
 	<h4>Your Uploaded Photos</h4>
+	<a href="{% url 'explore_scotland_app:upload_photo' %}">Upload</a>
 	<div class="photo-bar  d-flex align-items-center">
 		{% for photo in request.user.profile.photos_uploaded.all %}
 			<div>
@@ -22,7 +23,6 @@
 				</p>
 			</div>
 		{% endfor %}
-		<a href="{% url 'explore_scotland_app:upload_photo' %}">Upload photo</a>
 	</div>
 </div>
 
