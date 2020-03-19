@@ -8,12 +8,12 @@
 	<div class="col-8">
 		<div class="">
 			<h4>Search results for <i>{{query}}</i> sorted by <i>{{sorted_by}}</i></h4>
-			<div class="photo-bar d-flex align-items-center">
-				{% if not photos %}
-					<p class="text-center">No results</p>
-				{% endif %}
+			{% if not photos %}
+				<p class="text-center">No results</p>
+			{% else %}
+			<div class="row align-items-center">
 				{% for photo in photos %}
-					<div>
+					<div class="col-6">
 						<div class='photo-container'>
 							<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
 								<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
@@ -25,6 +25,7 @@
 					</div>
 				{% endfor %}
 			</div>
+			{% endif %}
 		</div>
 	</div>
 	<div class="col-4">
