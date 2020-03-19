@@ -1,7 +1,7 @@
 <form id="search_form" action="{% url 'explore_scotland_app:search_photos' %}" method="get" class="m-auto d-flex flex-column align-items-start">
 	<div>
 		<label class="text-center">Search (Leave blank to see all photos)</label>
-		<input type="text" name="keyword" placeholder="Enter keyword, location or tag" value="{{query}}"/>
+		<input type="text" name="keyword" placeholder="Enter keyword, location or tag" {% if query %}value="{{query}}"{% endif %}/>
 	</div>
 
 	<div>
