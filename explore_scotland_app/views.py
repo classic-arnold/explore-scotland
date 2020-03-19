@@ -9,6 +9,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
+from django.core.serializers import serialize
+import datetime
+
+from django.db.models import Count, Q
+import re
+
+from django.contrib import messages
+
 def index(request):
 	return render(request, 'explore_scotland_app/index.html')
 
@@ -63,8 +71,6 @@ def register(request):
 
 	# Render the template depending on the context.
 	return render(request,'explore_scotland_app/register.html',context = {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
-
-from django.contrib import messages
 
 def user_login(request):
 	# If the request is a HTTP POST, try to pull out the relevant information.
@@ -227,9 +233,6 @@ def delete_photo(request, photo_id):
 		return redirect(reverse('explore_scotland_app:profile'))
 	
 	return redirect(reverse('explore_scotland_app:profile'))
-	
-from django.core.serializers import serialize
-import datetime
 
 def get_all_photos(request, count):
 	photos = serialize('json', Photo.objects.all()[:count])
@@ -239,10 +242,6 @@ def get_photos_from_days_ago(request, days):
 	time = datetime.datetime.now() - datetime.timedelta(days = days)
 	photos = serialize('json', Photo.objects.filter(date_added__gte=time)[:10])
 	return JsonResponse(photos, safe=False)
-	
-from django.db.models import Count, Q
-
-import re
 
 def search_photos(request):
 	if request.method == 'GET':
