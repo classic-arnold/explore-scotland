@@ -231,11 +231,11 @@ def delete_photo(request, photo_id):
 from django.core.serializers import serialize
 import datetime
 
-def get_all_photos(request):
-	photos = serialize('json', Photo.objects.all()[:10])
+def get_all_photos(request, count):
+	photos = serialize('json', Photo.objects.all()[:count])
 	return JsonResponse(photos, safe=False)
 	
-def get_photos_from_days(request, days):
+def get_photos_from_days_ago(request, days):
 	time = datetime.datetime.now() - datetime.timedelta(days = days)
 	photos = serialize('json', Photo.objects.filter(date_added__gte=time)[:10])
 	return JsonResponse(photos, safe=False)

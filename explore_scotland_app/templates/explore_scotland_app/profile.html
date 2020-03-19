@@ -14,7 +14,7 @@
 </div>
 
 <div class="mt-5">
-	<h4>Your Liked Photos</h4>
+	<h4>Your Liked Photos (Favourites)</h4>
 	{% get_photo_grid photos=request.user.profile.photos_liked.all %}
 </div>
 {% endblock %}
