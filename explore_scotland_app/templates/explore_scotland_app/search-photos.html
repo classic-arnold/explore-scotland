@@ -11,9 +11,9 @@
 			{% if not photos %}
 				<p class="text-center">No results</p>
 			{% else %}
-			<div class="row align-items-center">
+			<div class="d-flex flex-wrap align-items-center">
 				{% for photo in photos %}
-					<div class="col-6">
+					<div class="">
 						<div class='photo-container'>
 							<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
 								<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
