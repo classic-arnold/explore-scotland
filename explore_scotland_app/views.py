@@ -17,6 +17,12 @@ import re
 
 from django.contrib import messages
 
+def pop_url(request_meta):
+	try:
+		return redirect(request_meta.get('HTTP_REFERER'))
+	except:
+		pass
+
 def index(request):
 	return render(request, 'explore_scotland_app/index.html')
 
@@ -100,18 +106,12 @@ def user_login(request):
 			else:
 				# An inactive account was used - no logging in!
 				messages.info(request, 'Your Explore Scotland account is disabled.')
-				try:
-					return redirect(request.META.get('HTTP_REFERER'))
-				except:
-					pass
+				pop_url(request.META)
 				return redirect(reverse('explore_scotland_app:login'))
 		else:
 			# Bad login details were provided. So we can't log the user in.
 			messages.info(request, 'Invalid login details supplied.')
-			try:
-				return redirect(request.META.get('HTTP_REFERER'))
-			except:
-				pass
+			pop_url(request.META)
 			return redirect(reverse('explore_scotland_app:login'))
 	# The request is not a HTTP POST, so display the login form.
 	# This scenario would most likely be a HTTP GET.
@@ -176,10 +176,7 @@ def delete_user(request):
 		request.user.delete()
 	except:
 		messages.info(request, 'Unable to delete account.')
-		try:
-			return redirect(request.META.get('HTTP_REFERER'))
-		except:
-			pass
+		pop_url(request.META)
 		return redirect(reverse('explore_scotland_app:index'))
 	return redirect(reverse('explore_scotland_app:index'))
 	
@@ -216,20 +213,14 @@ def delete_photo(request, photo_id):
 		photo = Photo.objects.get(pk=photo_id)
 	except Photo.DoesNotExist:
 		messages.info(request, 'You tried to delete a photo that does not exist.')
-		try:
-			return redirect(request.META.get('HTTP_REFERER'))
-		except:
-			pass
+		pop_url(request.META)
 		return redirect(reverse('explore_scotland_app:profile'))
 	
 	if photo.owner == request.user.profile:
 		photo.delete()
 	else:
 		messages.info(request, 'You tried to delete a photo you do not own.')
-		try:
-			return redirect(request.META.get('HTTP_REFERER'))
-		except:
-			pass
+		pop_url(request.META)
 		return redirect(reverse('explore_scotland_app:profile'))
 	
 	return redirect(reverse('explore_scotland_app:profile'))
@@ -281,10 +272,7 @@ def picture_details(request, photo_id):
 		photo = Photo.objects.get(pk=photo_id)
 	except Photo.DoesNotExist:
 		messages.info(request, 'The photo you are looking for does not exist.')
-		try:
-			return redirect(request.META.get('HTTP_REFERER'))
-		except:
-			pass
+		pop_url(request.META)
 		return redirect(reverse('explore_scotland_app:index'))
 	
 	comment_form = CommentForm()
@@ -320,15 +308,9 @@ def post_comment(request, photo_id):
 			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 		else:
 			messages.info(request, 'Failed to add comment.')
-			try:
-				return redirect(request.META.get('HTTP_REFERER'))
-			except:
-				pass
+			pop_url(request.META)
 			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
-	try:
-		return redirect(request.META.get('HTTP_REFERER'))
-	except:
-		pass
+	pop_url(request.META)
 	return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 	
 @login_required
@@ -340,10 +322,7 @@ def like_photo(request, photo_id):
 	else:
 		photo.likes.add(request.user.profile)
 	
-	try:
-		return redirect(request.META['HTTP_REFERER'])
-	except:
-		pass
+	pop_url(request.META)
 	return redirect(reverse('explore_scotland_app:index'))
 
 @login_required
@@ -358,10 +337,7 @@ def edit_photo(request, photo_id):
 			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 		else:
 			messages.info(request, 'Failed to edit photo.')
-			try:
-				return redirect(request.META.get('HTTP_REFERER'))
-			except:
-				pass
+			pop_url(request.META)
 			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 	photo_form = PhotoFormWithoutPhoto(instance=photo)
 	ctx = {
