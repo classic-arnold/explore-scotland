@@ -23,11 +23,13 @@ f"{FAILURE_HEADER} {FAILURE_FOOTER}"
 
 
 class LoginTests(TestCase):
+	def setUp(self):
+		populate()
+		
     def test_login_functionality(self):
         """
         Tests the login functionality. A user should be able to log in, and should be redirected to homepage.
         """
-        populate()
         user = User.objects.get(username='cindy')
         response = self.client.post(reverse('explore_scotland_app:login'), {'username': 'cindy', 'password': 'testcindy3'})
         try:
@@ -48,6 +50,9 @@ class LogoutTests(TestCase):
     """
     Tests to check the functionality of logging out.
     """
+    def setUp(self):
+		populate()
+		
     def test_bad_logout(self):
         """
         Attepts to log out a user who is not logged in.
@@ -60,7 +65,6 @@ class LogoutTests(TestCase):
         """
         Attempts to log out a user who IS logged in.
         """
-        populate()
         self.client.login(username='cindy', password='testcindy3')
 
         # Now log the user out. check the redirect to the homepage.
