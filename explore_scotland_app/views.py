@@ -276,11 +276,6 @@ def search_photos(request):
 		}
 		return render(request, 'explore_scotland_app/search-photos.html', ctx)
 	
-@login_required
-def get_liked_photos(request):
-	photos = serialize('json', request.user.profile.photos_liked.all())
-	return JsonResponse(photos, safe=False)
-	
 def picture_details(request, photo_id):
 	try:
 		photo = Photo.objects.get(pk=photo_id)

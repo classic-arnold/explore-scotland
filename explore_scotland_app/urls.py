@@ -13,7 +13,6 @@ urlpatterns = [
     path('get-all-photos/<int:count>', views.get_all_photos, name='get_all_photos'),
     path('get-photos-from-days-ago/<int:days>', views.get_photos_from_days_ago, name='get_photos_from_days_ago'),
     path('search-photos/', views.search_photos, name='search_photos'),
-    path('get-liked-photos/', views.get_liked_photos, name='get_liked_photos'),
     path('picture-page/<int:photo_id>', views.picture_details, name='picture_details'),
     path('picture-page/', views.picture_details, name='picture_details_without_key'),
     path('post-comment/<int:photo_id>', views.post_comment, name='post_comment'),
