@@ -39,7 +39,7 @@
 <script>
 
 $('document').ready(function(){
-	var url = "{% url 'explore_scotland_app:get_photos' %}";
+	var url = "{% url 'explore_scotland_app:get_all_photos' %}";
 	$.ajax(url,
 	{
 		dataType: 'json', // type of response data

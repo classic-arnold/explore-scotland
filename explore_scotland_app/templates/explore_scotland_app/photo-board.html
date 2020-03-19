@@ -30,13 +30,13 @@
 
 $('document').ready(function(){
 	var url = {% if board_type == 'daily-board' %}
-				"{% url 'explore_scotland_app:get_photos' %}"
+				"{% url 'explore_scotland_app:get_photos_from_days' 1 %}"
 				{% elif board_type == 'weekly-board' %}
-				"{% url 'explore_scotland_app:get_photos' %}"
+				"{% url 'explore_scotland_app:get_photos_from_days' 7 %}"
 				{% elif board_type == 'monthly-board' %}
-				"{% url 'explore_scotland_app:get_photos' %}"
+				"{% url 'explore_scotland_app:get_photos_from_days' 30 %}"
 				{% elif board_type == 'overall-board' %}
-				"{% url 'explore_scotland_app:get_photos' %}"
+				"{% url 'explore_scotland_app:get_all_photos' %}"
 				{% endif %};
 	$.ajax(url,
 	{
