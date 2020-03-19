@@ -14,12 +14,10 @@ from django.urls import reverse, resolve
 from django.contrib.auth.models import User
 from django.forms import fields as django_fields
 
-from explore_scotland_app.populate_explore_scotland_app import populate
+from population_script import populate
 
 FAILURE_HEADER = f"{os.linesep}{os.linesep}{os.linesep}================{os.linesep}TwD TEST FAILURE =({os.linesep}================{os.linesep}"
 FAILURE_FOOTER = f"{os.linesep}"
-
-f"{FAILURE_HEADER} {FAILURE_FOOTER}"
 
 
 class LoginTests(TestCase):
