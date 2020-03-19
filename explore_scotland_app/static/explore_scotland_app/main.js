@@ -8,7 +8,4 @@ $('document').ready(function(){
 	$('input[type="file"]').addClass('p-1');
 	$('input[type="button"]').addClass('btn btn-primary');
 	
-	{% if messages %}
-	$('#message_modal').modal('show');
-	{% endif %}
 });
