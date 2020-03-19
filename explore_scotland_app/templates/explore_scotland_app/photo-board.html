@@ -6,14 +6,27 @@
 {% block body_block %}
 
 
-<h4>10 Photos For You</h4>
-<div class="photo-bar d-flex align-items-center">
-	
+<h4>Photos For You</h4>
+
+<div id="photoCarousel" class="carousel slide" data-ride="carousel">
+  <ol class="carousel-indicators">
+  </ol>
+  <div class="carousel-inner">
+  </div>
+  <a class="carousel-control-prev" href="#photoCarousel" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#photoCarousel" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
 </div>
 {% endblock %}
 
 {% block script_block %}
 <script>
+
 $('document').ready(function(){
 	var url = {% if board_type == 'daily-board' %}
 				"{% url 'explore_scotland_app:get_photos' %}"
@@ -30,22 +43,25 @@ $('document').ready(function(){
 		timeout: 500,     // timeout milliseconds
 		success: function (data,status,xhr) {   // success callback function
 			data = JSON.parse(data);
-			data.map((photo)=>{
-				var photoDiv = `<div>
-									<div class='photo-container'>
-										<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
-											<img class="border rounded mw-100" src='{{MEDIA_URL}}/${photo.fields.picture}'/>
-										</a>
-									</div>
-									<p>
-										<strong>${photo.fields.owner}</strong> ${photo.fields.description}
-									</p>
+			var active = 'active';
+			data.map((photo, i)=>{
+				var photoMeta = `<li data-target="#photoCarousel" data-slide-to="${i}" class="${active}"></li>`
+				var photoDiv = `<div class="carousel-item ${active}">
+									<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
+										<img src="{{MEDIA_URL}}/${photo.fields.picture}" alt="" class="img-fluid" width="100%" height="auto">
+										<div class="carousel-caption d-none d-md-block">
+											<h5>${photo.fields.owner}</h5>
+											<p>${photo.fields.description}</p>
+										</div>
+									</a>
 								</div>`;
-				$('.photo-bar').append(photoDiv);
+				$('.carousel-indicators').append(photoMeta);
+				$('.carousel-inner').append(photoDiv);
+				active = '';
 			});
 		},
 		error: function (jqXhr, textStatus, errorMessage) { // error callback 
-			$('.photo-bar').append('Error: ' + errorMessage);
+			$('.carousel-inner').append('Error: ' + errorMessage);
 		}
 	});
 	

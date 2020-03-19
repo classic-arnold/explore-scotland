@@ -4,7 +4,7 @@
 {% block title_block %}Home{% endblock %}
 
 {% block body_block %}
-<div>
+<div class="mt-3">
 	<form id="search_form" action="{% url 'explore_scotland_app:search_photos' %}" method="get" class="m-auto d-flex flex-column align-items-center">
 		<div>
 			<label class="text-center">Search (Leave blank to see all photos)</label>
@@ -18,6 +18,16 @@
 				<option value="latest" {% if sorted_by == 'latest' %}selected{% endif %}>Latest Uploads</option>
 			</select>
 		</div>
+		
+		<div>
+			<label class="mt-3 d-block text-center">Category</label>
+			<select name="category">
+				<option value="all">All</option>
+				{% for category in categories %}
+				<option value="{{category.0}}" {% if category_searched == category.0 %}selected{% endif %}>{{category.1}}</option>
+				{% endfor %}
+			</select>
+		</div>
 	
 		<div class="mt-3">
 			<input type="submit" value="Explore Scotland!">
@@ -25,7 +35,7 @@
 	</form>
 </div>
 <div class="mt-5">
-	<h4>Search results for {{query}} sorted by {{sorted_by}}</h4>
+	<h4>Search results for <i>{{query}}</i> sorted by <i>{{sorted_by}}</i></h4>
 	<div class="photo-bar d-flex align-items-center">
 		{% if not photos %}
 			<p class="text-center">No results</p>
