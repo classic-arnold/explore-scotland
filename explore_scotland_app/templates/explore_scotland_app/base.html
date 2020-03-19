@@ -14,24 +14,46 @@
 </head>
 
 <body>
+	<div id="message_modal" class="modal" tabindex="-1" role="dialog">
+	  <div class="modal-dialog" role="document">
+		<div class="modal-content">
+		  <div class="modal-body">
+			{% if messages %}
+			<ul class="messages">
+				{% for message in messages %}
+				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+				{% endfor %}
+			</ul>
+			{% endif %}
+		  </div>
+		  <div class="modal-footer">
+			<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  </div>
+		</div>
+	  </div>
+	</div>
 	<div class="container">
 		<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+		
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav ml-auto mr-5 pr-5">
-			  <li class="nav-item">
-				<a class="nav-link" href="#"><span class="d-flex">Hello {{request.user}} 
-					<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center ml-3">
-						<img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}">
-					</div></span>
-				</a>
-			  </li>
+			  {% if user.is_authenticated %}
 			  <li class="nav-item active">
-				<a class="nav-link" href="{% url 'explore_scotland_app:index' %}">Home</a>
+			  	<span class="nav-link"><span class="d-flex">
+					<a href="{% url 'explore_scotland_app:index' %}" class="btn btn-sm btn-outline-light">Home</a>
+				</span>
+			  </li>
+			  <li class="nav-item">
+			  	<span class="nav-link"><span class="d-flex">
+					<a class="btn btn-sm btn-outline-light" href="{% url 'explore_scotland_app:upload_photo' %}">Upload Photo</a>
+				</span>
 			  </li>
 			  <li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				  Account
-				</a>
+			  	<span class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			  		<a class="dropdown-toggle btn btn-sm btn-outline-light" href="#">
+				 	 Account
+					</a>
+				</span>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 				  <a class="dropdown-item" href="{% url 'explore_scotland_app:profile' %}">Dashboard</a>
 				  <a class="dropdown-item" href="{% url 'explore_scotland_app:edit_profile' %}">Edit account</a>
@@ -39,6 +61,22 @@
 				  <a class="dropdown-item" href="{% url 'explore_scotland_app:logout' %}">Logout</a>
 				</div>
 			  </li>
+			  <li class="nav-item">
+				<span class="nav-link disabled">
+					<span class="d-flex align-items-center text-light">
+						<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center mr-3">
+							<img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}">
+						</div> Hello {{request.user}}
+					</span>
+				</span>
+			  </li>
+			  {% else %}
+			  <li class="nav-item">
+				<span class="nav-link"><span class="d-flex">
+					<a href="{% url 'explore_scotland_app:login' %}" class="btn btn-sm btn-outline-light">Login / Signup</a>
+				</span>
+			  </li>
+			  {% endif %}
 			</ul>
 		  </div>
 		</nav>
@@ -61,18 +99,13 @@
 		</footer>
 	</div>
 	
+	<script src="{% static 'explore_scotland_app/main.js' %}"></script>
+	
+	{% if messages %}
 	<script>
-		$('document').ready(function(){
-			$('form').addClass('form-group');
-			$('input').addClass('form-control');
-			
-			$('input[type="submit"]').removeClass('form-control');
-			$('input[type="submit"]').addClass('btn btn-primary');
-			
-			$('input[type="file"]').addClass('p-1');
-			$('input[type="button"]').addClass('btn btn-primary');
-		});
+	$('#message_modal').modal('show');
 	</script>
+	{% endif %}
 	
 	{% block script_block %} {% endblock %}
 	

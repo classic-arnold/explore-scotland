@@ -10,21 +10,6 @@ footer * {
 	box-shadow: 8px 8px 8px 1px #888888;
 }
 
-.cat-bar a {
-	border: 1px solid black;
-	border-radius: 3px;
-	padding: 5px;
-	margin: 5px;
-	box-shadow: 8px 8px 8px 1px #888888;
-	color: black;
-}
-
-.cat-bar a:hover {
-	background: white;
-	text-decoration: none;
-	transform: translateY(-10px);
-}
-
 footer *, footer a:hover {
 	background: white;
 	color: black;
@@ -35,6 +20,7 @@ footer a:hover {
 	transform: translateY(-10px);
 }
 
+/* 
 .photo-bar{
 	overflow-x: scroll;
   	overflow-y: hidden;
@@ -45,6 +31,7 @@ footer a:hover {
   		display: inline-block;
   	}
 }
+ */
 
 .photo-container{
 	width: 300px;

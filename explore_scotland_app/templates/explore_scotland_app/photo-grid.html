@@ -1,0 +1,18 @@
+{% if not photos %}
+	<p class="text-center">No photos</p>
+{% else %}
+<div class="d-flex flex-wrap align-items-center">
+	{% for photo in photos %}
+		<div class="">
+			<div class='photo-container'>
+				<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
+					<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
+				</a>
+			</div>
+			<p>
+				<strong>{{photo.owner}}</strong> {{photo.description}}
+			</p>
+		</div>
+	{% endfor %}
+</div>
+{% endif %}

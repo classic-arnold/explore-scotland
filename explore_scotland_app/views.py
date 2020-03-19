@@ -10,10 +10,7 @@ from django.contrib.auth.decorators import login_required
 from datetime import datetime
 
 def index(request):
-	ctx = {
-		'categories': Photo.CATEGORY_CHOICES,
-	}
-	return render(request, 'explore_scotland_app/index.html', ctx)
+	return render(request, 'explore_scotland_app/index.html')
 
 def register(request):
 	# A boolean value for telling the template
@@ -67,6 +64,8 @@ def register(request):
 	# Render the template depending on the context.
 	return render(request,'explore_scotland_app/register.html',context = {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
+from django.contrib import messages
+
 def user_login(request):
 	# If the request is a HTTP POST, try to pull out the relevant information.
 	if request.method == 'POST':
@@ -94,11 +93,20 @@ def user_login(request):
 				return redirect(reverse('explore_scotland_app:index'))
 			else:
 				# An inactive account was used - no logging in!
-				return HttpResponse("Your Explore Scotland account is disabled.")
+				messages.info(request, 'Your Explore Scotland account is disabled.')
+				try:
+					return redirect(request.META.get('HTTP_REFERER'))
+				except:
+					pass
+				return redirect(reverse('explore_scotland_app:login'))
 		else:
 			# Bad login details were provided. So we can't log the user in.
-			print(f"Invalid login details: {username}, {password}")
-			return HttpResponse("Invalid login details supplied.")
+			messages.info(request, 'Invalid login details supplied.')
+			try:
+				return redirect(request.META.get('HTTP_REFERER'))
+			except:
+				pass
+			return redirect(reverse('explore_scotland_app:login'))
 	# The request is not a HTTP POST, so display the login form.
 	# This scenario would most likely be a HTTP GET.
 	else:
@@ -161,7 +169,12 @@ def delete_user(request):
 	try:
 		request.user.delete()
 	except:
-		return HttpResponse("Unable to delete account.")
+		messages.info(request, 'Unable to delete account.')
+		try:
+			return redirect(request.META.get('HTTP_REFERER'))
+		except:
+			pass
+		return redirect(reverse('explore_scotland_app:index'))
 	return redirect(reverse('explore_scotland_app:index'))
 	
 @login_required
@@ -196,19 +209,35 @@ def delete_photo(request, photo_id):
 	try:
 		photo = Photo.objects.get(pk=photo_id)
 	except Photo.DoesNotExist:
-		return HttpResponse('Photo does not exist.')
+		messages.info(request, 'You tried to delete a photo that does not exist.')
+		try:
+			return redirect(request.META.get('HTTP_REFERER'))
+		except:
+			pass
+		return redirect(reverse('explore_scotland_app:profile'))
 	
 	if photo.owner == request.user.profile:
 		photo.delete()
 	else:
-		return HttpResponse('You are not the owner of this photo.')
+		messages.info(request, 'You tried to delete a photo you do not own.')
+		try:
+			return redirect(request.META.get('HTTP_REFERER'))
+		except:
+			pass
+		return redirect(reverse('explore_scotland_app:profile'))
 	
 	return redirect(reverse('explore_scotland_app:profile'))
 	
 from django.core.serializers import serialize
+import datetime
 
-def get_photos(request):
-	photos = serialize('json', Photo.objects.all()[:10])
+def get_all_photos(request, count):
+	photos = serialize('json', Photo.objects.all()[:count])
+	return JsonResponse(photos, safe=False)
+	
+def get_photos_from_days_ago(request, days):
+	time = datetime.datetime.now() - datetime.timedelta(days = days)
+	photos = serialize('json', Photo.objects.filter(date_added__gte=time)[:10])
 	return JsonResponse(photos, safe=False)
 	
 from django.db.models import Count, Q
@@ -244,7 +273,6 @@ def search_photos(request):
 			'photos': photos,
 			'query': query_string,
 			'sorted_by': sorted_by,
-			'categories': Photo.CATEGORY_CHOICES,
 			'category_searched': category
 		}
 		return render(request, 'explore_scotland_app/search-photos.html', ctx)
@@ -258,7 +286,12 @@ def picture_details(request, photo_id):
 	try:
 		photo = Photo.objects.get(pk=photo_id)
 	except Photo.DoesNotExist:
-		return HttpResponse('Photo does not exist.')
+		messages.info(request, 'The photo you are looking for does not exist.')
+		try:
+			return redirect(request.META.get('HTTP_REFERER'))
+		except:
+			pass
+		return redirect(reverse('explore_scotland_app:index'))
 	
 	comment_form = CommentForm()
 	
@@ -292,12 +325,17 @@ def post_comment(request, photo_id):
 			
 			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 		else:
-			return HttpResponse('Failed to add comment.')
+			messages.info(request, 'Failed to add comment.')
+			try:
+				return redirect(request.META.get('HTTP_REFERER'))
+			except:
+				pass
+			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 	try:
 		return redirect(request.META.get('HTTP_REFERER'))
 	except:
 		pass
-	return redirect(reverse('explore_scotland_app:index'))
+	return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 	
 @login_required
 def like_photo(request, photo_id):
@@ -325,7 +363,12 @@ def edit_photo(request, photo_id):
 		
 			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 		else:
-			return HttpResponse('Failed to edit photo.')
+			messages.info(request, 'Failed to edit photo.')
+			try:
+				return redirect(request.META.get('HTTP_REFERER'))
+			except:
+				pass
+			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 	photo_form = PhotoFormWithoutPhoto(instance=photo)
 	ctx = {
 		'photo_form': photo_form,
