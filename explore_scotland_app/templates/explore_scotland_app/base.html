@@ -15,31 +15,35 @@
 
 <body>
 	<div class="container">
-		<div class="p-3 d-flex justify-content-end">
-			{% if user.is_authenticated %}
-			<!-- add link -->
-			<span class="d-flex align-items-center">
-				<span class="d-flex align-items-center">Hello {{request.user}} 
+		<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav ml-auto mr-5 pr-5">
+			  <li class="nav-item">
+				<a class="nav-link" href="#"><span class="d-flex">Hello {{request.user}} 
 					<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center ml-3">
 						<img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}">
-					</div>
-				</span>
-				<a href="{% url 'explore_scotland_app:profile' %}" class="small ml-3">
-					Dashboard
+					</div></span>
 				</a>
-				<a href="{% url 'explore_scotland_app:edit_profile' %}" class="small ml-3">
-					Edit account
+			  </li>
+			  <li class="nav-item active">
+				<a class="nav-link" href="{% url 'explore_scotland_app:index' %}">Home</a>
+			  </li>
+			  <li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				  Account
 				</a>
-				<a href="{% url 'explore_scotland_app:logout' %}" class="small ml-3">
-					Logout
-				</a>
-			</span>
-			{% else %}
-			<a href="{% url 'explore_scotland_app:login' %}" class="btn btn-outline-primary btn-sm">Account</a>
-			{% endif %}
-		</div>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+				  <a class="dropdown-item" href="{% url 'explore_scotland_app:profile' %}">Dashboard</a>
+				  <a class="dropdown-item" href="{% url 'explore_scotland_app:edit_profile' %}">Edit account</a>
+				  <div class="dropdown-divider"></div>
+				  <a class="dropdown-item" href="{% url 'explore_scotland_app:logout' %}">Logout</a>
+				</div>
+			  </li>
+			</ul>
+		  </div>
+		</nav>
 
-		<div class="text-center">
+		<div class="text-center mt-5">
 			<a href="{% url 'explore_scotland_app:index' %}"><img src="{% static 'explore_scotland_app/logo/logo.png' %}" width="150" height="150"  alt="Logo"/></a>
 		</div>
 		{% block body_block %} {% endblock %}

@@ -9,7 +9,7 @@
 			<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center">
 				<img class="img-fluid" src="{{MEDIA_ROOT}}{{photo.owner.picture.url}}">
 			</div>
-			<strong class="ml-3">{{photo.owner}}</strong>
+			<span><strong class="ml-3">{{photo.owner}}</strong> posted on {{photo.date_added}}</span>
 		</div>
 		
 		<div class="mt-3">
@@ -36,6 +36,7 @@
 			{{photo.description}}
 		</p>
 		<span id="tags" class="mt-3">
+			<small class='badge badge-primary mr-1'>{{photo.get_categories_display}}</small>
 		</span>
 	</div>
 		
@@ -56,6 +57,9 @@
 	
 	<div>
 		<h4>Other comments</h4>
+		{% if not comments %}
+			<p class="text-center">No comments</p>
+		{% endif %}
 		{% for comment in comments %}
 		<div class="card mt-3" style="width: 18rem;">
 		  <div class="card-body">
@@ -101,6 +105,9 @@
 	}
 	
 	$('document').ready(function(){
+		if ("{{photo.tags}}" == "None"){
+			return;
+		}
 		var tags = "{{photo.tags}}";
 		tagsArr = tags.split(" ");
 		tagsArr.map((tag)=>{
@@ -108,5 +115,9 @@
 			$("#tags").append(tagElem);
 		})
 	});
+	
+	{% if successful %}
+	alert(Upload successful);
+	{% endif %}
 </script>
 {% endblock %}

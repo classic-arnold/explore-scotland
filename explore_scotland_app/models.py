@@ -4,6 +4,10 @@ from django.core.exceptions import ValidationError
 
 from django.contrib.auth.models import User
 
+from PIL import Image
+
+from django.core.files.base import ContentFile
+
 # Create your models here.
 class UserProfile(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
@@ -28,7 +32,7 @@ class Photo(models.Model):
 	description = models.TextField(max_length=256)
 	date_added = models.DateField(auto_now_add=True)
 	categories = models.CharField(max_length=2, choices=CATEGORY_CHOICES, default=LANDSCAPE)
-	tags = models.CharField(max_length=256) #add choice
+	tags = models.CharField(max_length=256, null=True, blank=True) #add choice
 	likes = models.ManyToManyField(UserProfile, related_name="photos_liked")
 	picture = models.ImageField(upload_to="")
 	
@@ -37,6 +41,30 @@ class Photo(models.Model):
 	
 	def __str__(self):
 		return self.owner.user.username + " photo."
+		
+# 	def save(self, *args, **kwargs):
+# 		super().save()
+# 		img = Image.open(self.picture.path)
+# 		width, height = img.size  # Get dimensions
+# 
+# 		# check which one is smaller
+# 		if height < width:
+# 			# make square by cutting off equal amounts left and right
+# 			left = (width - height) / 2
+# 			right = (width + height) / 2
+# 			top = 0
+# 			bottom = height
+# 			img = img.crop((left, top, right, bottom))
+# 
+# 		elif width < height:
+# 			# make square by cutting off bottom
+# 			left = 0
+# 			right = width
+# 			top = 0
+# 			bottom = width
+# 			img = img.crop((left, top, right, bottom))
+# 
+# 		img.save(self.picture.path)
 		
 class Comment(models.Model):
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="comment_posted")

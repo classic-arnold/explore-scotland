@@ -7,36 +7,40 @@
 <h2 class="homepagetitle text-center"><span style="color:#6495ED"> Share &</span>
 <span style="color:#DC143C"> Love </span> </h2>
 
-<h4>Your Uploaded Photos</h4>
-<div class="photo-bar  d-flex align-items-center">
-	{% for photo in request.user.profile.photos_uploaded.all %}
-		<div>
-			<div class='photo-container'>
-				<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
-					<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
-				</a>
+<div>
+	<h4>Your Uploaded Photos</h4>
+	<div class="photo-bar  d-flex align-items-center">
+		{% for photo in request.user.profile.photos_uploaded.all %}
+			<div>
+				<div class='photo-container'>
+					<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
+						<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
+					</a>
+				</div>
+				<p>
+					<strong>{{photo.owner}}</strong> {{photo.description}}
+				</p>
 			</div>
-			<p>
-				<strong>{{photo.owner}}</strong> {{photo.description}}
-			</p>
-		</div>
-	{% endfor %}
-	<a href="{% url 'explore_scotland_app:upload_photo' %}">Upload photo</a>
+		{% endfor %}
+		<a href="{% url 'explore_scotland_app:upload_photo' %}">Upload photo</a>
+	</div>
 </div>
 
-<h4>Your Liked Photos</h4>
-<div class="photo-bar  d-flex align-items-center">
-	{% for photo in request.user.profile.photos_liked.all %}
-		<div>
-			<div class='photo-container'>
-				<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
-					<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
-				</a>
+<div class="mt-5">
+	<h4>Your Liked Photos</h4>
+	<div class="photo-bar  d-flex align-items-center">
+		{% for photo in request.user.profile.photos_liked.all %}
+			<div>
+				<div class='photo-container'>
+					<a href="{% url 'explore_scotland_app:picture_details' photo.pk %}">
+						<img class="border rounded mw-100" src='{{photo.picture.url}}'/>
+					</a>
+				</div>
+				<p>
+					<strong>{{photo.owner}}</strong> {{photo.description}}
+				</p>
 			</div>
-			<p>
-				<strong>{{photo.owner}}</strong> {{photo.description}}
-			</p>
-		</div>
-	{% endfor %}
+		{% endfor %}
+	</div>
 </div>
 {% endblock %}
