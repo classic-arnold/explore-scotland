@@ -218,7 +218,7 @@ def delete_photo(request, photo_id):
 	return redirect(reverse('explore_scotland_app:profile'))
 
 def get_all_photos(request, count):
-	photos = serialize('json', Photo.objects.all()[:count])
+	photos = serialize('json', Photo.objects.all().annotate(q_count=Count('likes')).order_by('-q_count')[:count])
 	return JsonResponse(photos, safe=False)
 	
 def get_photos_from_days_ago(request, days):
