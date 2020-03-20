@@ -20,19 +20,6 @@ footer a:hover {
 	transform: translateY(-10px);
 }
 
-/* 
-.photo-bar{
-	overflow-x: scroll;
-  	overflow-y: hidden;
-  	white-space: nowrap;
-  	-webkit-overflow-scrolling: touch;
-
-  	nth-child(1) {
-  		display: inline-block;
-  	}
-}
- */
-
 .photo-container{
 	width: 300px;
 	heigh: auto;
@@ -57,8 +44,10 @@ a {
 	text-decoration: none;	
 }
 
-form{
+form {
 	max-width: 300px;
+	border: 1px solid #888888;
+	box-shadow: 8px 8px 8px 1px #888888;
 }
 
 #daily-board{
