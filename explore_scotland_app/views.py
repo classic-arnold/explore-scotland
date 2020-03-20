@@ -151,10 +151,8 @@ def edit_profile(request):
 
 			# Update our variable to indicate that the template
 			# registration was successful.
-			ctx = {
-				'changed': True,
-			}
-			return render(request, 'explore_scotland_app/edit-profile.html', ctx)
+			messages.info('Update successful.')
+			return redirect(reverse('explore_scotland_app:index'))
 			
 	user_form = UserFormWithoutPassword(instance = request.user)
 	profile_form = UserProfileForm(instance = request.user.profile)

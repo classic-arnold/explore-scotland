@@ -5,19 +5,20 @@
 
 {% block body_block %}
 	<h1>Edit Profile</h1>
-	{% if changed %}
-	<strong>Update successful</strong>
-	<a href="{% url 'explore_scotland_app:index' %}">Return to the homepage.</a><br/>
-	{% else %}
 	<strong>Edit your account details here!</strong> <br/>
-	<form id="user_form" method="post" action="{% url 'explore_scotland_app:edit_profile' %}" enctype="multipart/form-data">
-		{% csrf_token %}
-		<!-- Display each form -->
-		{{ user_form.as_p }}
-		{{ profile_form.as_p }}
-		<!-- Provide a button to click to submit the form. -->
-		<input type="submit" name="submit" value="Update" />
-	</form>
-	<a href="{% url 'explore_scotland_app:delete_user' %}" class="btn btn-danger">Delete account</a>
-	{% endif %}
+	<div class="row">
+		<div class="col-md-6 border bg-light p-5">
+			<form id="user_form" method="post" action="{% url 'explore_scotland_app:edit_profile' %}" enctype="multipart/form-data">
+				{% csrf_token %}
+				<!-- Display each form -->
+				{{ user_form.as_p }}
+				{{ profile_form.as_p }}
+				<!-- Provide a button to click to submit the form. -->
+				<input type="submit" name="submit" value="Update" />
+			</form>
+		</div>
+		<div class="col-md-6 d-flex align-items-center justify-content-center bg-dark">
+			<a href="{% url 'explore_scotland_app:delete_user' %}" class="btn btn-danger btn-lg">Delete account</a>
+		</div>
+	</div>
 {% endblock %}
