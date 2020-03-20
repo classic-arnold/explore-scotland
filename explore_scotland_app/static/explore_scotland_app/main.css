@@ -68,7 +68,7 @@ form {
 	margin-right: 20px;
 }
 
-.fb-login-button, .ig-login-button, .twitter-login-button{
+.fb-login-button, .ig-login-button, .twitter-login-button, .fb-login-button:hover, .ig-login-button:hover, .twitter-login-button:hover{
 	color: white;
 }
 
