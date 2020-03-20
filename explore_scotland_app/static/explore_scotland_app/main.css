@@ -68,4 +68,24 @@ form {
 	margin-right: 20px;
 }
 
+.fb-login-button, .ig-login-button, .twitter-login-button{
+	color: white;
+}
+
+.fb-login-button {
+	background: #3B5998;	
+}
+
+.ig-login-button {
+	background: #E1306C;
+}
+
+.twitter-login-button {
+	background: #1DA1F2;
+}
+
+
+
+
+
 
