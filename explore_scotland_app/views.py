@@ -27,12 +27,6 @@ def index(request):
 	return render(request, 'explore_scotland_app/index.html')
 
 def register(request):
-	# A boolean value for telling the template
-	# whether the registration was successful.
-	# Set to False initially. Code changes value to
-	# True when registration succeeds.
-	registered = False
-
 	# If it's a HTTP POST, we're interested in processing form data.
 	if request.method == 'POST':
 		# Attempt to grab information from the raw form information.
@@ -65,10 +59,10 @@ def register(request):
 
 			# Now we save the UserProfile model instance.
 			profile.save()
-
-			# Update our variable to indicate that the template
-			# registration was successful.
-			registered = True
+			
+			login(request, user)
+			
+			return redirect('explore_scotland_app:index')
 	else:
 		# Not a HTTP POST, so we render our form using two ModelForm instances.
 		# These forms will be blank, ready for user input.
@@ -76,7 +70,7 @@ def register(request):
 		profile_form = UserProfileForm()
 
 	# Render the template depending on the context.
-	return render(request,'explore_scotland_app/register.html',context = {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+	return render(request,'explore_scotland_app/register.html',context = {'user_form': user_form, 'profile_form': profile_form})
 
 def user_login(request):
 	# If the request is a HTTP POST, try to pull out the relevant information.

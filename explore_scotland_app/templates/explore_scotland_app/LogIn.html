@@ -5,13 +5,18 @@
 
 {% block body_block %}
 <h1>Login</h1>
-<a href="{% url 'explore_scotland_app:register' %}">Not registered? Register here</a>
+<div class="row">
+	<div class="col-md-6 border bg-light p-5">
+		<form id="login_form" method="post" action="{% url 'explore_scotland_app:login' %}" class="">
+			{% csrf_token %}
+			Username: <input type="text" name="username" value="" size="50" /> <br />
+			Password: <input type="password" name="password" value="" size="50" /> <br />
+			<input type="submit" value="submit" />
+		</form>
+	</div>
+	<div class="login-bg col-md-6 d-flex align-items-center bg-dark">
+		<a href="{% url 'explore_scotland_app:register' %}" class="text-light font-weight-bold text-uppercase lead">Not registered? Register here</a>
+	</div>
+</div>
 
-<form id="login_form" method="post" action="{% url 'explore_scotland_app:login' %}">
-	{% csrf_token %}
-	Username: <input type="text" name="username" value="" size="50" /> <br />
-	Password: <input type="password" name="password" value="" size="50" /> <br />
-	<input type="submit" value="submit" />
-</form>
-
-{% endblock %} 
+{% endblock %}

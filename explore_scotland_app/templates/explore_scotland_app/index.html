@@ -11,45 +11,12 @@
 </div>
 
 <div class="row">
-	<div class="col-8" style="height:40em;">
-		{% photo_carousel %}
-
-	</div>
-	<div class="col-4">
+	<div class="col-lg-4 border bg-light d-flex justify-content-center p-5">
 		{% get_search_form %}
+	</div>
+	<div class="col-lg-8 decor-photo p-0 d-none d-lg-block">
+		<img src="{% static 'explore_scotland_app/img/hero.jpg' %}" alt="" class="img-responsive" width="100%" height="auto">
 	</div>
 </div>
 
-{% endblock %}
-
-{% block script_block %}
-<script>
-
-$('document').ready(function(){
-	var url = "{% url 'explore_scotland_app:get_all_photos' 10 %}";
-	$.ajax(url,
-	{
-		dataType: 'json', // type of response data
-		timeout: 500,     // timeout milliseconds
-		success: function (data,status,xhr) {   // success callback function
-			data = JSON.parse(data);
-			var active = 'active';
-			data.map((photo, i)=>{
-				var photoMeta = `<li data-target="#photoCarousel" data-slide-to="${i}" class="${active}"></li>`
-				var photoDiv = `<div class="carousel-item ${active} text-center">
-									<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
-										<img src="{{MEDIA_URL}}/${photo.fields.picture}" alt="" class="img-responsive" width="100%" height="auto">
-									</a>
-								</div>`;
-				$('.carousel-indicators').append(photoMeta);
-				$('.carousel-inner').append(photoDiv);
-				active = '';
-			});
-		},
-		error: function (jqXhr, textStatus, errorMessage) { // error callback 
-			$('.carousel-inner').append('Error: ' + errorMessage);
-		}
-	});
-});
-</script>
 {% endblock %}

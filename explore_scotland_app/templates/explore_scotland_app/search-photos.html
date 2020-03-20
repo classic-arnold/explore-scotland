@@ -6,14 +6,14 @@
 
 {% block body_block %}
 <div class="row">
-	<div class="col-8">
+	<div class="col-md-4 p-5 border bg-light">
+		{% get_search_form category_searched=category_searched sorted_by=sorted_by query=query %}
+	</div>
+	<div class="col-md-8 p-5">
 		<div class="">
 			<h4>Search results for <i>{{query}}</i> sorted by <i>{{sorted_by}}</i></h4>
 			{% get_photo_grid photos=photos %}
 		</div>
-	</div>
-	<div class="col-4">
-		{% get_search_form category_searched=category_searched sorted_by=sorted_by query=query %}
 	</div>
 </div>
 {% endblock %}
