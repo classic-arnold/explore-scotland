@@ -223,7 +223,7 @@ def get_all_photos(request, count):
 	
 def get_photos_from_days_ago(request, days):
 	time = datetime.datetime.now() - datetime.timedelta(days = days)
-	photos = serialize('json', Photo.objects.filter(date_added__gte=time)[:10])
+	photos = serialize('json', Photo.objects.filter(date_added__gte=time)[:10]).annotate(q_count=Count('likes')).order_by('-q_count')
 	return JsonResponse(photos, safe=False)
 
 def search_photos(request):
