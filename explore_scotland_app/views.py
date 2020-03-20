@@ -347,7 +347,9 @@ def photo_board(request, board_type):
 @login_required
 def profile(request):
 	return render(request, 'explore_scotland_app/profile.html')
-
+	
+def about(request):
+	return render(request, 'explore_scotland_app/about.html')
 
 
 

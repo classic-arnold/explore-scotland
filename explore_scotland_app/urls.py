@@ -19,7 +19,8 @@ urlpatterns = [
     path('like-photo/<int:photo_id>', views.like_photo, name='like_photo'),
     path('edit-photo/<int:photo_id>', views.edit_photo, name='edit_photo'),
     path('photo-board/<slug:board_type>', views.photo_board, name='photo_board'),
-    path('profile', views.profile, name='profile'),
+    path('profile/', views.profile, name='profile'),
+    path('about/', views.about, name='about'),
     
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
