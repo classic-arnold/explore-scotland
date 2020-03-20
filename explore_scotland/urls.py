@@ -26,5 +26,6 @@ from explore_scotland_app import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('', include('explore_scotland_app.urls')),
-    path('admin/', admin.site.urls),
+    path('', include('social_django.urls', namespace='social')),
+    path('admin/', admin.site.urls)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
