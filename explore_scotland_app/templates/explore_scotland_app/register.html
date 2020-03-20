@@ -16,8 +16,11 @@
 			<input type="submit" name="submit" value="Register" />
 		</form>
 	</div>
-	<div class="login-bg col-md-6 d-flex align-items-center bg-dark">
-		<a href="{% url 'explore_scotland_app:login' %}" class="text-light font-weight-bold text-uppercase lead">Registered? Login here</a>
+	<div class="login-bg col-md-6 d-flex align-items-center justify-content-center bg-dark p-5">
+		<div class="text-center">
+			<h4 class="text-light font-weight-bold text-uppercase lead">Registered?</h4>
+			<a href="{% url 'explore_scotland_app:login' %}" class="btn btn-primary btn-lg">Login here</a>
+		</div>
 	</div>
 </div>
 {% endblock %}
