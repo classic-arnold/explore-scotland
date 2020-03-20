@@ -9,7 +9,6 @@
 	<div class="border bg-light p-5">
 		<form id="photo_form" method="post" action="{% url 'explore_scotland_app:upload_photo' %}" enctype="multipart/form-data">
 			{% csrf_token %}
-			<img src="#" id="img_preview" width="60px" height="auto" alt=""/>
 			<!-- Display each form -->
 			{{ photo_form.as_p }}
 			<!-- Provide a button to click to submit the form. -->

@@ -8,8 +8,12 @@ $('document').ready(function(){
 	$('input[type="file"]').addClass('p-1');
 	$('input[type="button"]').addClass('btn btn-primary');
 	
+	var prev_img = '<img src="#" id="img_preview" width="60px" height="auto" alt="" class="mt-3"/>';
+	
+	$("input[type=file]").after(prev_img);
+	
 	$("input[type=file]").change(function() {
-	  readURL(this);
+	  readImageURL(this);
 	});
 });
 
@@ -17,7 +21,7 @@ function confirm_delete() {
   return confirm('Are you sure?');
 }
 
-function readURL(input) {
+function readImageURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
     

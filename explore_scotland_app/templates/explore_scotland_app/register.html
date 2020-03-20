@@ -9,7 +9,6 @@
 	<div class="col-md-6 border bg-light p-5">
 		<form id="user_form" method="post" action="{% url 'explore_scotland_app:register' %}" enctype="multipart/form-data">
 			{% csrf_token %}
-			<img src="#" id="img_preview" width="60px" height="auto" alt=""/>
 			<!-- Display each form -->
 			{{ user_form.as_p }}
 			{{ profile_form.as_p }}
