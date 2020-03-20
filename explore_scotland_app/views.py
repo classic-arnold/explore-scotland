@@ -315,7 +315,7 @@ def like_photo(request, photo_id):
 		photo.likes.add(request.user.profile)
 	
 	pop_url(request.META)
-	return redirect(reverse('explore_scotland_app:index'))
+	return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 
 @login_required
 def edit_photo(request, photo_id):
