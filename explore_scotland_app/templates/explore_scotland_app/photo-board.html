@@ -1,27 +1,16 @@
   {% extends './base.html' %}
 {% load static %}
+{% load explore_scotland_tags %}
 
-{% block title_block %}Home{% endblock %}
+{% block title_block %}Photo Board{% endblock %}
 
 {% block body_block %}
 
 <div style="height:55em;">
 	<h4>Photos For You</h4>
 
-	<div id="photoCarousel" class="carousel slide" data-ride="carousel" >
-	  <ol class="carousel-indicators">
-	  </ol>
-	  <div class="carousel-inner">
-	  </div>
-	  <a class="carousel-control-prev" href="#photoCarousel" role="button" data-slide="prev">
-		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-		<span class="sr-only">Previous</span>
-	  </a>
-	  <a class="carousel-control-next" href="#photoCarousel" role="button" data-slide="next">
-		<span class="carousel-control-next-icon" aria-hidden="true"></span>
-		<span class="sr-only">Next</span>
-	  </a>
-	</div>
+	{% photo_carousel %}
+	
 </div>
 {% endblock %}
 
