@@ -28,7 +28,7 @@
 		
 				{% if photo.owner == request.user.profile %}
 				<a class="btn btn-primary btn-sm" href="{% url 'explore_scotland_app:edit_photo' photo_id=photo.pk %}">Edit</a>
-				<a class="btn btn-danger btn-sm" href="{% url 'explore_scotland_app:delete_photo' photo_id=photo.pk %}">Delete</a>
+				<a class="btn btn-danger btn-sm" href="{% url 'explore_scotland_app:delete_photo' photo_id=photo.pk %}" onclick="return confirm_delete()">Delete</a>
 				{% endif %}
 			</div>
 		</div>

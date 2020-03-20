@@ -7,5 +7,8 @@ $('document').ready(function(){
 	
 	$('input[type="file"]').addClass('p-1');
 	$('input[type="button"]').addClass('btn btn-primary');
-	
 });
+
+function confirm_delete() {
+  return confirm('Are you sure?');
+}
