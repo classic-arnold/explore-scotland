@@ -18,6 +18,7 @@
 <script>
 function doAjaxImage(){
 	$('document').ready(function(){
+		$('.carousel-inner').append('loading images...');
 		var url = {% if board_type == 'daily-board' %}
 					"{% url 'explore_scotland_app:get_photos_from_days_ago' 0 %}"
 					{% elif board_type == 'weekly-board' %}
