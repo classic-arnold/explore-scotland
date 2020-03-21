@@ -27,7 +27,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 LOGIN_URL = 'explore_scotland_app:login'
 
-STATICFILES_DIRS = [STATIC_DIR, ]
+# STATICFILES_DIRS = [STATIC_DIR, ]
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
