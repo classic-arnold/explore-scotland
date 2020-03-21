@@ -2,6 +2,10 @@ body {
 	font-family: arial;
 }
 
+footer {
+	transition: transform 2s;
+}
+
 footer * {
 	border: 1px solid black;
 	border-radius: 3px;
@@ -88,7 +92,6 @@ form {
 	height:55em;
 }
 
-/* 
 @media only screen and (max-width: 991px) {
 	.photo-board {
 		height:35em;
@@ -106,7 +109,7 @@ form {
 		height:20em;
 	}
 }
- */
+
 
 .card {
 	width: 18rem;
