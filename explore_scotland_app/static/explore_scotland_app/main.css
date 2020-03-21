@@ -84,6 +84,28 @@ form {
 	background: #1DA1F2;
 }
 
+.photo-board {
+	height:55em;
+}
+
+@media only screen and (max-width: 991px) {
+	.photo-board {
+		height:35em;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.photo-board {
+		height:28em;
+	}
+}
+
+@media only screen and (max-width: 395px) {
+	.photo-board {
+		height:20em;
+	}
+}
+
 
 
 
