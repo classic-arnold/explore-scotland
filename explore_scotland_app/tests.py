@@ -15,7 +15,7 @@ FAILURE_HEADER = f"{os.linesep}{os.linesep}{os.linesep}================{os.lines
 FAILURE_FOOTER = f"{os.linesep}"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEST_DIR = os.path.join(BASE_DIR, 'media/test')
+TEST_DIR = os.path.join(BASE_DIR, 'media/media/test')
 TEST_TEMP_DIR = os.path.join(BASE_DIR, 'media/test/temp')
 
 
