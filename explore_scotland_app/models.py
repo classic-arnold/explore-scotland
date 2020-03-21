@@ -8,8 +8,8 @@ from PIL import Image
 
 from django.core.files.base import ContentFile
 
-# Create your models here.
 class UserProfile(models.Model):
+	# user profile to extend user attributes
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
 	picture = models.ImageField(upload_to="")
 	
@@ -17,7 +17,7 @@ class UserProfile(models.Model):
 		return self.user.username
 		
 class Photo(models.Model):
-	
+	# represents a photo
 	LANDSCAPE = 'LS'
 	ARCHITECTURE = 'AC'
 	PEOPLE = 'PP'
@@ -36,6 +36,7 @@ class Photo(models.Model):
 	likes = models.ManyToManyField(UserProfile, related_name="photos_liked")
 	picture = models.ImageField(upload_to="")
 	
+	# order by date descending
 	class Meta:
 		ordering = ('-date_added',)
 	
@@ -43,6 +44,7 @@ class Photo(models.Model):
 		return self.owner.user.username + " photo."
 		
 # 	def save(self, *args, **kwargs):
+#		# cuts the image to a square
 # 		super().save()
 # 		img = Image.open(self.picture.path)
 # 		width, height = img.size  # Get dimensions
@@ -67,12 +69,14 @@ class Photo(models.Model):
 # 		img.save(self.picture.path)
 		
 class Comment(models.Model):
+	# represents a comment
 	owner = models.ForeignKey(UserProfile, on_delete=models.CASCADE, related_name="comment_posted")
 	content = models.TextField(max_length=256)
 	photo = models.ForeignKey(Photo, on_delete=models.CASCADE, related_name="photo_comments", null=True, blank=True)
 	comment = models.ForeignKey("self", on_delete=models.CASCADE, related_name="comment_comments", null=True, blank=True)
 	date_added = models.DateField(auto_now_add=True)
 	
+	# upon saving, check that both the comment field and photo are not empty
 	def save(self):
 		super().save()
 		if self.photo is None and self.comment is None:
