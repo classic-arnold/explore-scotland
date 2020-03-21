@@ -88,6 +88,7 @@ form {
 	height:55em;
 }
 
+/* 
 @media only screen and (max-width: 991px) {
 	.photo-board {
 		height:35em;
@@ -105,6 +106,7 @@ form {
 		height:20em;
 	}
 }
+ */
 
 .card {
 	width: 18rem;
