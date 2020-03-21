@@ -100,6 +100,9 @@
 	
 	<script src="{% static 'explore_scotland_app/main.js' %}"></script>
 	
+	
+	<!-- some inline scripts are used because we found it more efficient loading the js code
+	on only necessary pages, and not on every page -->
 	{% if messages %}
 	<script>
 	$('#message_modal').modal('show');
