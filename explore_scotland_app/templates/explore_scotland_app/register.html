@@ -5,18 +5,22 @@
 
 {% block body_block %}
 <h1>Register</h1>
-{% if registered %}
-<strong>Thank you for registering!</strong>
-<a href="{% url 'explore_scotland_app:index' %}">Return to the homepage.</a> <br/>
-{% else %}
-<a href="{% url 'explore_scotland_app:login' %}">Registered? Login here</a> <br/>
-<form id="user_form" method="post" action="{% url 'explore_scotland_app:register' %}" enctype="multipart/form-data">
-	{% csrf_token %}
-	<!-- Display each form -->
-	{{ user_form.as_p }}
-	{{ profile_form.as_p }}
-	<!-- Provide a button to click to submit the form. -->
-	<input type="submit" name="submit" value="Register" />
-</form>
-{% endif %}
+<div class="row">
+	<div class="col-md-6 border bg-light p-5">
+		<form id="user_form" method="post" action="{% url 'explore_scotland_app:register' %}" enctype="multipart/form-data">
+			{% csrf_token %}
+			<!-- Display each form -->
+			{{ user_form.as_p }}
+			{{ profile_form.as_p }}
+			<!-- Provide a button to click to submit the form. -->
+			<input type="submit" name="submit" value="Register" />
+		</form>
+	</div>
+	<div class="login-bg col-md-6 d-flex align-items-center justify-content-center bg-dark p-5">
+		<div class="text-center">
+			<h4 class="text-light font-weight-bold text-uppercase lead">Registered?</h4>
+			<a href="{% url 'explore_scotland_app:login' %}" class="btn btn-primary btn-lg">Login here</a>
+		</div>
+	</div>
+</div>
 {% endblock %}

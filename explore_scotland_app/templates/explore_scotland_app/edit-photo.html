@@ -1,19 +1,23 @@
 {% extends './base.html' %}
 {% load static %}
 
-{% block title_block %} Upload Photo {% endblock %}
+{% block title_block %} Edit Photo {% endblock %}
 
 {% block body_block %}
 	<h1>Edit Photo</h1>
 	<strong>Edit your photo here!</strong> <br/>
-	<div class="photo-container">
-		<img class="border rounded mw-100" src={{photo.picture.url}}>
+	<div class="border bg-light p-5">
+		<div class="">
+			<img class="" width="300px" height="auto" src={{photo.picture.url}}>
+		</div>
+		<div class="mt-3">
+			<form id="photo_form" method="post" action="{% url 'explore_scotland_app:edit_photo' photo.pk %}" enctype="multipart/form-data">
+				{% csrf_token %}
+				<!-- Display each form -->
+				{{ photo_form.as_p }}
+				<!-- Provide a button to click to submit the form. -->
+				<input type="submit" name="submit" value="Update"/>
+			</form>
+		</div>
 	</div>
-	<form id="photo_form" method="post" action="{% url 'explore_scotland_app:edit_photo' photo.pk %}" enctype="multipart/form-data">
-		{% csrf_token %}
-		<!-- Display each form -->
-		{{ photo_form.as_p }}
-		<!-- Provide a button to click to submit the form. -->
-		<input type="submit" name="submit" value="Update"/>
-	</form>
 {% endblock %}

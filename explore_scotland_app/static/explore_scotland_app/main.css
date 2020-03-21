@@ -20,19 +20,6 @@ footer a:hover {
 	transform: translateY(-10px);
 }
 
-/* 
-.photo-bar{
-	overflow-x: scroll;
-  	overflow-y: hidden;
-  	white-space: nowrap;
-  	-webkit-overflow-scrolling: touch;
-
-  	nth-child(1) {
-  		display: inline-block;
-  	}
-}
- */
-
 .photo-container{
 	width: 300px;
 	heigh: auto;
@@ -57,7 +44,7 @@ a {
 	text-decoration: none;	
 }
 
-form{
+form {
 	max-width: 300px;
 }
 
@@ -80,5 +67,59 @@ form{
 .photo-container{
 	margin-right: 20px;
 }
+
+.fb-login-button, .ig-login-button, .twitter-login-button, .fb-login-button:hover, .ig-login-button:hover, .twitter-login-button:hover{
+	color: white;
+}
+
+.fb-login-button {
+	background: #3B5998;	
+}
+
+.ig-login-button {
+	background: #E1306C;
+}
+
+.twitter-login-button {
+	background: #1DA1F2;
+}
+
+.photo-board {
+	height:55em;
+}
+
+@media only screen and (max-width: 991px) {
+	.photo-board {
+		height:35em;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.photo-board {
+		height:28em;
+	}
+}
+
+@media only screen and (max-width: 395px) {
+	.photo-board {
+		height:20em;
+	}
+}
+
+.card {
+	width: 18rem;
+}
+
+.love {
+	color:#DC143C;
+}
+
+.homepagetitle {
+	color:#6495ED;
+}
+
+
+
+
 
 

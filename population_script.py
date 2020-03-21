@@ -28,21 +28,27 @@ def populate():
 
     test_photos = [
         {'owner': 'alice',
-         'description': 'ben_nevis',
+         'description': 'glasgow bridge',
          'cat': 'LS',
          'tag': 'fort william',
-         'picture': 'test/ben_nevis.jpg'},
+         'picture': 'test/glasgow_bridge.jpg'},
         {'owner': 'alice',
-         'description': 'glasgow_uni',
+         'description': 'glasgow bridge',
          'cat': 'AC',
          'tag': 'glasgow',
-         'picture': 'test/glasgow_uni.jpg'},
+         'picture': 'test/glasgow_bridge_2.jpg'},
         {'owner': 'bob',
-         'description': 'edinburgh_castle',
+         'description': 'building with people',
          'cat': 'AC',
          'tag': 'edinburgh',
-         'picture': 'test/edinburgh_castle.jpg'}
+         'picture': 'test/building_with_people.jpg'},
+        {'owner': 'bob',
+         'description': 'train with smoke',
+         'cat': 'AC',
+         'tag': 'edinburgh',
+         'picture': 'test/train.jpg'},
     ]
+    
 
     for user, user_data in test_users.items():
         add_user(user, user_data['email'], user_data['password'], user_data['image'])

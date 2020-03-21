@@ -5,6 +5,10 @@
 <head>
     <title>Explore Scotland - {% block title_block %}{% endblock %} </title>
     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="shortcut icon" type="image/png" href="{% static 'explore_scotland_app/img/favicon.ico' %}"/>
+    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -32,75 +36,75 @@
 		</div>
 	  </div>
 	</div>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    	<span class="navbar-toggler-icon"></span>
+  	  </button>
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav ml-auto mr-5 pr-5">
+		  {% if user.is_authenticated %}
+		  <li class="nav-item active">
+			<span class="nav-link"><span class="d-flex">
+				<a href="{% url 'explore_scotland_app:index' %}" class="btn btn-sm btn-outline-light">Home</a>
+			</span>
+		  </li>
+		  <li class="nav-item">
+			<span class="nav-link"><span class="d-flex">
+				<a class="btn btn-sm btn-outline-light" href="{% url 'explore_scotland_app:upload_photo' %}">Upload Photo</a>
+			</span>
+		  </li>
+		  <li class="nav-item dropdown">
+			<span class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<a class="dropdown-toggle btn btn-sm btn-outline-light" href="#">
+				 Account
+				</a>
+			</span>
+			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			  <a class="dropdown-item" href="{% url 'explore_scotland_app:profile' %}">Dashboard</a>
+			  <a class="dropdown-item" href="{% url 'explore_scotland_app:edit_profile' %}">Edit account</a>
+			  <div class="dropdown-divider"></div>
+			  <a class="dropdown-item" href="{% url 'explore_scotland_app:logout' %}">Logout</a>
+			</div>
+		  </li>
+		  <li class="nav-item">
+			<span class="nav-link disabled">
+				<span class="d-flex align-items-center text-light">
+					<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center mr-3">
+						<img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}">
+					</div> Hello {{request.user}}
+				</span>
+			</span>
+		  </li>
+		  {% else %}
+		  <li class="nav-item">
+			<span class="nav-link"><span class="d-flex">
+				<a href="{% url 'explore_scotland_app:login' %}" class="btn btn-sm btn-outline-light">Login / Signup</a>
+			</span>
+		  </li>
+		  {% endif %}
+		</ul>
+	  </div>
+	</nav>
 	<div class="container">
-		<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-		
-		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav ml-auto mr-5 pr-5">
-			  {% if user.is_authenticated %}
-			  <li class="nav-item active">
-			  	<span class="nav-link"><span class="d-flex">
-					<a href="{% url 'explore_scotland_app:index' %}" class="btn btn-sm btn-outline-light">Home</a>
-				</span>
-			  </li>
-			  <li class="nav-item">
-			  	<span class="nav-link"><span class="d-flex">
-					<a class="btn btn-sm btn-outline-light" href="{% url 'explore_scotland_app:upload_photo' %}">Upload Photo</a>
-				</span>
-			  </li>
-			  <li class="nav-item dropdown">
-			  	<span class="nav-link" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			  		<a class="dropdown-toggle btn btn-sm btn-outline-light" href="#">
-				 	 Account
-					</a>
-				</span>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-				  <a class="dropdown-item" href="{% url 'explore_scotland_app:profile' %}">Dashboard</a>
-				  <a class="dropdown-item" href="{% url 'explore_scotland_app:edit_profile' %}">Edit account</a>
-				  <div class="dropdown-divider"></div>
-				  <a class="dropdown-item" href="{% url 'explore_scotland_app:logout' %}">Logout</a>
-				</div>
-			  </li>
-			  <li class="nav-item">
-				<span class="nav-link disabled">
-					<span class="d-flex align-items-center text-light">
-						<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center mr-3">
-							<img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}">
-						</div> Hello {{request.user}}
-					</span>
-				</span>
-			  </li>
-			  {% else %}
-			  <li class="nav-item">
-				<span class="nav-link"><span class="d-flex">
-					<a href="{% url 'explore_scotland_app:login' %}" class="btn btn-sm btn-outline-light">Login / Signup</a>
-				</span>
-			  </li>
-			  {% endif %}
-			</ul>
-		  </div>
-		</nav>
-
-		<div class="text-center mt-5">
+		<div class="text-center">
 			<a href="{% url 'explore_scotland_app:index' %}"><img src="{% static 'explore_scotland_app/logo/logo.png' %}" width="150" height="150"  alt="Logo"/></a>
 		</div>
 		{% block body_block %} {% endblock %}
-		<footer class="d-flex justify-content-around align-items-center flex-wrap mt-5">
+		<footer class="d-flex justify-content-around align-items-center flex-wrap mt-5 pb-3">
 			<span>© 2020 Team LAT</span>
 			<a id="daily-board" href="{% url 'explore_scotland_app:photo_board' 'daily-board' %}">Daily Board</a>
 			<a id="weekly-board" href="{% url 'explore_scotland_app:photo_board' 'weekly-board' %}">Weekly Board </a>
 			<a id="monthly-board" href="{% url 'explore_scotland_app:photo_board' 'monthly-board' %}">Monthly Board </a>
 			<a id="overall-board" href="{% url 'explore_scotland_app:photo_board' 'overall-board' %}">Overall Board </a>
-			<a href="#">Support </a>
-			<a href="#">Contact Us </a>
-			<a href="#">Terms </a>
-			<a href="#">Privacy </a>
-			<a href="#">FAQ </a>
+			<a id="about" href="{% url 'explore_scotland_app:about' %}">About Us</a>
 		</footer>
 	</div>
 	
 	<script src="{% static 'explore_scotland_app/main.js' %}"></script>
 	
+	
+	<!-- some inline scripts are used because we found it more efficient loading the js code
+	on only necessary pages, and not on every page -->
 	{% if messages %}
 	<script>
 	$('#message_modal').modal('show');

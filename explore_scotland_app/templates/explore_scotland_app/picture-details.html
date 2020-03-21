@@ -5,42 +5,45 @@
 
 {% block body_block %}
 	<div>
-		<div class="d-flex align-items-center">
+		<div class="d-flex align-items-center border-top py-3">
 			<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center">
 				<img class="img-fluid" src="{{MEDIA_ROOT}}{{photo.owner.picture.url}}">
 			</div>
 			<span><strong class="ml-3">{{photo.owner}}</strong> posted on {{photo.date_added}}</span>
 		</div>
 		
-		<div class="mt-3">
-			<iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button_count&size=small&width=96&height=20&appId" width="96" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
-			<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+		<div class="border-top py-3">
+			<div class="">
+				<iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&layout=button_count&size=small&width=96&height=20&appId" width="96" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+				<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+			</div>
+			<div class="photo-container-big">
+				<img class="border rounded mw-100" src={{photo.picture.url}}>
+			</div>
+		
+			<span class="badge">{{photo.likes.all.count}} likes</span>
+		
+			<div class="mt-3">
+				<a class="btn btn-primary btn-sm" href="{% url 'explore_scotland_app:like_photo' photo_id=photo.pk %}">{% if request.user.profile in photo.likes.all %}Dislike{% else %}Like{% endif %}</a>
+		
+				{% if photo.owner == request.user.profile %}
+				<a class="btn btn-primary btn-sm" href="{% url 'explore_scotland_app:edit_photo' photo_id=photo.pk %}">Edit</a>
+				<a class="btn btn-danger btn-sm" href="{% url 'explore_scotland_app:delete_photo' photo_id=photo.pk %}" onclick="return confirm_delete()">Delete</a>
+				{% endif %}
+			</div>
 		</div>
 		
-		<div class="photo-container-big">
-			<img class="border rounded mw-100" src={{photo.picture.url}}>
+		<div class="border-top py-3">
+			<p>
+				{{photo.description}}
+			</p>
+			<span id="tags" class="mt-3">
+				<small class='badge badge-primary mr-1'>{{photo.get_categories_display}}</small>
+			</span>
 		</div>
-		
-		<span class="badge">{{photo.likes.all.count}} likes</span>
-		
-		<div class="mt-3">
-			<a class="btn btn-primary btn-sm" href="{% url 'explore_scotland_app:like_photo' photo_id=photo.pk %}">{% if request.user.profile in photo.likes.all %}Dislike{% else %}Like{% endif %}</a>
-		
-			{% if photo.owner == request.user.profile %}
-			<a class="btn btn-primary btn-sm" href="{% url 'explore_scotland_app:edit_photo' photo_id=photo.pk %}">Edit</a>
-			<a class="btn btn-danger btn-sm" href="{% url 'explore_scotland_app:delete_photo' photo_id=photo.pk %}">Delete</a>
-			{% endif %}
-		</div>
-		
-		<p class="mt-3">
-			{{photo.description}}
-		</p>
-		<span id="tags" class="mt-3">
-			<small class='badge badge-primary mr-1'>{{photo.get_categories_display}}</small>
-		</span>
 	</div>
 		
-	<div id="comment-form" class="mt-3">
+	<div id="comment-form" class="border-top py-3">
 		<h4>Post comment</h4>
 		<span id="comment_help" class="hide-this">
 		</span>
@@ -61,7 +64,7 @@
 			<p class="text-center">No comments</p>
 		{% endif %}
 		{% for comment in comments %}
-		<div class="card mt-3" style="width: 18rem;">
+		<div class="card mt-3">
 		  <div class="card-body">
 			<h5 class="card-title">{{comment.owner}}</h5>
 			<h6 class="card-subtitle mb-2 text-muted">{{comment.date_added}}</h6>
@@ -71,7 +74,7 @@
 		</div>
 		<div class="ml-5">
 			{% for comment in comment.comment_comments.all %}
-			<div class="card mt-3" style="width: 18rem;">
+			<div class="card mt-3">
 			  <div class="card-body">
 				<h5 class="card-title">{{comment.owner}}</h5>
 				<h6 class="card-subtitle mb-2 text-muted">{{comment.date_added}}</h6>

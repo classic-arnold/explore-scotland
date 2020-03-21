@@ -11,3 +11,7 @@ def get_search_form(category_searched=None, sorted_by=None, query=None):
 @register.inclusion_tag('explore_scotland_app/photo-grid.html')
 def get_photo_grid(photos):
 	return {'photos': photos,}
+	
+@register.inclusion_tag('explore_scotland_app/photo-carousel.html')
+def photo_carousel():
+	return
