@@ -31,7 +31,7 @@ function doAjaxImage(){
 		$.ajax(url,
 		{
 			dataType: 'json', // type of response data
-			timeout: 500,     // timeout milliseconds
+			timeout: 10000,     // timeout milliseconds
 			success: function (data,status,xhr) {   // success callback function
 				$('.carousel-inner').empty();
 				data = JSON.parse(data);
