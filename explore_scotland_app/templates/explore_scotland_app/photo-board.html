@@ -18,7 +18,7 @@
 <script>
 function doAjaxImage(){
 	$('document').ready(function(){
-		$('.carousel-inner').append('loading images...');
+		$('.carousel-inner').html('loading images...');
 		var url = {% if board_type == 'daily-board' %}
 					"{% url 'explore_scotland_app:get_photos_from_days_ago' 0 %}"
 					{% elif board_type == 'weekly-board' %}
@@ -33,6 +33,7 @@ function doAjaxImage(){
 			dataType: 'json', // type of response data
 			timeout: 500,     // timeout milliseconds
 			success: function (data,status,xhr) {   // success callback function
+				$('.carousel-inner').empty();
 				data = JSON.parse(data);
 				var active = 'active';
 				if (data.length === 0){
