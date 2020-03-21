@@ -16,49 +16,57 @@
 
 {% block script_block %}
 <script>
-
-$('document').ready(function(){
-	var url = {% if board_type == 'daily-board' %}
-				"{% url 'explore_scotland_app:get_photos_from_days_ago' 0 %}"
-				{% elif board_type == 'weekly-board' %}
-				"{% url 'explore_scotland_app:get_photos_from_days_ago' 7 %}"
-				{% elif board_type == 'monthly-board' %}
-				"{% url 'explore_scotland_app:get_photos_from_days_ago' 30 %}"
-				{% elif board_type == 'overall-board' %}
-				"{% url 'explore_scotland_app:get_all_photos' 10 %}"
-				{% endif %};
-	$.ajax(url,
-	{
-		dataType: 'json', // type of response data
-		timeout: 500,     // timeout milliseconds
-		success: function (data,status,xhr) {   // success callback function
-			data = JSON.parse(data);
-			var active = 'active';
-			if (data.length === 0){
-				var paragraph = `<p class="text-center">No photos</p>`;
-				$('.carousel').html(paragraph);
+function doAjaxImage(){
+	$('document').ready(function(){
+		var url = {% if board_type == 'daily-board' %}
+					"{% url 'explore_scotland_app:get_photos_from_days_ago' 0 %}"
+					{% elif board_type == 'weekly-board' %}
+					"{% url 'explore_scotland_app:get_photos_from_days_ago' 7 %}"
+					{% elif board_type == 'monthly-board' %}
+					"{% url 'explore_scotland_app:get_photos_from_days_ago' 30 %}"
+					{% elif board_type == 'overall-board' %}
+					"{% url 'explore_scotland_app:get_all_photos' 10 %}"
+					{% endif %};
+		$.ajax(url,
+		{
+			dataType: 'json', // type of response data
+			timeout: 500,     // timeout milliseconds
+			success: function (data,status,xhr) {   // success callback function
+				data = JSON.parse(data);
+				var active = 'active';
+				if (data.length === 0){
+					var paragraph = `<p class="text-center">No photos</p>`;
+					$('.carousel').html(paragraph);
+				}
+				data.map((photo, i)=>{
+					var photoMeta = `<li data-target="#photoCarousel" data-slide-to="${i}" class="${active}"></li>`
+					var photoDiv = `<div class="carousel-item ${active}">
+										<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
+											<img src="{{MEDIA_URL}}/${photo.fields.picture}" alt="" class="img-responsive" width="100%" height="auto">
+											<div class="carousel-caption d-none d-md-block">
+												<p>${photo.fields.description}</p>
+											</div>
+										</a>
+									</div>`;
+					$('.carousel-indicators').append(photoMeta);
+					$('.carousel-inner').append(photoDiv);
+					active = '';
+				});
+			},
+			error: function (jqXhr, textStatus, errorMessage) { // error callback
+				if(errorMessage === 'timeout'){
+					doAjaxImage();
+				} else {
+					$('.carousel-inner').append('Error: ' + errorMessage);	
+				}
 			}
-			data.map((photo, i)=>{
-				var photoMeta = `<li data-target="#photoCarousel" data-slide-to="${i}" class="${active}"></li>`
-				var photoDiv = `<div class="carousel-item ${active}">
-									<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
-										<img src="{{MEDIA_URL}}/${photo.fields.picture}" alt="" class="img-responsive" width="100%" height="auto">
-										<div class="carousel-caption d-none d-md-block">
-											<p>${photo.fields.description}</p>
-										</div>
-									</a>
-								</div>`;
-				$('.carousel-indicators').append(photoMeta);
-				$('.carousel-inner').append(photoDiv);
-				active = '';
-			});
-		},
-		error: function (jqXhr, textStatus, errorMessage) { // error callback 
-			$('.carousel-inner').append('Error: ' + errorMessage);
-		}
-	});
+		});
 	
-	$("#{{board_type}}").addClass('mb-5');
-});
+		$("#{{board_type}}").addClass('mb-5');
+	});
+}
+
+doAjaxImage();
+
 </script>
 {% endblock %}
