@@ -2,6 +2,7 @@
 import os
 import sys
 
+# manage.py
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'explore_scotland.settings')
     try:

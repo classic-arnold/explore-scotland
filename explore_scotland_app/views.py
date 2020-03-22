@@ -23,9 +23,11 @@ def pop_url(request_meta):
 	except:
 		pass
 
+# render the homepage (index.html)
 def index(request):
 	return render(request, 'explore_scotland_app/index.html')
 
+# render the homepage (index.html)
 def register(request):
 	# If it's a HTTP POST, we're interested in processing form data.
 	if request.method == 'POST':
@@ -161,15 +163,19 @@ def edit_profile(request):
 		'profile_form': profile_form
 	}
 	return render(request, 'explore_scotland_app/edit-profile.html', ctx)
-	
+
+# delete a user
 @login_required
 def delete_user(request):
+	# check if teh user exists first
 	try:
 		request.user.delete()
 	except:
 		messages.info(request, 'Unable to delete account.')
 		pop_url(request.META)
 		return redirect(reverse('explore_scotland_app:index'))
+
+	# return to the homepage, if deletion succeeds or fails
 	return redirect(reverse('explore_scotland_app:index'))
 	
 @login_required
@@ -198,49 +204,55 @@ def upload_photo(request):
 		'photo_form': photo_form,
 	}
 	return render(request, 'explore_scotland_app/upload-photo.html', ctx)
-	
+
+# delete a photo
 @login_required
 def delete_photo(request, photo_id):
+	# check if the photo exists first
 	try:
 		photo = Photo.objects.get(pk=photo_id)
 	except Photo.DoesNotExist:
 		messages.info(request, 'You tried to delete a photo that does not exist.')
 		pop_url(request.META)
 		return redirect(reverse('explore_scotland_app:profile'))
-	
+	# check if the photois from the logged in user
 	if photo.owner == request.user.profile:
 		photo.delete()
 	else:
 		messages.info(request, 'You tried to delete a photo you do not own.')
 		pop_url(request.META)
 		return redirect(reverse('explore_scotland_app:profile'))
-	
+	# return to the account profile page
 	return redirect(reverse('explore_scotland_app:profile'))
-
+# get all photos
 def get_all_photos(request, count):
 	photos = serialize('json', Photo.objects.all().annotate(q_count=Count('likes')).order_by('-q_count')[:count])
 	return JsonResponse(photos, safe=False)
-	
+
+# get photos from a time period past
 def get_photos_from_days_ago(request, days):
 	time = datetime.datetime.now() - datetime.timedelta(days = days)
 	photos = serialize('json', Photo.objects.filter(date_added__gte=time).annotate(q_count=Count('likes')).order_by('-q_count')[:10])
 	return JsonResponse(photos, safe=False)
 
+# Search for a photo
 def search_photos(request):
 	if request.method == 'GET':
+		# Get the search parameters for teh photo
 		query_string = request.GET.get("keyword", '')
 		sorted_by = request.GET.get("sort-by", '')
 		category = request.GET.get("category", '')
 		photos = None
-		
+		# ignore case-sensitivity
 		words = re.split(r"[^A-Za-z']+", query_string)
-		
+		# send query
 		query = Q()
-		
+		# analyze the search results
 		for word in words:
     		# 'or' the queries together
    			query |= Q(description__icontains=word) | Q(tags__icontains=word)
-		
+
+		# check how the photos are sorted, by likes or time
 		if sorted_by == 'likes':
 			photos = Photo.objects.filter(query).annotate(q_count=Count('likes')).order_by('-q_count')
 		elif sorted_by == 'latest':
@@ -257,18 +269,20 @@ def search_photos(request):
 			'sorted_by': sorted_by,
 			'category_searched': category
 		}
+		# show the search results
 		return render(request, 'explore_scotland_app/search-photos.html', ctx)
-	
+
+# get the photo details
 def picture_details(request, photo_id):
+	# check first if the photo exists
 	try:
 		photo = Photo.objects.get(pk=photo_id)
 	except Photo.DoesNotExist:
 		messages.info(request, 'The photo you are looking for does not exist.')
 		pop_url(request.META)
 		return redirect(reverse('explore_scotland_app:index'))
-	
+	# get the comments for the photo
 	comment_form = CommentForm()
-	
 	comments = photo.photo_comments.all()
 	
 	ctx = {
@@ -276,25 +290,28 @@ def picture_details(request, photo_id):
 		'photo': photo,
 		'comments': comments
 	}
+	# show the photo details with comments
 	return render(request, 'explore_scotland_app/picture-details.html', ctx)
-	
+
+# Add a comment to a photo
 @login_required
 def post_comment(request, photo_id):
 	if request.method == 'POST':
+		# The the photo details and the comment form
 		comment_form = CommentForm(request.POST)
 		photo_id = comment_form.data.get('photo_id', None)
 		comment_id = comment_form.data.get('comment_id', None)
-		
+
+		# check if teh form is valid
 		if comment_form.is_valid():
 			comment = comment_form.save(commit=False)
-			
 			comment.owner = request.user.profile
-			
+			# check if comment or photo
 			if comment_id:
 				comment.comment = Comment.objects.get(pk=comment_id)
 			elif photo_id:
 				comment.photo = Photo.objects.get(pk=photo_id)
-			
+			# save the comment
 			comment.save()
 			
 			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
@@ -302,52 +319,62 @@ def post_comment(request, photo_id):
 			messages.info(request, 'Failed to add comment.')
 			pop_url(request.META)
 			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
+	# update the information
 	pop_url(request.META)
 	return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
-	
+
+# Like the photo
 @login_required
 def like_photo(request, photo_id):
+	# get the photo id
 	photo = Photo.objects.get(pk=photo_id)
-	
+	# Check if 'like all' is selected
 	if request.user.profile in photo.likes.all():
 		photo.likes.remove(request.user.profile)
 	else:
 		photo.likes.add(request.user.profile)
-	
+	# update the information
 	pop_url(request.META)
 	return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 
+# Edit a photo
 @login_required
 def edit_photo(request, photo_id):
+	# get the photo id
 	photo = Photo.objects.get(pk=photo_id)
+	# check if this is a valid photo
 	if request.method == 'POST':
 		photo_form = PhotoFormWithoutPhoto(request.POST, instance=photo)
-	
 		if photo_form.is_valid():
 			photo_form.save()
-		
 			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
 		else:
 			messages.info(request, 'Failed to edit photo.')
 			pop_url(request.META)
 			return redirect(reverse('explore_scotland_app:picture_details', kwargs={'photo_id':photo_id,}))
+	# load the phot details
 	photo_form = PhotoFormWithoutPhoto(instance=photo)
 	ctx = {
 		'photo_form': photo_form,
 		'photo': photo
 	}
+	# edit the requested photo
 	return render(request, 'explore_scotland_app/edit-photo.html', ctx)
 
+# request the profile page, a user must be logged in
 def photo_board(request, board_type):
+	# get the board type (daily, weekly, monthly or overall)
 	ctx = {
 		'board_type': board_type,
 	}
 	return render(request, 'explore_scotland_app/photo-board.html', ctx)
-	
+
+# request the profile page, a user must be logged in
 @login_required
 def profile(request):
 	return render(request, 'explore_scotland_app/profile.html')
-	
+
+# request the about page
 def about(request):
 	return render(request, 'explore_scotland_app/about.html')
 
