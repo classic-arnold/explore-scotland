@@ -59,7 +59,7 @@ function doAjaxImage(){
 				if(errorMessage === 'timeout'){
 					doAjaxImage();
 				} else {
-					$('.carousel-inner').append('Error: ' + errorMessage);	
+					$('.carousel-inner').html('Error: ' + errorMessage);	
 				}
 			}
 		});
