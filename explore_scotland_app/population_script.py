@@ -30,7 +30,7 @@ def populate():
         {'owner': 'alice',
          'description': 'glasgow bridge',
          'cat': 'LS',
-         'tag': 'fort william',
+         'tag': 'glasgow',
          'picture': 'test/glasgow_bridge.jpg'},
         {'owner': 'alice',
          'description': 'glasgow bridge',
@@ -48,7 +48,6 @@ def populate():
          'tag': 'edinburgh',
          'picture': 'test/train.jpg'},
     ]
-    
 
     for user, user_data in test_users.items():
         add_user(user, user_data['email'], user_data['password'], user_data['image'])

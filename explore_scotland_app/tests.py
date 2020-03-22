@@ -9,13 +9,13 @@ from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from explore_scotland_app.population_script import populate
-from explore_scotland_app.models import UserProfile, Photo
+from explore_scotland_app.models import UserProfile, Photo, Comment
 
 FAILURE_HEADER = f"{os.linesep}{os.linesep}{os.linesep}================{os.linesep}TwD TEST FAILURE =({os.linesep}================{os.linesep}"
 FAILURE_FOOTER = f"{os.linesep}"
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEST_DIR = os.path.join(BASE_DIR, 'media/media/test')
+TEST_DIR = os.path.join(BASE_DIR, 'media/test')
 TEST_TEMP_DIR = os.path.join(BASE_DIR, 'media/test/temp')
 
 
@@ -79,8 +79,8 @@ class RegisterTests(TestCase):
         post_data = {'username': 'testuser', 'password': 'testpassword', 'email': 'test@email.com', 'picture': img}
         request = self.client.post(reverse('explore_scotland_app:register'), post_data)
         content = request.content.decode('utf-8')
-
-        self.assertTrue('<a href="/login/">Registered? Login here</a>' in content,
+        # print(content)
+        self.assertTrue('<a href="/login/"' in content,
                         f"{FAILURE_HEADER}After repeated registering, we couldn't find the expected link back to the log in page.{FAILURE_FOOTER}")
 
 
@@ -205,8 +205,8 @@ class TestEditPhotos(TestCase):
         """
         self.client.login(username='cindy', password='testcindy3')
         content = self.client.get(reverse('explore_scotland_app:profile')).content.decode()
-
-        self.assertTrue('<a href="/upload-photo/">Upload photo</a>' in content,
+        # print(content)
+        self.assertTrue('''href="/upload-photo/">Upload Photo</a>''' in content,
                         f"{FAILURE_HEADER}add photo link does not exist on detail page{FAILURE_FOOTER}")
 
     @override_settings(MEDIA_ROOT=(TEST_TEMP_DIR + '/media'))
@@ -217,16 +217,15 @@ class TestEditPhotos(TestCase):
         """
         self.client.login(username='cindy', password='testcindy3')
 
-        pic = open(TEST_DIR + '/glasgow_uni.jpg', 'rb')
+        pic = open(TEST_DIR + '/test_photo.jpg', 'rb')
         photo_data = {'picture': pic, 'description': 'My beloved uni', 'categories': 'PP', 'tags': 'cindy'}
 
         response = self.client.post(reverse('explore_scotland_app:upload_photo'), photo_data)
         content = self.client.get(reverse('explore_scotland_app:profile')).content.decode()
         photo = Photo.objects.filter(description='My beloved uni')[0]
 
-        self.assertEqual(response.status_code, 200,
-                         f"{FAILURE_HEADER}We failed to add upload a photo, status code shows{FAILURE_FOOTER}")
-        self.assertTrue('''<img class="border rounded mw-100" src='/media/glasgow_uni.jpg'/>''' in content)
+        # print(content)
+        self.assertTrue('''<img class="border rounded mw-100" src='/media/test_photo.jpg'/>''' in content)
         self.assertEqual(photo.tags, 'cindy',
                          f"{FAILURE_HEADER}The new photo uploaded didn't have the tag we specified{FAILURE_FOOTER}")
 
@@ -234,12 +233,12 @@ class TestEditPhotos(TestCase):
         """
         check whether the edit photo link exists for photo owner
         """
-        photo = Photo.objects.filter(description='ben_nevis')[0]
-        self.client.login(username='alice', password='testalice1')
+        photo = Photo.objects.filter(description='train with smoke')[0]
+        self.client.login(username='bob', password='testbob2')
 
         response = self.client.get(reverse('explore_scotland_app:picture_details', kwargs={'photo_id': photo.id}))
         content = response.content.decode()
-
+        # print(content)
         self.assertTrue('href="/edit-photo/' + str(photo.id) + '">Edit</a>' in content,
                         f"{FAILURE_HEADER}edit photo link not presents for the photo owner{FAILURE_FOOTER}")
 
@@ -247,7 +246,7 @@ class TestEditPhotos(TestCase):
         """
         check whether the edit photo link exists for nonowner
         """
-        photo = Photo.objects.filter(description='ben_nevis')[0]
+        photo = Photo.objects.filter(description='train with smoke')[0]
         self.client.login(username='cindy', password='testcindy3')
 
         response = self.client.get(reverse('explore_scotland_app:picture_details', kwargs={'photo_id': photo.id}))
@@ -261,8 +260,8 @@ class TestEditPhotos(TestCase):
         test the functionality of edit photo
         display and model checks
         """
-        photo = Photo.objects.filter(description='ben_nevis')[0]
-        self.client.login(username='alice', password='testalice1')
+        photo = Photo.objects.filter(description='train with smoke')[0]
+        self.client.login(username='bob', password='testbob2')
         photo_data = {'description': 'the mountain', 'categories': 'LS', 'tags': 'highland'}
 
         response = self.client.post(reverse('explore_scotland_app:edit_photo', kwargs={'photo_id': photo.id}),
@@ -271,7 +270,7 @@ class TestEditPhotos(TestCase):
             reverse('explore_scotland_app:picture_details', kwargs={'photo_id': photo.id})).content.decode()
         pic = Photo.objects.get(id=photo.id)
 
-        self.assertTrue('''the mountain''' in content,
+        self.assertTrue(photo_data['description'] in content,
                         f"{FAILURE_HEADER}The new photo updated didn't display the description we update{FAILURE_FOOTER}")
         self.assertEqual(pic.tags, 'highland',
                          f"{FAILURE_HEADER}The new photo updated didn't have the tag we update in models{FAILURE_FOOTER}")
@@ -282,9 +281,9 @@ class TestEditPhotos(TestCase):
         model checks
         display in profile page checks
         """
-        photo = Photo.objects.filter(description='ben_nevis')[0]
-        user = User.objects.filter(username='bob')[0]
-        self.client.login(username='bob', password='testbob2')
+        photo = Photo.objects.filter(description='train with smoke')[0]
+        user = User.objects.filter(username='alice')[0]
+        self.client.login(username='alice', password='testalice1')
 
         self.client.get(reverse('explore_scotland_app:like_photo', kwargs={'photo_id': photo.id}))
 
@@ -293,7 +292,7 @@ class TestEditPhotos(TestCase):
 
         content = self.client.get(reverse('explore_scotland_app:profile')).content.decode()
 
-        self.assertTrue('''src='/media/test/ben_nevis.jpg'/>''' in content,
+        self.assertTrue('''src='/media/test/train.jpg'/>''' in content,
                         f"{FAILURE_HEADER}profile page didn't show liked photo after we like a photo{FAILURE_FOOTER}")
 
     def test_dislike_photo(self):
@@ -301,9 +300,9 @@ class TestEditPhotos(TestCase):
         test the functionality of cancel like photo
         model checks
         """
-        photo = Photo.objects.filter(description='ben_nevis')[0]
-        user = User.objects.filter(username='bob')[0]
-        self.client.login(username='bob', password='testbob2')
+        photo = Photo.objects.filter(description='train with smoke')[0]
+        user = User.objects.filter(username='alice')[0]
+        self.client.login(username='alice', password='testalice1')
 
         self.client.get(reverse('explore_scotland_app:like_photo', kwargs={'photo_id': photo.id}))
         self.client.get(reverse('explore_scotland_app:like_photo', kwargs={'photo_id': photo.id}))
@@ -312,12 +311,81 @@ class TestEditPhotos(TestCase):
                         f"{FAILURE_HEADER}data in model didn,t update after we dislike a photo{FAILURE_FOOTER}")
 
 
-# class test_edit_comment(TestCase):
+class TestEditComment(TestCase):
 
+    def setUp(self):
+        populate()
+
+    def test_add_comment_link_prensents(self):
+        """
+        test if the add comment link presents
+        """
+        photo = Photo.objects.filter(description='train with smoke')[0]
+        self.client.login(username='alice', password='testalice1')
+
+        response = self.client.get(reverse('explore_scotland_app:picture_details', kwargs={'photo_id': photo.id}))
+        content = response.content.decode()
+        # print(content)
+        self.assertTrue('' in content,
+                        f"{FAILURE_HEADER}cannot find the link to add comment in the photo detail page{FAILURE_FOOTER}")
+
+    def test_add_blank_comment_post(self):
+        """
+        test the functionality of add a comment to photo
+        if we add a blank comment
+        """
+        photo = Photo.objects.filter(description='train with smoke')[0]
+        self.client.login(username='cindy', password='testcindy3')
+
+        comment_data = {'content': '  ', 'photo_id': photo.id}
+        self.client.post(reverse('explore_scotland_app:post_comment', kwargs={'photo_id': photo.id}), comment_data)
+        content = self.client.get(
+            reverse('explore_scotland_app:picture_details', kwargs={'photo_id': photo.id})).content.decode()
+
+        self.assertTrue('''<p class="text-center">No comments</p>''' in content,
+                        f"{FAILURE_HEADER}a comment with only spaces should not be accepted{FAILURE_FOOTER}")
+
+    def test_add_comment_post(self):
+        """
+        test the functionality of add a comment to photo
+        checks data in model and display
+        """
+        photo = Photo.objects.filter(description='train with smoke')[0]
+        self.client.login(username='cindy', password='testcindy3')
+
+        comment_data = {'content': 'nice picture', 'photo_id': photo.id}
+        self.client.post(reverse('explore_scotland_app:post_comment', kwargs={'photo_id': photo.id}), comment_data)
+        content = self.client.get(
+            reverse('explore_scotland_app:picture_details', kwargs={'photo_id': photo.id})).content.decode()
+        # print(content)
+
+        comment = Comment.objects.filter(content='nice picture')[0]
+        self.assertTrue(comment is not None,
+                        f"{FAILURE_HEADER}failed to add comment to photo through the post on picture_detail page{FAILURE_FOOTER}")
+        self.assertTrue('''<p class="card-text">nice picture</p>''' in content,
+                        f"{FAILURE_HEADER}the added photo comment didn't display well on the template{FAILURE_FOOTER}")
+
+        """
+        test the functionality of add a comment to a comment
+        checks data in model and display
+        """
+        self.client.logout()
+        self.client.login(username='bob', password='testbob2')
+
+        comment_data = {'content': 'thank you', 'comment_id': comment.id, 'photo_id': photo.id}
+        self.client.post(reverse('explore_scotland_app:post_comment', kwargs={'photo_id': photo.id}), comment_data)
+        content = self.client.get(
+            reverse('explore_scotland_app:picture_details', kwargs={'photo_id': photo.id})).content.decode()
+        commentcomment = Comment.objects.filter(content='thank you')[0]
+
+        self.assertTrue(commentcomment is not None,
+                        f"{FAILURE_HEADER}failed to add comment to a comment through the post on picture_detail page{FAILURE_FOOTER}")
+        self.assertTrue('''<p class="card-text">thank you</p>''' in content,
+                        f"{FAILURE_HEADER}the added comment comment didn't display well on the template{FAILURE_FOOTER}")
 
 
 def tearDownModule():
-    print("\nDeleting temporary files...\n")
+    print("\nDeleting temporary media files...\n")
     try:
         shutil.rmtree(TEST_TEMP_DIR)
     except OSError:
