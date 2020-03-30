@@ -1,6 +1,6 @@
 from .models import UserProfile
 
-def create_profile(strategy, details, response, user, *args, **kwargs):
+def create_profile(strategy, details, response, user, backend, *args, **kwargs):
 	if UserProfile.objects.filter(user=user).exists():
 		pass
 	else:
