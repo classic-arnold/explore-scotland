@@ -32,3 +32,8 @@ function readImageURL(input) {
     reader.readAsDataURL(input.files[0]);
   }
 }
+
+function alertUser(){
+	alert("This may not work properly, as it is still being worked on. We await an API key from the appropriate service.");
+	return false;
+}
