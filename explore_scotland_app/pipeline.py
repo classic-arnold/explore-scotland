@@ -1,4 +1,6 @@
 from .models import UserProfile
+from django.core.files.base import ContentFile
+from urllib.request import urlopen
 
 def create_profile(strategy, details, response, user, backend, *args, **kwargs):
 	if UserProfile.objects.filter(user=user).exists():
