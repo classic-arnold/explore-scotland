@@ -193,7 +193,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.user.create_user',
     
     # Create profile
-    'explore_scotland_app.pipeline.create_profile',
+    #'explore_scotland_app.pipeline.create_profile',
 
     # Create the record that associates the social account with the user.
     'social_core.pipeline.social_auth.associate_user',
