@@ -11,7 +11,7 @@ from django.core.files.base import ContentFile
 class UserProfile(models.Model):
 	# user profile to extend user attributes
 	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-	picture = models.ImageField(upload_to="")
+	picture = models.ImageField(upload_to="", null=True, blank=True)
 	
 	def __str__(self):
 		return self.user.username
