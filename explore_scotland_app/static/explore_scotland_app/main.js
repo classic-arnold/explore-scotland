@@ -34,6 +34,6 @@ function readImageURL(input) {
 }
 
 function alertUser(){
-	alert("This may not work properly, as it is still being worked on. We await an API key from the appropriate service.");
+	alert("Twitter and IG login will not work properly, as it is still being worked on. We await an API key from the appropriate service.");
 	return false;
 }
