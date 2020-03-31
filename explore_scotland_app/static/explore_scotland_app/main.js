@@ -15,6 +15,10 @@ $('document').ready(function(){
 	$("input[type=file]").change(function() {
 	  readImageURL(this);
 	});
+	
+	if($('title').html().includes("About")){
+		$("#about").addClass('mb-5');
+	}
 });
 
 function confirm_delete() {
