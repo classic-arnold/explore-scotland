@@ -70,7 +70,9 @@
 			<span class="nav-link disabled">
 				<span class="d-flex align-items-center text-light">
 					<div class="rounded-circle profile-circle overflow-hidden border border-dark d-flex align-items-center mr-3">
+						{% if request.user.profile.picture %}
 						<img class="img-fluid" src="{{MEDIA_ROOT}}{{request.user.profile.picture.url}}">
+						{% endif %}
 					</div> Hello {{request.user}}
 				</span>
 			</span>
