@@ -193,7 +193,7 @@ class TestEditProfile(TestCase):
 
 class TestEditPhotos(TestCase):
     """
-    test edit/add photo functionalities
+    test edit/add photo functionality
     """
 
     def setUp(self):
@@ -233,7 +233,7 @@ class TestEditPhotos(TestCase):
         """
         check whether the edit photo link exists for photo owner
         """
-        photo = Photo.objects.filter(description='train with smoke')[0]
+        photo = Photo.objects.filter(description='edinburgh castle')[0]
         self.client.login(username='bob', password='testbob2')
 
         response = self.client.get(reverse('explore_scotland_app:picture_details', kwargs={'photo_id': photo.id}))
@@ -246,7 +246,7 @@ class TestEditPhotos(TestCase):
         """
         check whether the edit photo link exists for nonowner
         """
-        photo = Photo.objects.filter(description='train with smoke')[0]
+        photo = Photo.objects.filter(description='edinburgh castle')[0]
         self.client.login(username='cindy', password='testcindy3')
 
         response = self.client.get(reverse('explore_scotland_app:picture_details', kwargs={'photo_id': photo.id}))
@@ -260,7 +260,7 @@ class TestEditPhotos(TestCase):
         test the functionality of edit photo
         display and model checks
         """
-        photo = Photo.objects.filter(description='train with smoke')[0]
+        photo = Photo.objects.filter(description='edinburgh castle')[0]
         self.client.login(username='bob', password='testbob2')
         photo_data = {'description': 'the mountain', 'categories': 'LS', 'tags': 'highland'}
 
@@ -281,7 +281,7 @@ class TestEditPhotos(TestCase):
         model checks
         display in profile page checks
         """
-        photo = Photo.objects.filter(description='train with smoke')[0]
+        photo = Photo.objects.filter(description='edinburgh castle')[0]
         user = User.objects.filter(username='alice')[0]
         self.client.login(username='alice', password='testalice1')
 
@@ -292,7 +292,7 @@ class TestEditPhotos(TestCase):
 
         content = self.client.get(reverse('explore_scotland_app:profile')).content.decode()
 
-        self.assertTrue('''src='/media/test/train.jpg'/>''' in content,
+        self.assertTrue('''src='/media/test/castle_1.jpg'/>''' in content,
                         f"{FAILURE_HEADER}profile page didn't show liked photo after we like a photo{FAILURE_FOOTER}")
 
     def test_dislike_photo(self):
@@ -300,7 +300,7 @@ class TestEditPhotos(TestCase):
         test the functionality of cancel like photo
         model checks
         """
-        photo = Photo.objects.filter(description='train with smoke')[0]
+        photo = Photo.objects.filter(description='edinburgh castle')[0]
         user = User.objects.filter(username='alice')[0]
         self.client.login(username='alice', password='testalice1')
 
@@ -320,7 +320,7 @@ class TestEditComment(TestCase):
         """
         test if the add comment link presents
         """
-        photo = Photo.objects.filter(description='train with smoke')[0]
+        photo = Photo.objects.filter(description='edinburgh castle')[0]
         self.client.login(username='alice', password='testalice1')
 
         response = self.client.get(reverse('explore_scotland_app:picture_details', kwargs={'photo_id': photo.id}))
@@ -334,7 +334,7 @@ class TestEditComment(TestCase):
         test the functionality of add a comment to photo
         if we add a blank comment
         """
-        photo = Photo.objects.filter(description='train with smoke')[0]
+        photo = Photo.objects.filter(description='edinburgh castle')[0]
         self.client.login(username='cindy', password='testcindy3')
 
         comment_data = {'content': '  ', 'photo_id': photo.id}
@@ -350,7 +350,7 @@ class TestEditComment(TestCase):
         test the functionality of add a comment to photo
         checks data in model and display
         """
-        photo = Photo.objects.filter(description='train with smoke')[0]
+        photo = Photo.objects.filter(description='edinburgh castle')[0]
         self.client.login(username='cindy', password='testcindy3')
 
         comment_data = {'content': 'nice picture', 'photo_id': photo.id}
