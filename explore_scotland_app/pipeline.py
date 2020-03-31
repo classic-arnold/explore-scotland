@@ -7,6 +7,7 @@ def create_profile(strategy, details, response, user, backend, *args, **kwargs):
 		pass
 	else:
 		new_profile = UserProfile(user=user)
+		new_profile.save()
 	
 	# graph.facebook.com isn't on pythonanywhere whitelist, so we cannot get the picture with this code
 		# if backend.name == 'facebook':
