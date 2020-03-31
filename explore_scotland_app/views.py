@@ -62,7 +62,7 @@ def register(request):
 			# Now we save the UserProfile model instance.
 			profile.save()
 			
-			login(request, user)
+			login(request, user, backend='django.contrib.auth.backends.ModelBackend')
 			
 			return redirect('explore_scotland_app:index')
 	else:
