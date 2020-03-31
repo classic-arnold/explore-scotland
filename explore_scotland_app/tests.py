@@ -65,10 +65,8 @@ class RegisterTests(TestCase):
         content = request.content.decode('utf-8')
 
         self.assertTrue(self.client.login(username='testuser', password='testpassword'),
-                        f"{FAILURE_HEADER}We couldn't log in the user we created using your registration form. Please check your implementation of the register() view. Are you missing a .save() call?{FAILURE_FOOTER}")
-        self.assertTrue('<a href="/">Return to the homepage.</a>' in content,
-                        f"{FAILURE_HEADER}After successfully registering, we couldn't find the expected link back to the homepage.{FAILURE_FOOTER}")
-
+                        f"{FAILURE_HEADER}We couldn't log in the user we created using your registration form. Please check your implementation of the register() view.{FAILURE_FOOTER}")
+                        
     @override_settings(MEDIA_ROOT=(TEST_TEMP_DIR + '/media'))
     def test_duplicated_registration_post(self):
         """
