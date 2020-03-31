@@ -89,38 +89,6 @@
 
 {% block script_block %}
 <script>
-	function commentComment(commentId, commentOwner){
-		undoCommentComment();
-		$('document').ready(function(){
-			$('input[name="comment_id"]').val(commentId);
-			$('#comment_help').append(`Replying to ${commentOwner}'s comment`);
-			$('#comment_help').append(`<a id="comment_help_cancel" class="btn btn-danger btn-sm text-light ml-3" onclick="undoCommentComment()">cancel</a>`);
-			$('#comment_help').show();
-		});
-	}
-	
-	function undoCommentComment(){
-		$('document').ready(function(){
-			$('input[name="comment_id"]').val('');
-			$('#comment_help').empty();
-			$('#comment_help').hide();
-		});
-	}
-	
-	$('document').ready(function(){
-		if ("{{photo.tags}}" == "None"){
-			return;
-		}
-		var tags = "{{photo.tags}}";
-		tagsArr = tags.split(" ");
-		tagsArr.map((tag)=>{
-			var tagElem = `<small class='badge badge-secondary mr-1'>${tag}</small>`
-			$("#tags").append(tagElem);
-		})
-	});
-	
-	{% if successful %}
-	alert(Upload successful);
-	{% endif %}
+	loadTags("{{photo.tags}}");
 </script>
 {% endblock %}

@@ -88,3 +88,32 @@ function doAjaxImage(url, pictureUrl, mediaUrl, boardType){
 		$(`#${boardType}`).addClass('mb-5');
 	});
 }
+
+function commentComment(commentId, commentOwner){
+	undoCommentComment();
+	$('document').ready(function(){
+		$('input[name="comment_id"]').val(commentId);
+		$('#comment_help').append(`Replying to ${commentOwner}'s comment`);
+		$('#comment_help').append(`<a id="comment_help_cancel" class="btn btn-danger btn-sm text-light ml-3" onclick="undoCommentComment()">cancel</a>`);
+		$('#comment_help').show();
+	});
+}
+
+function undoCommentComment(){
+	$('document').ready(function(){
+		$('input[name="comment_id"]').val('');
+		$('#comment_help').empty();
+		$('#comment_help').hide();
+	});
+}
+
+function loadTags(tags){
+	if (tags == "None"){
+		return;
+	}
+	tagsArr = tags.split(" ");
+	tagsArr.map((tag)=>{
+		var tagElem = `<small class='badge badge-secondary mr-1'>${tag}</small>`
+		$("#tags").append(tagElem);
+	})
+}
