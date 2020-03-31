@@ -6,24 +6,31 @@
 
 {% block body_block %}
 
-<div class="photo-board" onload="()=>{
-					doAjaxImage(
-						`{% if board_type == 'daily-board' %}
-							{% url 'explore_scotland_app:get_photos_from_days_ago' 0 %}
-						{% elif board_type == 'weekly-board' %}
-							{% url 'explore_scotland_app:get_photos_from_days_ago' 7 %}
-						{% elif board_type == 'monthly-board' %}
-							{% url 'explore_scotland_app:get_photos_from_days_ago' 30 %}
-						{% elif board_type == 'overall-board' %}
-							{% url 'explore_scotland_app:get_all_photos' 10 %}
-						{% endif %}`,
-						`{% url 'explore_scotland_app:picture_details_without_key' %}`,
-						`{{MEDIA_URL}}`,
-						`{{board_type}}`
-					)}">
+<div class="photo-board">
 	<h4>Photos For You</h4>
 
 	{% photo_carousel %}
 	
 </div>
+{% endblock %}
+
+{% block script_block %}
+<script>
+
+doAjaxImage(
+	`{% if board_type == 'daily-board' %}
+		{% url 'explore_scotland_app:get_photos_from_days_ago' 0 %}
+	{% elif board_type == 'weekly-board' %}
+		{% url 'explore_scotland_app:get_photos_from_days_ago' 7 %}
+	{% elif board_type == 'monthly-board' %}
+		{% url 'explore_scotland_app:get_photos_from_days_ago' 30 %}
+	{% elif board_type == 'overall-board' %}
+		{% url 'explore_scotland_app:get_all_photos' 10 %}
+	{% endif %}`,
+	`{% url 'explore_scotland_app:picture_details_without_key' %}`,
+	`{{MEDIA_URL}}`,
+	`{{board_type}}`
+)
+
+</script>
 {% endblock %}
