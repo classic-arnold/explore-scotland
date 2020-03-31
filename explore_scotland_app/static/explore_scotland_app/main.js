@@ -19,6 +19,10 @@ $('document').ready(function(){
 	if($('title').html().includes("About")){
 		$("#about").addClass('mb-5');
 	}
+	
+	if( ($('#message_modal').find('.modal-body').children().length > 0 ) ){
+		$('#message_modal').modal('show');
+	}
 });
 
 function confirm_delete() {
