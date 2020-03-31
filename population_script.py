@@ -67,7 +67,6 @@ def populate():
          'cat': 'LS',
          'tag': 'yak animal',
          'picture': 'test/scottish_yak.jpg'},
-
     ]
 
     for user, user_data in test_users.items():
