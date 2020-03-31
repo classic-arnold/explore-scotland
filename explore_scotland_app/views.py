@@ -153,7 +153,7 @@ def edit_profile(request):
 
 			# Update our variable to indicate that the template
 			# registration was successful.
-			messages.info('Update successful.')
+			messages.info(message='Update successful.', request=request)
 			return redirect(reverse('explore_scotland_app:index'))
 			
 	user_form = UserFormWithoutPassword(instance = request.user)
