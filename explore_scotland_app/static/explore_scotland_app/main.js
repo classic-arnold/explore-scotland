@@ -45,3 +45,46 @@ function alertUser(){
 	alert("Twitter and IG login will not work properly, as it is still being worked on. We await an API key from the appropriate service.");
 	return true;
 }
+
+function doAjaxImage(url, pictureUrl, mediaUrl, boardType){
+	$('document').ready(function(){
+		$('.carousel-inner').html('loading images...');
+		$.ajax(url,
+		{
+			dataType: 'json', // type of response data
+			timeout: 10000,     // timeout milliseconds
+			success: function (data,status,xhr) {   // success callback function
+				$('.carousel-inner').empty();
+				data = JSON.parse(data);
+				var active = 'active';
+				if (data.length === 0){
+					var paragraph = `<p class="text-center">No photos</p>`;
+					$('.carousel').html(paragraph);
+				}
+				data.map((photo, i)=>{
+					var photoMeta = `<li data-target="#photoCarousel" data-slide-to="${i}" class="${active}"></li>`
+					var photoDiv = `<div class="carousel-item ${active}">
+										<a href='${pictureUrl}${photo.pk}'>
+											<img src="${mediaUrl}/${photo.fields.picture}" alt="" class="img-responsive" width="100%" height="auto">
+											<div class="carousel-caption d-none d-md-block">
+												<p>${photo.fields.description}</p>
+											</div>
+										</a>
+									</div>`;
+					$('.carousel-indicators').append(photoMeta);
+					$('.carousel-inner').append(photoDiv);
+					active = '';
+				});
+			},
+			error: function (jqXhr, textStatus, errorMessage) { // error callback
+				if(errorMessage === 'timeout'){
+					doAjaxImage();
+				} else {
+					$('.carousel-inner').html('Error: ' + errorMessage);	
+				}
+			}
+		});
+	
+		$(`#${boardType}`).addClass('mb-5');
+	});
+}

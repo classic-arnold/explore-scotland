@@ -6,69 +6,24 @@
 
 {% block body_block %}
 
-<div class="photo-board">
+<div class="photo-board" onload="()=>{
+					doAjaxImage(
+						`{% if board_type == 'daily-board' %}
+							{% url 'explore_scotland_app:get_photos_from_days_ago' 0 %}
+						{% elif board_type == 'weekly-board' %}
+							{% url 'explore_scotland_app:get_photos_from_days_ago' 7 %}
+						{% elif board_type == 'monthly-board' %}
+							{% url 'explore_scotland_app:get_photos_from_days_ago' 30 %}
+						{% elif board_type == 'overall-board' %}
+							{% url 'explore_scotland_app:get_all_photos' 10 %}
+						{% endif %}`,
+						`{% url 'explore_scotland_app:picture_details_without_key' %}`,
+						`{{MEDIA_URL}}`,
+						`{{board_type}}`
+					)}">
 	<h4>Photos For You</h4>
 
 	{% photo_carousel %}
 	
 </div>
-{% endblock %}
-
-{% block script_block %}
-<script>
-function doAjaxImage(){
-	$('document').ready(function(){
-		$('.carousel-inner').html('loading images...');
-		var url = {% if board_type == 'daily-board' %}
-					"{% url 'explore_scotland_app:get_photos_from_days_ago' 0 %}"
-					{% elif board_type == 'weekly-board' %}
-					"{% url 'explore_scotland_app:get_photos_from_days_ago' 7 %}"
-					{% elif board_type == 'monthly-board' %}
-					"{% url 'explore_scotland_app:get_photos_from_days_ago' 30 %}"
-					{% elif board_type == 'overall-board' %}
-					"{% url 'explore_scotland_app:get_all_photos' 10 %}"
-					{% endif %};
-		$.ajax(url,
-		{
-			dataType: 'json', // type of response data
-			timeout: 10000,     // timeout milliseconds
-			success: function (data,status,xhr) {   // success callback function
-				$('.carousel-inner').empty();
-				data = JSON.parse(data);
-				var active = 'active';
-				if (data.length === 0){
-					var paragraph = `<p class="text-center">No photos</p>`;
-					$('.carousel').html(paragraph);
-				}
-				data.map((photo, i)=>{
-					var photoMeta = `<li data-target="#photoCarousel" data-slide-to="${i}" class="${active}"></li>`
-					var photoDiv = `<div class="carousel-item ${active}">
-										<a href='{% url 'explore_scotland_app:picture_details_without_key' %}${photo.pk}'>
-											<img src="{{MEDIA_URL}}/${photo.fields.picture}" alt="" class="img-responsive" width="100%" height="auto">
-											<div class="carousel-caption d-none d-md-block">
-												<p>${photo.fields.description}</p>
-											</div>
-										</a>
-									</div>`;
-					$('.carousel-indicators').append(photoMeta);
-					$('.carousel-inner').append(photoDiv);
-					active = '';
-				});
-			},
-			error: function (jqXhr, textStatus, errorMessage) { // error callback
-				if(errorMessage === 'timeout'){
-					doAjaxImage();
-				} else {
-					$('.carousel-inner').html('Error: ' + errorMessage);	
-				}
-			}
-		});
-	
-		$("#{{board_type}}").addClass('mb-5');
-	});
-}
-
-doAjaxImage();
-
-</script>
 {% endblock %}
